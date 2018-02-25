@@ -1,0 +1,58 @@
+---
+title: Geometry With R
+author: Tara Kenner
+date: '2018-02-17'
+slug: geometry-with-r
+categories:
+  - math
+  - geometry
+  - r
+tags:
+  - ggplot
+  - highcharter
+---
+
+
+
+<div id="area-of-a-circle" class="section level2">
+<h2>Area of a circle</h2>
+<p>In my math class, we are studying how to calculate the area, circumference and diameter of a circle.</p>
+<pre class="r"><code>circlearea_r &lt;- function(pi, radius) {
+  
+  area_circle &lt;- pi*radius^2
+}
+
+test_circle &lt;- circlearea_r(22/7, 5)
+
+test_circle</code></pre>
+<pre><code>## [1] 78.57143</code></pre>
+<pre class="r"><code>circlearea_d &lt;- function(pi, diameter) {
+  
+  area_circle &lt;- (pi*diameter^2)/4
+}
+
+test_circled &lt;- circlearea_d(22/7, 12)  
+
+test_circled</code></pre>
+<pre><code>## [1] 113.1429</code></pre>
+<pre class="r"><code>circle_area_c &lt;- function(pi, circum) {
+  
+  area_circle &lt;- (circum^2)/(4*pi)
+}
+  
+test_circlec &lt;- circle_area_c(22/7, 16)
+  
+test_circlec</code></pre>
+<pre><code>## [1] 20.36364</code></pre>
+</div>
+<div id="drawing-circles-with-ggplot" class="section level2">
+<h2>Drawing circles with ggplot</h2>
+<pre class="r"><code>ggplot() + geom_circle(aes(x0 = 0, y0 = 0, r = 5, fill = 5))</code></pre>
+<p><img src="/post/2018-02-17-geometry-with-r_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>symbols (0, 0, circles=1,fg=&quot;red&quot;)</code></pre>
+<p><img src="/post/2018-02-17-geometry-with-r_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code># install.packages(&quot;plotrix&quot;)
+# library(plotrix)
+# plot(BOD)
+# draw.circle(4,14,2,border=&quot;blue&quot;,col=&quot;tan2&quot;)</code></pre>
+</div>

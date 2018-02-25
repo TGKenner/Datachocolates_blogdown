@@ -1,0 +1,171 @@
+---
+title: Making a Security Camera using a Raspberry pi
+thumbnail: "/img/testpic.png"
+author: Tara Kenner
+date: '2018-02-11'
+slug: raspberry-pi-stem-project
+categories:
+  - Raspberry Pi
+  - Engineering
+  - STEM
+tags:
+  - R Markdown
+  - Security Camera
+  - R
+  - Statistics
+  - Ruby
+---
+
+
+### What is your title- Choose something that reflects your engineering goal. 
+
+Making a Security Camera using a Raspberry pi
+
+### What is your Engineering Problem-What problem are you trying to solve? 
+
+Our dog can sometimes get into trouble at home and we want to keep tabs on him.
+
+### Engineering goal- what you are trying to produce. 
+
+A video camera that we can monitor from our phones
+
+### What topics will be researched to find out more about what is known about your project and how to design your project. LIST AT LEAST 3. (keywords/topics to use in a literature search)
+
+Raspberry Pi, 
+Security camera design,
+How to connect a security camera to your phone and parts needed to build a security camera
+
+### Write a problem statement that follows this format guideline: Who need(s) what because why. In other words, “_____ need(s) _________ because________.”
+
+Our family needs a security camera because we want to see how our dog is doing during the day when we're not home.
+
+### Draft of Materials: List equipment needed to complete your project.
+
+*  Raspberry Pi, 
+*  Raspberry Pi Camera module, 
+*  Camera cable, 
+*  MicroUSB power supply,
+*  Micro SD card, 
+*  Wood screws, 
+*  1/8" metal plate
+
+### Draft of Engineering Methods: The method describes how you will design and test your device to safely complete the project
+
+1.  Follow online directions to assemble Raspberry Pi and camera
+2.  Load operating system and camera software
+3.  Modify configuration files (maybe custom code with parents assistance)
+4.  Connect to monitor to see if running correctly at this point
+5.  Connect to WiFi
+6.  Configure Router port (parent will do this to ensure it is secure)
+7.  Create web landing page. (with help)
+8.  Test from web connected device
+9.  Stretch goal - Configure recording when motion detector activated
+
+### List of three sources of information on your topic, cited in APA format. None of the sources may be encyclopedias.All of the sources must be recent, less than 5 years. If you have a question about a source, please ask before the due date 
+
+*  <a href="https://www.raspberrypi.org/" target="_blank">Raspberry Pi Official Site</a>
+*  [Raspberry Pi Official Site](https://www.raspberrypi.org/)
+*   [Understanding Security Camera Systems](https://www.wikihow.com/Understand-Security-Camera-Systems)
+*   [Hackster io Smart Security Camera Info](https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd)
+
+
+###  Results after the project
+
+![](/img/Raspberrypi1.jpg)
+
+1.  Follow online directions to assemble Raspberry Pi and camera
+[Raspberry Pi assembly directions](https://www.canakit.com/pi-case)
+2.  Load operating system and camera software
+We had a preloaded microSD card with NOOBS.
+3.  Modify configuration files (maybe custom code with parents assistance)
+[Security Camera Instructions](https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd)
+4.  Connect to monitor to see if running correctly at this point
+5.  Connect to WiFi
+6.  Open the terminal and run the unix command to enable the camera
+```{r, eval = FALSE}
+sudo raspi-config
+```
+
+7.  Now we verify that the camera works by running 
+```{r, eval = FALSE}
+raspistill -o image.jpg
+```
+
+
+```{r, eval = FALSE}
+source ~/.profile 
+workon cv
+```
+
+```{r,eval = FALSE}
+cd Smart-Security-Camera
+```
+
+
+In the mail.py file (using Python 3.5) use the following:
+
+```{r, eval = FALSE}
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+-D ENABLE_PRECOMPILED_HEADERS=OFF
+```
+
+
+```{r, eval = FALSE}
+pip install -r requirements.txt
+# Email you want to send the update from (only works with gmail)
+fromEmail = 'myemail@gmail.com'
+fromEmailPassword = 'password1234'
+# Email you want to send the update to
+toEmail = 'anotheremail@gmail.com'
+
+email_update_interval = 600 # sends an email only once in this time interval
+video_camera = VideoCamera(flip=True) # creates a camera object, flip vertically
+object_classifier = cv2.CascadeClassifier("models/fullbody_recognition_model.xml") # an opencv classifier
+
+python main.py
+```
+
+You can view a live stream by visiting the ip address of my pi in a browser on the same network. Y can find the ip address of your Raspberry Pi by typing ifconfig in the terminal and looking for the inet address.
+
+Visit <raspberrypi_ip>:5000 in your browser to view the stream.
+
+Note: To view the live stream on a different network than your Raspberry Pi, you can use ngrok to expose a local tunnel. Once downloaded, run ngrok with ./ngrok http 5000 and visit one of the generated links in your browser.
+
+
+
+8.  Install openCV by using this 
+[tutorial](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/)
+6.  Configure Router port (parent will do this to ensure it is secure)
+7.  Create web landing page. (with help)
+8.  Test from web connected device
+First, install git: sudo apt-get install git -y
+
+Once that's installed, go to your home directory and clone the project using:
+
+git clone https://github.com/HackerHouseYT/Smart-Security-Camera
+
+9.  Stretch goal - Configure recording when motion detector activated
+
+
+### Opening the port
+Go to Downloads folder 
+```{r, eval = FALSE}
+cd Downloads
+#Run the command
+./ngrok authtoken 34TANXmfyKaK6qPJmi5TR_5eTXjsdCMcFWuAJMjF76L
+./ngrok http -auth="prince:nubu" 5000
+This will pop up the screen that will give us the Forwarding:(Use the https) https: address for secure tunnel.
+
+When authentication pops up type username as:prince, and password: nubu (./ngrok http -auth="prince:nubu" 5000) 
+
+```
+
+
+
+
+
+
+
+

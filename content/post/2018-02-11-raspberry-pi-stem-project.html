@@ -1,0 +1,140 @@
+---
+title: Making a Security Camera using a Raspberry pi
+thumbnail: "/img/testpic.png"
+author: Tara Kenner
+date: '2018-02-11'
+slug: raspberry-pi-stem-project
+categories:
+  - Raspberry Pi
+  - Engineering
+  - STEM
+tags:
+  - R Markdown
+  - Security Camera
+  - R
+  - Statistics
+  - Ruby
+---
+
+
+
+<div id="what-is-your-title--choose-something-that-reflects-your-engineering-goal." class="section level3">
+<h3>What is your title- Choose something that reflects your engineering goal.</h3>
+<p>Making a Security Camera using a Raspberry pi</p>
+</div>
+<div id="what-is-your-engineering-problem-what-problem-are-you-trying-to-solve" class="section level3">
+<h3>What is your Engineering Problem-What problem are you trying to solve?</h3>
+<p>Our dog can sometimes get into trouble at home and we want to keep tabs on him.</p>
+</div>
+<div id="engineering-goal--what-you-are-trying-to-produce." class="section level3">
+<h3>Engineering goal- what you are trying to produce.</h3>
+<p>A video camera that we can monitor from our phones</p>
+</div>
+<div id="what-topics-will-be-researched-to-find-out-more-about-what-is-known-about-your-project-and-how-to-design-your-project.-list-at-least-3.-keywordstopics-to-use-in-a-literature-search" class="section level3">
+<h3>What topics will be researched to find out more about what is known about your project and how to design your project. LIST AT LEAST 3. (keywords/topics to use in a literature search)</h3>
+<p>Raspberry Pi, Security camera design, How to connect a security camera to your phone and parts needed to build a security camera</p>
+</div>
+<div id="write-a-problem-statement-that-follows-this-format-guideline-who-needs-what-because-why.-in-other-words-_____-needs-_________-because________." class="section level3">
+<h3>Write a problem statement that follows this format guideline: Who need(s) what because why. In other words, “_____ need(s) _________ because________.”</h3>
+<p>Our family needs a security camera because we want to see how our dog is doing during the day when we’re not home.</p>
+</div>
+<div id="draft-of-materials-list-equipment-needed-to-complete-your-project." class="section level3">
+<h3>Draft of Materials: List equipment needed to complete your project.</h3>
+<ul>
+<li>Raspberry Pi,</li>
+<li>Raspberry Pi Camera module,</li>
+<li>Camera cable,</li>
+<li>MicroUSB power supply,</li>
+<li>Micro SD card,</li>
+<li>Wood screws,</li>
+<li>1/8&quot; metal plate</li>
+</ul>
+</div>
+<div id="draft-of-engineering-methods-the-method-describes-how-you-will-design-and-test-your-device-to-safely-complete-the-project" class="section level3">
+<h3>Draft of Engineering Methods: The method describes how you will design and test your device to safely complete the project</h3>
+<ol style="list-style-type: decimal">
+<li>Follow online directions to assemble Raspberry Pi and camera</li>
+<li>Load operating system and camera software</li>
+<li>Modify configuration files (maybe custom code with parents assistance)</li>
+<li>Connect to monitor to see if running correctly at this point</li>
+<li>Connect to WiFi</li>
+<li>Configure Router port (parent will do this to ensure it is secure)</li>
+<li>Create web landing page. (with help)</li>
+<li>Test from web connected device</li>
+<li>Stretch goal - Configure recording when motion detector activated</li>
+</ol>
+</div>
+<div id="list-of-three-sources-of-information-on-your-topic-cited-in-apa-format.-none-of-the-sources-may-be-encyclopedias.all-of-the-sources-must-be-recent-less-than-5-years.-if-you-have-a-question-about-a-source-please-ask-before-the-due-date" class="section level3">
+<h3>List of three sources of information on your topic, cited in APA format. None of the sources may be encyclopedias.All of the sources must be recent, less than 5 years. If you have a question about a source, please ask before the due date</h3>
+<ul>
+<li><a href="https://www.raspberrypi.org/" target="_blank">Raspberry Pi Official Site</a></li>
+<li><a href="https://www.raspberrypi.org/">Raspberry Pi Official Site</a></li>
+<li><a href="https://www.wikihow.com/Understand-Security-Camera-Systems">Understanding Security Camera Systems</a></li>
+<li><a href="https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd">Hackster io Smart Security Camera Info</a></li>
+</ul>
+</div>
+<div id="results-after-the-project" class="section level3">
+<h3>Results after the project</h3>
+<div class="figure">
+<img src="/img/Raspberrypi1.jpg" />
+
+</div>
+<ol style="list-style-type: decimal">
+<li>Follow online directions to assemble Raspberry Pi and camera <a href="https://www.canakit.com/pi-case">Raspberry Pi assembly directions</a></li>
+<li>Load operating system and camera software We had a preloaded microSD card with NOOBS.</li>
+<li>Modify configuration files (maybe custom code with parents assistance) <a href="https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd">Security Camera Instructions</a></li>
+<li>Connect to monitor to see if running correctly at this point</li>
+<li>Connect to WiFi</li>
+<li>Open the terminal and run the unix command to enable the camera</li>
+</ol>
+<pre class="r"><code>sudo raspi-config</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Now we verify that the camera works by running</li>
+</ol>
+<pre class="r"><code>raspistill -o image.jpg</code></pre>
+<pre class="r"><code>source ~/.profile 
+workon cv</code></pre>
+<pre class="r"><code>cd Smart-Security-Camera</code></pre>
+<p>In the mail.py file (using Python 3.5) use the following:</p>
+<pre class="r"><code>from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+-D ENABLE_PRECOMPILED_HEADERS=OFF</code></pre>
+<pre class="r"><code>pip install -r requirements.txt
+# Email you want to send the update from (only works with gmail)
+fromEmail = &#39;myemail@gmail.com&#39;
+fromEmailPassword = &#39;password1234&#39;
+# Email you want to send the update to
+toEmail = &#39;anotheremail@gmail.com&#39;
+
+email_update_interval = 600 # sends an email only once in this time interval
+video_camera = VideoCamera(flip=True) # creates a camera object, flip vertically
+object_classifier = cv2.CascadeClassifier(&quot;models/fullbody_recognition_model.xml&quot;) # an opencv classifier
+
+python main.py</code></pre>
+<p>You can view a live stream by visiting the ip address of my pi in a browser on the same network. Y can find the ip address of your Raspberry Pi by typing ifconfig in the terminal and looking for the inet address.</p>
+<p>Visit <raspberrypi_ip>:5000 in your browser to view the stream.</p>
+<p>Note: To view the live stream on a different network than your Raspberry Pi, you can use ngrok to expose a local tunnel. Once downloaded, run ngrok with ./ngrok http 5000 and visit one of the generated links in your browser.</p>
+<ol start="8" style="list-style-type: decimal">
+<li>Install openCV by using this <a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/">tutorial</a></li>
+<li>Configure Router port (parent will do this to ensure it is secure)</li>
+<li>Create web landing page. (with help)</li>
+<li>Test from web connected device First, install git: sudo apt-get install git -y</li>
+</ol>
+<p>Once that’s installed, go to your home directory and clone the project using:</p>
+<p>git clone <a href="https://github.com/HackerHouseYT/Smart-Security-Camera" class="uri">https://github.com/HackerHouseYT/Smart-Security-Camera</a></p>
+<ol start="9" style="list-style-type: decimal">
+<li>Stretch goal - Configure recording when motion detector activated</li>
+</ol>
+</div>
+<div id="opening-the-port" class="section level3">
+<h3>Opening the port</h3>
+<p>Go to Downloads folder</p>
+<pre class="r"><code>cd Downloads
+#Run the command
+./ngrok authtoken 34TANXmfyKaK6qPJmi5TR_5eTXjsdCMcFWuAJMjF76L
+./ngrok http -auth=&quot;prince:nubu&quot; 5000
+This will pop up the screen that will give us the Forwarding:(Use the https) https: address for secure tunnel.
+
+When authentication pops up type username as:prince, and password: nubu (./ngrok http -auth=&quot;prince:nubu&quot; 5000) </code></pre>
+</div>

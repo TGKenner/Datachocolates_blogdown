@@ -1,0 +1,593 @@
+---
+title: '6th Grade STEM: Does Tire Air Pressure Affect the Rolling Resistance of a Mountain Bike?'
+author: Tara K
+date: '2017-03-26'
+slug: does-tire-air-pressure-affect-the-rolling-resistance-of-a-mountain-bike
+categories:
+  - 'STEM projects'
+tags:
+  - R
+  - ggplot
+  - linear regression
+  - tidyverse
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/plotlyjs/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plotlyjs/plotly-latest.min.js"></script>
+
+
+<div id="the-test-mountain-bike-transition-covert-c" class="section level2">
+<h2>The Test Mountain Bike: Transition Covert C</h2>
+<div class="figure">
+<img src="/img/rolling_bike2.png" />
+
+</div>
+</div>
+<div id="my-questions" class="section level2">
+<h2>My Question/s</h2>
+<ul>
+<li><em>Does tire air pressure affect the rolling resistance of a mountain bike?</em></li>
+<li><em>Is the effect the same on both smooth and rough surfaces?</em></li>
+</ul>
+</div>
+<div id="my-hypothesis" class="section level2">
+<h2>My Hypothesis:</h2>
+<ul>
+<li><em>If the air pressure is decreased by 10 psi, then the elapsed time in which the bike rolls down the track will increase by ~3% because the rolling resistance of a bicycle tire is inversely related to the air pressure.</em></li>
+</ul>
+</div>
+<div id="variables" class="section level2">
+<h2>Variables</h2>
+<div id="independent-variable-iv--also-called-manipulatedexplanatory-variable-or-predictor." class="section level5">
+<h5>Independent Variable (IV)- Also called manipulated/explanatory variable or predictor.</h5>
+<table>
+<colgroup>
+<col width="35%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><em>Independent Variable</em></th>
+<th><em>How will you Change the independent variable</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Air Pressure</td>
+<td>Decrease the air pressure 10 PSI (Pounds Per Square Inch) at a time</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dependent-variable-dv---also-called-the-responsetarget-variable" class="section level5">
+<h5>Dependent Variable (DV) - Also called the response/target variable</h5>
+<table style="width:100%;">
+<colgroup>
+<col width="32%" />
+<col width="67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><em>Dependent Variable</em></th>
+<th><em>How and when will you measure the dependent variable</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time in secs</td>
+<td>With an iphone stopwatch/When the bike crosses the fixed marker (set at 20 meters)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="control-variable-variables-that-are-kept-the-same." class="section level5">
+<h5>Control variable: Variables that are kept the same.</h5>
+<table>
+<thead>
+<tr class="header">
+<th><em>Control Variable</em></th>
+<th><em>How will you will control it</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rider</td>
+<td>Same rider (Mark Kenner)</td>
+</tr>
+<tr class="even">
+<td>Bike</td>
+<td>Same bike (Transition Covert C)</td>
+</tr>
+<tr class="odd">
+<td>Distance the bike rolls</td>
+<td>20 meters</td>
+</tr>
+<tr class="even">
+<td>Same Tires</td>
+<td>Maxxis EXO DHF front and DHR rear, 26” diameter and tubeless</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="materials-and-procedures" class="section level3">
+<h3>Materials and Procedures</h3>
+<div id="materials" class="section level5">
+<h5>Materials</h5>
+<ul>
+<li>Rider (Mark Kenner)</li>
+<li>Assistant/Timekeeper/Statistician/Data-Scientist (Tara Kenner)</li>
+<li>Bicycle (Transition Covert C)</li>
+<li>Tires (Maxxis EXO DHF front and EXO DHR rear, 26” diameter and tubeless).</li>
+<li>Elapsed time will be measured with the stopwatch feature of an iPhone6</li>
+<li>Air pressure will be measured with an Accu-guage(accurate to ¼ PSI).<br />
+</li>
+<li>Track distance will be measured with a tape measurer.</li>
+<li>The slope will be measured at the start, middle, and end of track with a Pitch Angle Calculator to get the average.</li>
+</ul>
+<p><img src="/img/Materials_small.jpg" alt="Materials" /> <img src="/img/PSI_material_small_1.jpg" alt="Materials2" /></p>
+</div>
+<div id="procedures" class="section level5">
+<h5>Procedures</h5>
+<ul>
+<li>A bicycle will coast down a fixed distance, in a straight line, from one fixed marker to the next with no pedaling or braking.<br />
+</li>
+<li>An assistant will record the elapsed time.<br />
+</li>
+<li>The distance and average slope of the test track will be recorded (probably 100 meters and about 12 degrees). Due to what we learned about gradient resistance from our on-line research, we went with the smallest degrees which allowed the bike to roll. Used 20 meters instead of 100 meters)</li>
+<li>Winds must be 5mph or less as to not impact results.<br />
+</li>
+<li>Runs will be done with tires at 50PSI, 40PSI, 30PSI, 20PSI, and 10PSI.<br />
+</li>
+<li>This test will be conducted once on asphalt and once on a rough surface (probably a logging road, preferably with 1-2 inch diameter gravel and some irregularities such as holes and ruts). Ended up using a motorcycle trail with large rocks solidly embedded into the surface. Was worried that gravel would deflect and compress and really be testing a soft surface. Wanted to test a hard surface, but a rough one.</li>
+</ul>
+<p><img src="/img/Smoothroad_small.jpg" alt="Smooth Road" /> <img src="/img/Rough_Road_small.jpg" alt="Rough Road" /></p>
+<p><img src="/img/riding_1.jpg" alt="Riding" /> <img src="/img/riding2.jpg" alt="Riding2" /> <img src="/img/riding3.jpg" alt="Riding3" /></p>
+</div>
+<div id="data-collection" class="section level5">
+<h5>Data Collection</h5>
+<p>I will be using the programming language <a href="http://www.r-project.org/about.html">R</a> and <a href="http://www.rstudio.com">RStudio</a> which is an IDE (Integrated Development Environment) for R, to analyze, model, and visualize the data I have collected, and Rstudio’s <a href="http://rmarkdown.rstudio.com/">rmarkdown package</a> to communicate my results and answer the questions in the conclusion section.</p>
+<p>First, I’ll load the libraries I need in R:</p>
+<pre class="r"><code>#Load the required libraries for analyis, modeling, and visualization in R
+library(tidyverse)
+library(broom)
+library(modelr)
+library(plotly)
+library(grid)
+library(gridExtra)</code></pre>
+<p>Next, I will create data frames for the data I collected for both surfaces in R:</p>
+<ul>
+<li>Smooth surface (asphalt)</li>
+<li>Rough surface (motorcycle trail with large rocks solidly embedded into the surface).</li>
+</ul>
+<pre class="r"><code>#Create vectors for Air Pressure in PSI, recorded Elapsed time in secs for the bike to travel 20 meters on Smooth and Rough Road 
+# Tire_Air_Pressure_PSI &lt;- c(50, 50, 50, 40, 40, 40, 30, 30, 30, 20, 20, 20, 10, 10, 10)
+
+Tire_Air_Pressure_PSI &lt;- rep(c(50,40,30,20,10), each =3)
+Elapsed_Time_Sec_SmR &lt;- c(9.15, 9.35, 9.42, 9.83, 9.97, 9.77, 10.13, 10.52, 10.27, 11.05, 10.47, 11.09, 12.09, 11.52, 11.15)
+Elapsed_Time_Sec_RgR &lt;- c(12.95, 12.10, 13.12, 12.87, 13.44, 13.77, 13.02, 13.62, 13.54, 13.57, 13.80, 14.02, 14.89, 15.02, 15.66)
+
+#bind the Air Pressure, Elapsed time vectors to create a data frame/tibble
+Data_for_BikeRuns &lt;- tibble(Tire_Air_Pressure_PSI, Elapsed_Time_Sec_SmR, Elapsed_Time_Sec_RgR)
+
+#View the table of Data_for_BikeRuns
+Data_for_BikeRuns</code></pre>
+<pre><code>## # A tibble: 15 × 3
+##    Tire_Air_Pressure_PSI Elapsed_Time_Sec_SmR Elapsed_Time_Sec_RgR
+##                    &lt;dbl&gt;                &lt;dbl&gt;                &lt;dbl&gt;
+## 1                     50                 9.15                12.95
+## 2                     50                 9.35                12.10
+## 3                     50                 9.42                13.12
+## 4                     40                 9.83                12.87
+## 5                     40                 9.97                13.44
+## 6                     40                 9.77                13.77
+## 7                     30                10.13                13.02
+## 8                     30                10.52                13.62
+## 9                     30                10.27                13.54
+## 10                    20                11.05                13.57
+## 11                    20                10.47                13.80
+## 12                    20                11.09                14.02
+## 13                    10                12.09                14.89
+## 14                    10                11.52                15.02
+## 15                    10                11.15                15.66</code></pre>
+<p>Next, I will plot and visualize the collected data-set using the ggplot function and plotly.</p>
+<pre class="r"><code>smooth_title &lt;- c(&quot;Smooth Surface&quot;)
+rough_title &lt;- c(&quot;Rough Surface&quot;)
+
+own_plot_function &lt;- function(df, manipulated_var, response_var, plottitle) {
+  df %&gt;% 
+    ggplot(aes(x = manipulated_var, y = response_var)) + geom_point(color = &quot;firebrick&quot;) + ggtitle(paste(&quot;Data for &quot;, plottitle))
+}
+
+smooth_surface_plot &lt;- own_plot_function(Data_for_BikeRuns, Tire_Air_Pressure_PSI, Elapsed_Time_Sec_SmR, smooth_title)
+rough_surface_plot &lt;- own_plot_function(Data_for_BikeRuns, Tire_Air_Pressure_PSI, Elapsed_Time_Sec_RgR, rough_title)
+
+ggplotly(smooth_surface_plot)</code></pre>
+<pre><code>## We recommend that you use the dev version of ggplot2 with `ggplotly()`
+## Install it with: `devtools::install_github(&#39;hadley/ggplot2&#39;)`</code></pre>
+<div id="6c445d0b2df5" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="6c445d0b2df5">{"x":{"data":[{"x":[50,50,50,40,40,40,30,30,30,20,20,20,10,10,10],"y":[9.15,9.35,9.42,9.83,9.97,9.77,10.13,10.52,10.27,11.05,10.47,11.09,12.09,11.52,11.15],"text":["manipulated_var: 50<br />response_var:  9.15","manipulated_var: 50<br />response_var:  9.35","manipulated_var: 50<br />response_var:  9.42","manipulated_var: 40<br />response_var:  9.83","manipulated_var: 40<br />response_var:  9.97","manipulated_var: 40<br />response_var:  9.77","manipulated_var: 30<br />response_var: 10.13","manipulated_var: 30<br />response_var: 10.52","manipulated_var: 30<br />response_var: 10.27","manipulated_var: 20<br />response_var: 11.05","manipulated_var: 20<br />response_var: 10.47","manipulated_var: 20<br />response_var: 11.09","manipulated_var: 10<br />response_var: 12.09","manipulated_var: 10<br />response_var: 11.52","manipulated_var: 10<br />response_var: 11.15"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(178,34,34,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(178,34,34,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Data for  Smooth Surface","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[8,52],"ticktext":["10","20","30","40","50"],"tickvals":[10,20,30,40,50],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"manipulated_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[9.003,12.237],"ticktext":["10","11","12"],"tickvals":[10,11,12],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"response_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest"},"source":"A","attrs":{"6c4449ac83f4":{"x":{},"y":{},"type":"ggplotly"}},"cur_data":"6c4449ac83f4","visdat":{"6c4449ac83f4":["function (y) ","x"]},"config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+<pre class="r"><code>ggplotly(rough_surface_plot)</code></pre>
+<pre><code>## We recommend that you use the dev version of ggplot2 with `ggplotly()`
+## Install it with: `devtools::install_github(&#39;hadley/ggplot2&#39;)`</code></pre>
+<div id="6c4429fbf704" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="6c4429fbf704">{"x":{"data":[{"x":[50,50,50,40,40,40,30,30,30,20,20,20,10,10,10],"y":[12.95,12.1,13.12,12.87,13.44,13.77,13.02,13.62,13.54,13.57,13.8,14.02,14.89,15.02,15.66],"text":["manipulated_var: 50<br />response_var: 12.95","manipulated_var: 50<br />response_var: 12.10","manipulated_var: 50<br />response_var: 13.12","manipulated_var: 40<br />response_var: 12.87","manipulated_var: 40<br />response_var: 13.44","manipulated_var: 40<br />response_var: 13.77","manipulated_var: 30<br />response_var: 13.02","manipulated_var: 30<br />response_var: 13.62","manipulated_var: 30<br />response_var: 13.54","manipulated_var: 20<br />response_var: 13.57","manipulated_var: 20<br />response_var: 13.80","manipulated_var: 20<br />response_var: 14.02","manipulated_var: 10<br />response_var: 14.89","manipulated_var: 10<br />response_var: 15.02","manipulated_var: 10<br />response_var: 15.66"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(178,34,34,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(178,34,34,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Data for  Rough Surface","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[8,52],"ticktext":["10","20","30","40","50"],"tickvals":[10,20,30,40,50],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"manipulated_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[11.922,15.838],"ticktext":["12","13","14","15"],"tickvals":[12,13,14,15],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"response_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest"},"source":"A","attrs":{"6c444efe8d80":{"x":{},"y":{},"type":"ggplotly"}},"cur_data":"6c444efe8d80","visdat":{"6c444efe8d80":["function (y) ","x"]},"config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+<p>Adding the line of best fit to both the data plots. The line of best fit is as close as possible to all points, and as many points above the line as below.</p>
+<pre class="r"><code>ggplotly(smooth_surface_plot + geom_smooth(method = &quot;lm&quot;, se = FALSE, color = &quot;black&quot;))</code></pre>
+<pre><code>## We recommend that you use the dev version of ggplot2 with `ggplotly()`
+## Install it with: `devtools::install_github(&#39;hadley/ggplot2&#39;)`</code></pre>
+<div id="6c442c9c6fda" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="6c442c9c6fda">{"x":{"data":[{"x":[50,50,50,40,40,40,30,30,30,20,20,20,10,10,10],"y":[9.15,9.35,9.42,9.83,9.97,9.77,10.13,10.52,10.27,11.05,10.47,11.09,12.09,11.52,11.15],"text":["manipulated_var: 50<br />response_var:  9.15","manipulated_var: 50<br />response_var:  9.35","manipulated_var: 50<br />response_var:  9.42","manipulated_var: 40<br />response_var:  9.83","manipulated_var: 40<br />response_var:  9.97","manipulated_var: 40<br />response_var:  9.77","manipulated_var: 30<br />response_var: 10.13","manipulated_var: 30<br />response_var: 10.52","manipulated_var: 30<br />response_var: 10.27","manipulated_var: 20<br />response_var: 11.05","manipulated_var: 20<br />response_var: 10.47","manipulated_var: 20<br />response_var: 11.09","manipulated_var: 10<br />response_var: 12.09","manipulated_var: 10<br />response_var: 11.52","manipulated_var: 10<br />response_var: 11.15"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(178,34,34,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(178,34,34,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[10,10.506329113924,11.0126582278481,11.5189873417722,12.0253164556962,12.5316455696203,13.0379746835443,13.5443037974684,14.0506329113924,14.5569620253165,15.0632911392405,15.5696202531646,16.0759493670886,16.5822784810127,17.0886075949367,17.5949367088608,18.1012658227848,18.6075949367089,19.1139240506329,19.620253164557,20.126582278481,20.6329113924051,21.1392405063291,21.6455696202532,22.1518987341772,22.6582278481013,23.1645569620253,23.6708860759494,24.1772151898734,24.6835443037975,25.1898734177215,25.6962025316456,26.2025316455696,26.7088607594937,27.2151898734177,27.7215189873418,28.2278481012658,28.7341772151899,29.2405063291139,29.746835443038,30.253164556962,30.7594936708861,31.2658227848101,31.7721518987342,32.2784810126582,32.7848101265823,33.2911392405063,33.7974683544304,34.3037974683544,34.8101265822785,35.3164556962025,35.8227848101266,36.3291139240506,36.8354430379747,37.3417721518987,37.8481012658228,38.3544303797468,38.8607594936709,39.3670886075949,39.873417721519,40.379746835443,40.8860759493671,41.3924050632911,41.8987341772152,42.4050632911392,42.9113924050633,43.4177215189873,43.9240506329114,44.4303797468354,44.9367088607595,45.4430379746835,45.9493670886076,46.4556962025316,46.9620253164557,47.4683544303797,47.9746835443038,48.4810126582279,48.9873417721519,49.493670886076,50],"y":[11.5,11.4717805907173,11.4435611814346,11.4153417721519,11.3871223628692,11.3589029535865,11.3306835443038,11.3024641350211,11.2742447257384,11.2460253164557,11.217805907173,11.1895864978903,11.1613670886076,11.1331476793249,11.1049282700422,11.0767088607595,11.0484894514768,11.0202700421941,10.9920506329114,10.9638312236287,10.935611814346,10.9073924050633,10.8791729957806,10.8509535864979,10.8227341772152,10.7945147679325,10.7662953586498,10.7380759493671,10.7098565400844,10.6816371308017,10.653417721519,10.6251983122363,10.5969789029536,10.5687594936709,10.5405400843882,10.5123206751055,10.4841012658228,10.4558818565401,10.4276624472574,10.3994430379747,10.371223628692,10.3430042194093,10.3147848101266,10.2865654008439,10.2583459915612,10.2301265822785,10.2019071729958,10.1736877637131,10.1454683544304,10.1172489451477,10.089029535865,10.0608101265823,10.0325907172996,10.0043713080169,9.97615189873417,9.94793248945147,9.91971308016877,9.89149367088607,9.86327426160337,9.83505485232067,9.80683544303797,9.77861603375527,9.75039662447257,9.72217721518987,9.69395780590717,9.66573839662447,9.63751898734177,9.60929957805907,9.58108016877637,9.55286075949367,9.52464135021097,9.49642194092827,9.46820253164557,9.43998312236287,9.41176371308017,9.38354430379746,9.35532489451476,9.32710548523206,9.29888607594936,9.27066666666666],"text":["manipulated_var: 10.00000<br />response_var: 11.500000","manipulated_var: 10.50633<br />response_var: 11.471781","manipulated_var: 11.01266<br />response_var: 11.443561","manipulated_var: 11.51899<br />response_var: 11.415342","manipulated_var: 12.02532<br />response_var: 11.387122","manipulated_var: 12.53165<br />response_var: 11.358903","manipulated_var: 13.03797<br />response_var: 11.330684","manipulated_var: 13.54430<br />response_var: 11.302464","manipulated_var: 14.05063<br />response_var: 11.274245","manipulated_var: 14.55696<br />response_var: 11.246025","manipulated_var: 15.06329<br />response_var: 11.217806","manipulated_var: 15.56962<br />response_var: 11.189586","manipulated_var: 16.07595<br />response_var: 11.161367","manipulated_var: 16.58228<br />response_var: 11.133148","manipulated_var: 17.08861<br />response_var: 11.104928","manipulated_var: 17.59494<br />response_var: 11.076709","manipulated_var: 18.10127<br />response_var: 11.048489","manipulated_var: 18.60759<br />response_var: 11.020270","manipulated_var: 19.11392<br />response_var: 10.992051","manipulated_var: 19.62025<br />response_var: 10.963831","manipulated_var: 20.12658<br />response_var: 10.935612","manipulated_var: 20.63291<br />response_var: 10.907392","manipulated_var: 21.13924<br />response_var: 10.879173","manipulated_var: 21.64557<br />response_var: 10.850954","manipulated_var: 22.15190<br />response_var: 10.822734","manipulated_var: 22.65823<br />response_var: 10.794515","manipulated_var: 23.16456<br />response_var: 10.766295","manipulated_var: 23.67089<br />response_var: 10.738076","manipulated_var: 24.17722<br />response_var: 10.709857","manipulated_var: 24.68354<br />response_var: 10.681637","manipulated_var: 25.18987<br />response_var: 10.653418","manipulated_var: 25.69620<br />response_var: 10.625198","manipulated_var: 26.20253<br />response_var: 10.596979","manipulated_var: 26.70886<br />response_var: 10.568759","manipulated_var: 27.21519<br />response_var: 10.540540","manipulated_var: 27.72152<br />response_var: 10.512321","manipulated_var: 28.22785<br />response_var: 10.484101","manipulated_var: 28.73418<br />response_var: 10.455882","manipulated_var: 29.24051<br />response_var: 10.427662","manipulated_var: 29.74684<br />response_var: 10.399443","manipulated_var: 30.25316<br />response_var: 10.371224","manipulated_var: 30.75949<br />response_var: 10.343004","manipulated_var: 31.26582<br />response_var: 10.314785","manipulated_var: 31.77215<br />response_var: 10.286565","manipulated_var: 32.27848<br />response_var: 10.258346","manipulated_var: 32.78481<br />response_var: 10.230127","manipulated_var: 33.29114<br />response_var: 10.201907","manipulated_var: 33.79747<br />response_var: 10.173688","manipulated_var: 34.30380<br />response_var: 10.145468","manipulated_var: 34.81013<br />response_var: 10.117249","manipulated_var: 35.31646<br />response_var: 10.089030","manipulated_var: 35.82278<br />response_var: 10.060810","manipulated_var: 36.32911<br />response_var: 10.032591","manipulated_var: 36.83544<br />response_var: 10.004371","manipulated_var: 37.34177<br />response_var:  9.976152","manipulated_var: 37.84810<br />response_var:  9.947932","manipulated_var: 38.35443<br />response_var:  9.919713","manipulated_var: 38.86076<br />response_var:  9.891494","manipulated_var: 39.36709<br />response_var:  9.863274","manipulated_var: 39.87342<br />response_var:  9.835055","manipulated_var: 40.37975<br />response_var:  9.806835","manipulated_var: 40.88608<br />response_var:  9.778616","manipulated_var: 41.39241<br />response_var:  9.750397","manipulated_var: 41.89873<br />response_var:  9.722177","manipulated_var: 42.40506<br />response_var:  9.693958","manipulated_var: 42.91139<br />response_var:  9.665738","manipulated_var: 43.41772<br />response_var:  9.637519","manipulated_var: 43.92405<br />response_var:  9.609300","manipulated_var: 44.43038<br />response_var:  9.581080","manipulated_var: 44.93671<br />response_var:  9.552861","manipulated_var: 45.44304<br />response_var:  9.524641","manipulated_var: 45.94937<br />response_var:  9.496422","manipulated_var: 46.45570<br />response_var:  9.468203","manipulated_var: 46.96203<br />response_var:  9.439983","manipulated_var: 47.46835<br />response_var:  9.411764","manipulated_var: 47.97468<br />response_var:  9.383544","manipulated_var: 48.48101<br />response_var:  9.355325","manipulated_var: 48.98734<br />response_var:  9.327105","manipulated_var: 49.49367<br />response_var:  9.298886","manipulated_var: 50.00000<br />response_var:  9.270667"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Data for  Smooth Surface","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[8,52],"ticktext":["10","20","30","40","50"],"tickvals":[10,20,30,40,50],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"manipulated_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[9.003,12.237],"ticktext":["10","11","12"],"tickvals":[10,11,12],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"response_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest"},"source":"A","attrs":{"6c441caa45a6":{"x":{},"y":{},"type":"ggplotly"},"6c446ec2a3fd":{"x":{},"y":{}}},"cur_data":"6c441caa45a6","visdat":{"6c441caa45a6":["function (y) ","x"],"6c446ec2a3fd":["function (y) ","x"]},"config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+<pre class="r"><code>ggplotly(rough_surface_plot + geom_smooth(method = &quot;lm&quot;, se = FALSE, color = &quot;black&quot;))</code></pre>
+<pre><code>## We recommend that you use the dev version of ggplot2 with `ggplotly()`
+## Install it with: `devtools::install_github(&#39;hadley/ggplot2&#39;)`</code></pre>
+<div id="6c442b7092ce" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="6c442b7092ce">{"x":{"data":[{"x":[50,50,50,40,40,40,30,30,30,20,20,20,10,10,10],"y":[12.95,12.1,13.12,12.87,13.44,13.77,13.02,13.62,13.54,13.57,13.8,14.02,14.89,15.02,15.66],"text":["manipulated_var: 50<br />response_var: 12.95","manipulated_var: 50<br />response_var: 12.10","manipulated_var: 50<br />response_var: 13.12","manipulated_var: 40<br />response_var: 12.87","manipulated_var: 40<br />response_var: 13.44","manipulated_var: 40<br />response_var: 13.77","manipulated_var: 30<br />response_var: 13.02","manipulated_var: 30<br />response_var: 13.62","manipulated_var: 30<br />response_var: 13.54","manipulated_var: 20<br />response_var: 13.57","manipulated_var: 20<br />response_var: 13.80","manipulated_var: 20<br />response_var: 14.02","manipulated_var: 10<br />response_var: 14.89","manipulated_var: 10<br />response_var: 15.02","manipulated_var: 10<br />response_var: 15.66"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(178,34,34,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(178,34,34,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[10,10.506329113924,11.0126582278481,11.5189873417722,12.0253164556962,12.5316455696203,13.0379746835443,13.5443037974684,14.0506329113924,14.5569620253165,15.0632911392405,15.5696202531646,16.0759493670886,16.5822784810127,17.0886075949367,17.5949367088608,18.1012658227848,18.6075949367089,19.1139240506329,19.620253164557,20.126582278481,20.6329113924051,21.1392405063291,21.6455696202532,22.1518987341772,22.6582278481013,23.1645569620253,23.6708860759494,24.1772151898734,24.6835443037975,25.1898734177215,25.6962025316456,26.2025316455696,26.7088607594937,27.2151898734177,27.7215189873418,28.2278481012658,28.7341772151899,29.2405063291139,29.746835443038,30.253164556962,30.7594936708861,31.2658227848101,31.7721518987342,32.2784810126582,32.7848101265823,33.2911392405063,33.7974683544304,34.3037974683544,34.8101265822785,35.3164556962025,35.8227848101266,36.3291139240506,36.8354430379747,37.3417721518987,37.8481012658228,38.3544303797468,38.8607594936709,39.3670886075949,39.873417721519,40.379746835443,40.8860759493671,41.3924050632911,41.8987341772152,42.4050632911392,42.9113924050633,43.4177215189873,43.9240506329114,44.4303797468354,44.9367088607595,45.4430379746835,45.9493670886076,46.4556962025316,46.9620253164557,47.4683544303797,47.9746835443038,48.4810126582279,48.9873417721519,49.493670886076,50],"y":[14.7666666666667,14.7394767932489,14.7122869198312,14.6850970464135,14.6579071729958,14.6307172995781,14.6035274261603,14.5763375527426,14.5491476793249,14.5219578059072,14.4947679324894,14.4675780590717,14.440388185654,14.4131983122363,14.3860084388186,14.3588185654008,14.3316286919831,14.3044388185654,14.2772489451477,14.25005907173,14.2228691983122,14.1956793248945,14.1684894514768,14.1412995780591,14.1141097046413,14.0869198312236,14.0597299578059,14.0325400843882,14.0053502109705,13.9781603375527,13.950970464135,13.9237805907173,13.8965907172996,13.8694008438819,13.8422109704641,13.8150210970464,13.7878312236287,13.760641350211,13.7334514767932,13.7062616033755,13.6790717299578,13.6518818565401,13.6246919831224,13.5975021097046,13.5703122362869,13.5431223628692,13.5159324894515,13.4887426160338,13.461552742616,13.4343628691983,13.4071729957806,13.3799831223629,13.3527932489451,13.3256033755274,13.2984135021097,13.271223628692,13.2440337552743,13.2168438818565,13.1896540084388,13.1624641350211,13.1352742616034,13.1080843881856,13.0808945147679,13.0537046413502,13.0265147679325,12.9993248945148,12.972135021097,12.9449451476793,12.9177552742616,12.8905654008439,12.8633755274262,12.8361856540084,12.8089957805907,12.781805907173,12.7546160337553,12.7274261603375,12.7002362869198,12.6730464135021,12.6458565400844,12.6186666666667],"text":["manipulated_var: 10.00000<br />response_var: 14.76667","manipulated_var: 10.50633<br />response_var: 14.73948","manipulated_var: 11.01266<br />response_var: 14.71229","manipulated_var: 11.51899<br />response_var: 14.68510","manipulated_var: 12.02532<br />response_var: 14.65791","manipulated_var: 12.53165<br />response_var: 14.63072","manipulated_var: 13.03797<br />response_var: 14.60353","manipulated_var: 13.54430<br />response_var: 14.57634","manipulated_var: 14.05063<br />response_var: 14.54915","manipulated_var: 14.55696<br />response_var: 14.52196","manipulated_var: 15.06329<br />response_var: 14.49477","manipulated_var: 15.56962<br />response_var: 14.46758","manipulated_var: 16.07595<br />response_var: 14.44039","manipulated_var: 16.58228<br />response_var: 14.41320","manipulated_var: 17.08861<br />response_var: 14.38601","manipulated_var: 17.59494<br />response_var: 14.35882","manipulated_var: 18.10127<br />response_var: 14.33163","manipulated_var: 18.60759<br />response_var: 14.30444","manipulated_var: 19.11392<br />response_var: 14.27725","manipulated_var: 19.62025<br />response_var: 14.25006","manipulated_var: 20.12658<br />response_var: 14.22287","manipulated_var: 20.63291<br />response_var: 14.19568","manipulated_var: 21.13924<br />response_var: 14.16849","manipulated_var: 21.64557<br />response_var: 14.14130","manipulated_var: 22.15190<br />response_var: 14.11411","manipulated_var: 22.65823<br />response_var: 14.08692","manipulated_var: 23.16456<br />response_var: 14.05973","manipulated_var: 23.67089<br />response_var: 14.03254","manipulated_var: 24.17722<br />response_var: 14.00535","manipulated_var: 24.68354<br />response_var: 13.97816","manipulated_var: 25.18987<br />response_var: 13.95097","manipulated_var: 25.69620<br />response_var: 13.92378","manipulated_var: 26.20253<br />response_var: 13.89659","manipulated_var: 26.70886<br />response_var: 13.86940","manipulated_var: 27.21519<br />response_var: 13.84221","manipulated_var: 27.72152<br />response_var: 13.81502","manipulated_var: 28.22785<br />response_var: 13.78783","manipulated_var: 28.73418<br />response_var: 13.76064","manipulated_var: 29.24051<br />response_var: 13.73345","manipulated_var: 29.74684<br />response_var: 13.70626","manipulated_var: 30.25316<br />response_var: 13.67907","manipulated_var: 30.75949<br />response_var: 13.65188","manipulated_var: 31.26582<br />response_var: 13.62469","manipulated_var: 31.77215<br />response_var: 13.59750","manipulated_var: 32.27848<br />response_var: 13.57031","manipulated_var: 32.78481<br />response_var: 13.54312","manipulated_var: 33.29114<br />response_var: 13.51593","manipulated_var: 33.79747<br />response_var: 13.48874","manipulated_var: 34.30380<br />response_var: 13.46155","manipulated_var: 34.81013<br />response_var: 13.43436","manipulated_var: 35.31646<br />response_var: 13.40717","manipulated_var: 35.82278<br />response_var: 13.37998","manipulated_var: 36.32911<br />response_var: 13.35279","manipulated_var: 36.83544<br />response_var: 13.32560","manipulated_var: 37.34177<br />response_var: 13.29841","manipulated_var: 37.84810<br />response_var: 13.27122","manipulated_var: 38.35443<br />response_var: 13.24403","manipulated_var: 38.86076<br />response_var: 13.21684","manipulated_var: 39.36709<br />response_var: 13.18965","manipulated_var: 39.87342<br />response_var: 13.16246","manipulated_var: 40.37975<br />response_var: 13.13527","manipulated_var: 40.88608<br />response_var: 13.10808","manipulated_var: 41.39241<br />response_var: 13.08089","manipulated_var: 41.89873<br />response_var: 13.05370","manipulated_var: 42.40506<br />response_var: 13.02651","manipulated_var: 42.91139<br />response_var: 12.99932","manipulated_var: 43.41772<br />response_var: 12.97214","manipulated_var: 43.92405<br />response_var: 12.94495","manipulated_var: 44.43038<br />response_var: 12.91776","manipulated_var: 44.93671<br />response_var: 12.89057","manipulated_var: 45.44304<br />response_var: 12.86338","manipulated_var: 45.94937<br />response_var: 12.83619","manipulated_var: 46.45570<br />response_var: 12.80900","manipulated_var: 46.96203<br />response_var: 12.78181","manipulated_var: 47.46835<br />response_var: 12.75462","manipulated_var: 47.97468<br />response_var: 12.72743","manipulated_var: 48.48101<br />response_var: 12.70024","manipulated_var: 48.98734<br />response_var: 12.67305","manipulated_var: 49.49367<br />response_var: 12.64586","manipulated_var: 50.00000<br />response_var: 12.61867"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Data for  Rough Surface","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[8,52],"ticktext":["10","20","30","40","50"],"tickvals":[10,20,30,40,50],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"manipulated_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[11.922,15.838],"ticktext":["12","13","14","15"],"tickvals":[12,13,14,15],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"response_var","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest"},"source":"A","attrs":{"6c441257a25d":{"x":{},"y":{},"type":"ggplotly"},"6c4437649113":{"x":{},"y":{}}},"cur_data":"6c441257a25d","visdat":{"6c441257a25d":["function (y) ","x"],"6c4437649113":["function (y) ","x"]},"config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+</div>
+<div id="observations-from-plots-as-per-the-topic-analysis-in-our-grade-6-science-class" class="section level5">
+<h5>Observations from Plots as per the topic “Analysis” in our Grade 6 Science Class:</h5>
+<ul>
+<li>The plots show a negative correlation; the response variable <em>Elapsed time_sec</em> decreases as the manipulated variable <em>Tire Air Pressure</em> increases, or vice-versa.</li>
+<li>The data points in each plot shows linear relationship.</li>
+<li>The smooth surface data points are closer to the line of best fit than the rough surface data points.
+<ul>
+<li>The difference between the actual observed elapsed time and line of best fit for the smooth surface data is smaller than for the rough surface data. So the residuals for the smooth surface data is smaller than for the rough surface data.</li>
+<li>I expect the <span class="math inline">\(R^2\)</span> statistic will be higher for the smooth surface versus the rough surface.</li>
+</ul></li>
+<li><em>Both these plots tell me that part of my hypothesis which states the rolling resistance of a bicycle tire is inversely related to the air pressure is true.</em></li>
+</ul>
+<p>To prove the other half of my hypothesis, I need to find out the rate of change in the elapsed time in which the bike rolls down the track as the air pressure is decreased by 10 PSI.</p>
+<p>To find the rate of change or by how much the elapsed time decreases/increases per 10 PSI increase/decrease, we first need to find the slope of the fitted line or the relationship between the 2 variables by using the simple linear equation <span class="math inline">\(Y = mx + c\)</span>, where m is the slope.</p>
+<p>I will first find the slope by writing a function in R, then I will use the linear regression function lm() in R to build a linear model for my dataset.</p>
+<p>Our regression line can be written in slope-intercept form:</p>
+<ul>
+<li>Elapsed_Time_in_Secs = (slope)*Tire_Air_Pressure_PSI + (Intercept)</li>
+<li><span class="math inline">\(Y = mx + c\)</span></li>
+</ul>
+<p>Transposing, we can calculate the slope manually: <span class="math inline">\(m = (y_{1}-{y})/(x_{1}-{x})\)</span></p>
+<pre class="r"><code>#Create own slope function
+own_slope &lt;- function(x, y, x1, y1) {
+  m = (y1-y)/(x1-x)
+}</code></pre>
+<p>So, if I want to calculate the slope between the 2 PSI points 40 PSI and 50 PSI, then we can substitute the x and y values with Elapsed Time and PSI respectively, and make the function call.</p>
+<pre class="r"><code>slope_40_50_sm &lt;- own_slope(40, 9.83, 50, 9.15)
+
+#Print the slope value for 1 PSI increase
+slope_40_50_sm</code></pre>
+<pre><code>## [1] -0.068</code></pre>
+<pre class="r"><code>#Since the hypothesis is for 10 PSI
+slope_40_50_sm*10</code></pre>
+<pre><code>## [1] -0.68</code></pre>
+<pre class="r"><code># To calculate %change in elapsed time, we divide the slope by the elapsed time (y), and multiply it by 100 to change it to percent 
+
+Percent_change_Elapsed_Time &lt;- round((slope_40_50_sm*10)/9.83*100, 2)
+
+#Create a single data frame for the slope and % change in elapsed time
+single_40_50_data &lt;- tibble(slope_40_50_sm*10, Percent_change_Elapsed_Time)
+
+#print the data frame
+single_40_50_data</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   `slope_40_50_sm * 10` Percent_change_Elapsed_Time
+##                   &lt;dbl&gt;                       &lt;dbl&gt;
+## 1                 -0.68                       -6.92</code></pre>
+<p>This tells me that for the set of smooth surface data points (40,9.83) and (50,9.15):</p>
+<ul>
+<li>A 10 PSI increase (40 to 50 PSI) causes the elapsed time to decrease by -0.68 and that the % change in Elapsed time in which the bike rolls down the track is -6.92.</li>
+<li>For these two smooth surface data points, my hypothesis is off by -3.92%.</li>
+</ul>
+</div>
+<div id="i-can-manually-calculate-the-slope-for-each-of-the-15-observations-in-each-of-my-datasets-and-figure-out-the-change-in-the-elapsed-time-in-which-our-bike-rolls-down-the-track-but-i-will-do-this-with-the-predicted-elapsed-time-values-using-the-linear-modeling-function-lm." class="section level5">
+<h5>I can manually calculate the slope for each of the 15 observations in each of my datasets, and figure out the % change in the Elapsed time in which our bike rolls down the track, but I will do this with the predicted elapsed time values using the linear modeling function lm().</h5>
+<pre class="r"><code>#The lm() function needs the response variable(Elapsed_Time_Sec_SmR) and the manipulated (Tire_Air_Pressure_PSI) variable, and the data that contains those variables.
+
+model_lm_smooth &lt;- lm(Elapsed_Time_Sec_SmR ~Tire_Air_Pressure_PSI, data = Data_for_BikeRuns)
+
+#To see the summary of the model
+summary(model_lm_smooth)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Elapsed_Time_Sec_SmR ~ Tire_Air_Pressure_PSI, data = Data_for_BikeRuns)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.4727 -0.1180  0.0200  0.1383  0.5900 
+## 
+## Coefficients:
+##                       Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           12.05733    0.15852   76.06  &lt; 2e-16 ***
+## Tire_Air_Pressure_PSI -0.05573    0.00478  -11.66 2.95e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2618 on 13 degrees of freedom
+## Multiple R-squared:  0.9127, Adjusted R-squared:  0.906 
+## F-statistic:   136 on 1 and 13 DF,  p-value: 2.946e-08</code></pre>
+<p>While the summary for the model contains all the statistics to explain the result, I will focus only on the ones I understand and taught in our <em>Grade 6 class</em>.</p>
+<p>I will use lm() and tidy functions in tidyverse, modelr, and broom libraries in R as shown in <a href="http://r4ds.had.co.nz/model-basics.html#predictions">Garrett’s Grolemund’s MasterTidyVerse notes</a>. This will provide me with important statistics in a user friendly format:</p>
+<ul>
+<li>An average slope/rate of change of my response variable to the 10 PSI change of my manipulated variable.</li>
+<li>The R-squared statistic (<span class="math inline">\(R^2\)</span>) which is a number that tells us how well the model fits the actual elapsed data points.</li>
+<li>The Residual statistic which is the difference between my actual Elapsed time data points and the predicted data points.</li>
+<li>The predicted values for my response variable.</li>
+</ul>
+<pre class="r"><code>#For Smooth test results, use the lm function passing the response and manipulated variables
+
+#Apply lm to the smooth surface data
+mod_smooth_1 &lt;- Data_for_BikeRuns %&gt;% 
+  lm(Elapsed_Time_Sec_SmR ~Tire_Air_Pressure_PSI, data = .)
+
+#Apply lm to the rough surface data
+mod_rough &lt;- Data_for_BikeRuns %&gt;% 
+  lm(Elapsed_Time_Sec_RgR ~Tire_Air_Pressure_PSI, data = .)
+
+#To get the intercept and slope, I&#39;ll use the tidy() function from the broom library
+smooth_slp_intcpt &lt;- mod_smooth_1 %&gt;% 
+  tidy() %&gt;% 
+  select(term, estimate, std.error)
+
+smooth_slp_intcpt</code></pre>
+<pre><code>##                    term    estimate   std.error
+## 1           (Intercept) 12.05733333 0.158523314
+## 2 Tire_Air_Pressure_PSI -0.05573333 0.004779658</code></pre>
+<pre class="r"><code>#Do the same for the rough data set
+rough_slp_intcpt &lt;- mod_rough %&gt;% 
+  tidy() %&gt;% 
+  select(term, estimate, std.error)
+
+rough_slp_intcpt</code></pre>
+<pre><code>##                    term estimate   std.error
+## 1           (Intercept) 15.30367 0.300061774
+## 2 Tire_Air_Pressure_PSI -0.05370 0.009047203</code></pre>
+</div>
+<div id="visualization-of-the-model-used-example-from-garretts-grolemunds-mastertidyverse-notes" class="section level4">
+<h4>Visualization of the model: Used Example from <a href="http://r4ds.had.co.nz/model-basics.html#predictions">Garrett’s Grolemund’s MasterTidyVerse notes</a></h4>
+<pre class="r"><code>#Plot the predicted values
+Smooth_Data_plot1 &lt;- Data_for_BikeRuns %&gt;% 
+  add_predictions(mod_smooth_1) %&gt;% 
+  ggplot(aes(x = Tire_Air_Pressure_PSI)) +
+  geom_point(aes(y = Elapsed_Time_Sec_SmR), color = &quot;firebrick&quot;) +
+  geom_line(aes(y = pred)) 
+
+#Plot the residuals
+Smooth_Data_plot2 &lt;- Data_for_BikeRuns %&gt;% 
+  add_residuals(mod_smooth_1) %&gt;% 
+  ggplot(aes(resid)) +
+  geom_freqpoly(binwidth = 0.5)
+
+
+grid.arrange(Smooth_Data_plot1,Smooth_Data_plot2, top = &quot;Smooth Surface Data plots: Predicted, Residuals&quot;)</code></pre>
+<p><img src="/post/2017-03-26-does-tire-air-pressure-affect-the-rolling-resistance-of-a-mountain-bike_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>#Plot the residuals</code></pre>
+<p>For the smooth surface, the residual plot tells us that the predictions from the observed values are not very far off.</p>
+<pre class="r"><code>#Plot the predicted values
+Rough_Data_plot1 &lt;- Data_for_BikeRuns %&gt;% 
+  add_predictions(mod_rough) %&gt;% 
+  ggplot(aes(x = Tire_Air_Pressure_PSI)) +
+  geom_point(aes(y = Elapsed_Time_Sec_RgR), color = &quot;firebrick&quot;) +
+  geom_line(aes(y = pred)) 
+
+#Plot the residuals
+Rough_Data_plot2 &lt;- Data_for_BikeRuns %&gt;% 
+  add_residuals(mod_rough) %&gt;% 
+  ggplot(aes(resid)) +
+  geom_freqpoly(binwidth = 0.5)
+
+grid.arrange(Rough_Data_plot1,Rough_Data_plot2, top = &quot;Rough Surface Data plots: Predicted, Residuals&quot;)</code></pre>
+<p><img src="/post/2017-03-26-does-tire-air-pressure-affect-the-rolling-resistance-of-a-mountain-bike_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Repeating the same commands and code for both the smooth and rough data points is not very efficient, so I will use the examples of the map() functions from the library purrr and use it with the tidy(), glance() and augment() functions, as provided in <a href="http://r4ds.had.co.nz/model-basics.html#predictions">Garrett’s Grolemund’s MasterTidyVerse notes</a> from <a href="http://www.rstudio.com/conference/">RStudio conference 2017</a>.</p>
+<pre class="r"><code>#First I will create the formulas with the Elapsed time and PSI variables so we can map it to lm()
+
+formulas_for_lm &lt;- list(
+  mod_smooth &lt;- Elapsed_Time_Sec_SmR ~Tire_Air_Pressure_PSI,
+  mod_rough &lt;- Elapsed_Time_Sec_RgR~Tire_Air_Pressure_PSI
+)
+
+#&#39;ll map the formulas created to function lm, and provide it the Data_for_BikeRuns data set to get the intercept and slope values using tidy for both the smooth and rough data sets
+
+slope_intercept &lt;- formulas_for_lm %&gt;% 
+  map(lm, data = Data_for_BikeRuns) %&gt;% 
+ map_df(tidy, .id = &quot;model&quot;) %&gt;% 
+  select(model, term, estimate, std.error)
+
+slope_intercept</code></pre>
+<pre><code>##   model                  term    estimate   std.error
+## 1     1           (Intercept) 12.05733333 0.158523314
+## 2     1 Tire_Air_Pressure_PSI -0.05573333 0.004779658
+## 3     2           (Intercept) 15.30366667 0.300061774
+## 4     2 Tire_Air_Pressure_PSI -0.05370000 0.009047203</code></pre>
+<p>For the smooth surface data points (model 1), the statistics from the model shows that:</p>
+<ul>
+<li>For every 1 PSI increase in the pressure of the tire, the required time (elapsed time) to complete the travel distance goes down by -0.0557333 secs.</li>
+<li>Therefore, a 10 PSI increase causes the elapsed time to decrease by -0.5573333 secs. Or conversely, for 10 PSI decrease, the required time to complete the travel distance goes up by -0.5573333 secs.</li>
+<li>The intercept tells me that at 0 PSI, the elapsed time for the bike to roll down the 20 meters track is 12.0573333 secs; this is not possible because a tire with 0 PSI will not be able to roll.</li>
+<li>The std.error shows that the time required by the bike to complete the 20 meters travel distance can vary by 0.0047797 secs.</li>
+</ul>
+<p>Similarly for the rough surface data points(model 2):</p>
+<ul>
+<li>For every 1 PSI increase in the pressure of the tire, the required time (elapsed time) to complete the travel distance goes down by -0.0537 secs.</li>
+<li>Therefore, a 10 PSI increase causes the elapsed time to decrease by -0.537 secs. Or conversely, for 10 PSI decrease, the required time to complete the travel distance goes up by -0.537 secs.</li>
+<li>The intercept tells me that at 0 PSI, the elapsed time for the bike to roll down the 20 meters track is 15.3036667 secs; this is not possible because a tire with 0 PSI will not be able to roll.</li>
+<li>The std.error shows that the time required by the bike to complete the 20 meters travel distance can vary by 0.0090472 secs.</li>
+</ul>
+<p>Now, let’s extract the <span class="math inline">\(R^2\)</span> for each of the models.</p>
+<pre class="r"><code>#I&#39;ll map the formulas created to function lm(), and provide it the Data_for_BikeRuns data set, and use glance() to get the r-squared values 
+Rsquared_fit &lt;- formulas_for_lm %&gt;% 
+  map(lm, data = Data_for_BikeRuns) %&gt;% 
+  map_df(glance, .id = &quot;model&quot;) %&gt;% 
+  select(model, r.squared, p.value)
+#Print the R-Squared values
+Rsquared_fit</code></pre>
+<pre><code>##   model r.squared      p.value
+## 1     1 0.9127329 2.946122e-08
+## 2     2 0.7304615 4.939636e-05</code></pre>
+<p>For the smooth surface data set, the <span class="math inline">\(R^2\)</span> value of 0.9127329 is close to 1 which tells me the fit of the model is really good. It is a high R.squared fit for the smooth data set and an Okay fit on the rough data set whose <span class="math inline">\(R^2\)</span> value is 0.7304615. This tells me that if I were choose tire pressure(measured in PSI) as an important measurement that could help explain how the rolling resistance of the bike would vary based on tire pressure(PSI), then I would be correct. It is why we get a high R.squared fit.</p>
+<p>Finally to get the predicted Elapsed time values (the line of best fit values) and how off the predicted values are compared to our actual elapsed time data, I will use the augment() function.</p>
+<pre class="r"><code>#To get the predictions and residuals from the model along with the original data points, I will use the augment() function
+
+predicted_residual_val &lt;- formulas_for_lm %&gt;% 
+  map(lm, data = Data_for_BikeRuns) %&gt;% 
+  map_df(augment, .id = &quot;model&quot;) %&gt;% 
+  select(model, Elapsed_Time_Sec_SmR, Tire_Air_Pressure_PSI, .fitted, .resid, Elapsed_Time_Sec_RgR)
+
+predicted_residual_val</code></pre>
+<pre><code>##    model Elapsed_Time_Sec_SmR Tire_Air_Pressure_PSI   .fitted      .resid
+## 1      1                 9.15                    50  9.270667 -0.12066667
+## 2      1                 9.35                    50  9.270667  0.07933333
+## 3      1                 9.42                    50  9.270667  0.14933333
+## 4      1                 9.83                    40  9.828000  0.00200000
+## 5      1                 9.97                    40  9.828000  0.14200000
+## 6      1                 9.77                    40  9.828000 -0.05800000
+## 7      1                10.13                    30 10.385333 -0.25533333
+## 8      1                10.52                    30 10.385333  0.13466667
+## 9      1                10.27                    30 10.385333 -0.11533333
+## 10     1                11.05                    20 10.942667  0.10733333
+## 11     1                10.47                    20 10.942667 -0.47266667
+## 12     1                11.09                    20 10.942667  0.14733333
+## 13     1                12.09                    10 11.500000  0.59000000
+## 14     1                11.52                    10 11.500000  0.02000000
+## 15     1                11.15                    10 11.500000 -0.35000000
+## 16     2                   NA                    50 12.618667  0.33133333
+## 17     2                   NA                    50 12.618667 -0.51866667
+## 18     2                   NA                    50 12.618667  0.50133333
+## 19     2                   NA                    40 13.155667 -0.28566667
+## 20     2                   NA                    40 13.155667  0.28433333
+## 21     2                   NA                    40 13.155667  0.61433333
+## 22     2                   NA                    30 13.692667 -0.67266667
+## 23     2                   NA                    30 13.692667 -0.07266667
+## 24     2                   NA                    30 13.692667 -0.15266667
+## 25     2                   NA                    20 14.229667 -0.65966667
+## 26     2                   NA                    20 14.229667 -0.42966667
+## 27     2                   NA                    20 14.229667 -0.20966667
+## 28     2                   NA                    10 14.766667  0.12333333
+## 29     2                   NA                    10 14.766667  0.25333333
+## 30     2                   NA                    10 14.766667  0.89333333
+##    Elapsed_Time_Sec_RgR
+## 1                    NA
+## 2                    NA
+## 3                    NA
+## 4                    NA
+## 5                    NA
+## 6                    NA
+## 7                    NA
+## 8                    NA
+## 9                    NA
+## 10                   NA
+## 11                   NA
+## 12                   NA
+## 13                   NA
+## 14                   NA
+## 15                   NA
+## 16                12.95
+## 17                12.10
+## 18                13.12
+## 19                12.87
+## 20                13.44
+## 21                13.77
+## 22                13.02
+## 23                13.62
+## 24                13.54
+## 25                13.57
+## 26                13.80
+## 27                14.02
+## 28                14.89
+## 29                15.02
+## 30                15.66</code></pre>
+<p>To calculate the percentage change on the Elapsed time when the PSI is changed by 10 PSI (second part of my hypothesis), I will use the slope and divide it by the predicted Elapsed Time values from the model.</p>
+<pre class="r"><code>perc_chg_smooth &lt;- predicted_residual_val%&gt;% 
+  filter(model ==1) %&gt;% 
+  distinct(Tire_Air_Pressure_PSI,.fitted) %&gt;% 
+  mutate(perc_chg = ((slope_intercept$estimate[[2]]*10)/lead(.fitted,1))*100, Delta_myHypothesis = (perc_chg-(-3)))
+
+perc_chg_rough &lt;- predicted_residual_val%&gt;% 
+  filter(model ==2) %&gt;% 
+  distinct(Tire_Air_Pressure_PSI,.fitted) %&gt;% 
+  mutate(perc_chg = ((slope_intercept$estimate[[4]]*10)/lead(.fitted,1))*100, Delta_myHypothesis = (perc_chg-(-3)))
+
+perc_chg_smooth</code></pre>
+<pre><code>##   Tire_Air_Pressure_PSI   .fitted  perc_chg Delta_myHypothesis
+## 1                    50  9.270667 -5.670872          -2.670872
+## 2                    40  9.828000 -5.366543          -2.366543
+## 3                    30 10.385333 -5.093213          -2.093213
+## 4                    20 10.942667 -4.846377          -1.846377
+## 5                    10 11.500000        NA                 NA</code></pre>
+<p>For the smooth surface data set, it appears that my hypothesis of an increase of 3% in elapsed time for every 10 PSI decrease is not very accurate to the average percent change of -5.2442512 of the predicted values.</p>
+<pre class="r"><code>perc_chg_rough</code></pre>
+<pre><code>##   Tire_Air_Pressure_PSI  .fitted  perc_chg Delta_myHypothesis
+## 1                    50 12.61867 -4.081891         -1.0818912
+## 2                    40 13.15567 -3.921807         -0.9218073
+## 3                    30 13.69267 -3.773806         -0.7738059
+## 4                    20 14.22967 -3.636569         -0.6365688
+## 5                    10 14.76667        NA                 NA</code></pre>
+<p>For the rough surface data set, it appears that my hypothesis of an increase of 3% in elapsed time for every 10 PSI decrease is very close to the average percent change of -3.8535183 of the predicted values.</p>
+</div>
+</div>
+<div id="extra" class="section level3">
+<h3>Extra</h3>
+<p>Interpolation: Interpolation is where we find a value inside our set of data points. Interpolating to get an estimate of the elapsed time when PSI is 15</p>
+<pre class="r"><code>Elapsed_15PSI &lt;- mod_smooth_1$coefficients[[2]]*15 + mod_smooth_1$coefficients[[1]]
+
+Elapsed_15PSI</code></pre>
+<pre><code>## [1] 11.22133</code></pre>
+<p>Extrapolation: Extrapolation is where we find a value outside our set of data points Extrapolating to get an estimate of the elapsed time when PSI is 60</p>
+<pre class="r"><code>Elapsed_60PSI &lt;- mod_smooth_1$coefficients[[2]]*60 + mod_smooth_1$coefficients[[1]]
+
+Elapsed_60PSI</code></pre>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>The Tire Air Pressure PSI affects the rolling resistance of a Mountain Bike (measured in elapsed time secs), as we have proved that it is negatively correlated, the slope or rate of change per 10 PSI is -0.5573333 (for smooth surface) and -0.537 secs(for rough surface) which means the air pressure and rolling resistance are inversely related.</p>
+<p>The correct part of my hypothesis is that for every 10 PSI decrease, the elapsed time in which the bike rolls down the track will increase. The incorrect part is the % of decrease which is an average of -5.2442512 for the smooth surface, and an average of -3.8535183 for the rough surface, versus the 3% in my hypothesis.</p>
+<p>The problems I encountered when doing the test are as follows:</p>
+<ul>
+<li><em>Started raining when we tested the rolling resistance on the rough surface</em></li>
+<li><em>Hard to get the right terrain and incline for our test. As it is a wet winter it took a couple hours to find a spot for the rough test. We wanted a surface that was rough but not soft so we needed a test track with a minimum of soil and vegetation.</em></li>
+<li><em>Had to use a slightly steeper 4 degree grade for the rough surface test as the bike would not remain stable using the 3 degree grade of the smooth surface test.</em></li>
+<li><em>Difficult to start moving consistently for each test.</em></li>
+</ul>
+<p>The additional piece I’d like to investigate:</p>
+<ul>
+<li>Soft versus hard surface. If the trail is soft mud, or contains a lot of soft vegetation, does tire PSI affect the rolling resistance?</li>
+</ul>
+<p>Our test proves that:</p>
+<ul>
+<li>Higher air pressure does roll faster. This matters because mountain bikes are limited to the power provided by a human, so efficiency is a top priority.</li>
+<li>Traction is also very important, and lower pressure provides better traction.<br />
+</li>
+<li>This test makes it easier to make a data-driven decision when a bike rider has to make the trade-off between traction and efficiency.</li>
+</ul>
+</div>
+<div id="background-information" class="section level3">
+<h3>Background Information</h3>
+<ul>
+<li><a href="http://www.schwalbe.com/en/rollwiederstand.html">Schwalbe</a></li>
+</ul>
+<p>-They claim tires inflated to a high PSI are faster on a smooth surface and tires inflated to a low PSI are faster on a rough surface. This is a biased source and they offer no evidence of their claims. Definitions from this source: - Rolling resistance: Energy that is lost when the tire is rolling - Air resistance : Resistance to air that rises in a squared ratio with increased speed. - Gradient resistance : The main resistance to overcome when riding uphill (Due to gradient resistance we modified our test to use the smallest grade possible instead of what we originally proposed).</p>
+<ul>
+<li><p>*<a href="http://www.analyticcycling.com/forces">Analytic Cycling</a></p></li>
+<li><p>Various road bicycle tires were tested against a smooth, steel drum. The graph shows a rolling resistance decreasing with increased air pressure. The source concludes that the returns from increasing pressure diminished at a certain point. Note that these tires are quite smoother and smaller than mountain bike tires.</p></li>
+<li><p>*<a href="http://www.engineeringtoolbox.com/rolling-friction-resistance-d_1303httd">Engineering Toolbox</a></p></li>
+<li><p>Has mathematical formulas which show more air pressure resulting in less rolling resistance. Note Math is outside of grade level.</p></li>
+</ul>
+</div>
+<div id="r-challenges" class="section level3">
+<h3>R Challenges</h3>
+<ul>
+<li>I did not understand what data_grid() from the modelr library does</li>
+<li>Could not replace Model 1, 2 with names (smooth and rough) that would identify the model</li>
+<li>Could not show my plots side by side using ggplot and plotly.</li>
+<li>Difficult to remember which functions (tidy, glance, augment) extracted which pieces of the lm model statistics.</li>
+</ul>
+<p>Overall, the project was long but fun, and I look forward to next year’s STEM Expo. I’m also hoping to build a basic shiny app to demo my expo results.</p>
+<p>I’d like to thank <a href="http://www.rstudio.com">RStudio (Garrett Grolemund, J.J. Allaire, Hadley Wickham, Roger Oberg, )</a> and <a href="http://www.datacamp.com">DataCamp (Nick Carchedi, Jonathan Cornelissen)</a> for their kindness and all the help and encouragement they have given me to learn R. Thank you so much.</p>
+</div>
+<div id="stem-expo-pictures" class="section level3">
+<h3>STEM Expo Pictures</h3>
+<p><img src="/img/Expo1_tst.jpg" alt="Expo Day" /> <img src="/img/Expo2_ts.jpg" alt="Biker&amp;DataScientist" /></p>
+</div>
+</div>
