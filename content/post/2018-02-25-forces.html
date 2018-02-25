@@ -1,0 +1,35 @@
+---
+title: Forces
+author: Tara Kenner
+date: '2018-02-25'
+slug: forces
+categories:
+  - Physics
+  - r
+  - math
+tags:
+  - blogdown
+  - ggplot
+  - highcharter
+  - Math
+  - Equations
+---
+
+
+
+<p>In my Physics class, we are learning about forces and Newton’s Laws. I will create a function that calculates force in Newtons.</p>
+<pre class="r"><code>ForceEquation &lt;- function(mass, acceleration) {
+  
+  F = mass*acceleration
+  return(F)
+}
+ForceEquation(6, 22)</code></pre>
+<pre><code>## [1] 132</code></pre>
+<pre class="r"><code>MassEquation &lt;- function(force, gravity_a) {
+  
+ M = force/gravity_a 
+  return(M)
+}
+
+MassEquation(196, 9.8)</code></pre>
+<pre><code>## [1] 20</code></pre>
