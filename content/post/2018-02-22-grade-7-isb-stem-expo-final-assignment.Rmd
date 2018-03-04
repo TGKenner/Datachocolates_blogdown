@@ -28,7 +28,7 @@ tags:
 
 **Results:** The assembly and configuration of the Raspberry Pi and Camera went smoothly; I was able to quickly test the camera using the `raspistill -o image.jpg` command in the terminal. Key challenges I encountered included installing/configuring the open source software, [openCV](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/), and configuring a secure port to monitor the video stream on a different network other than my raspberry pi. With the help of online resources/comments section of the online tutorial, the challenges were resolved.  The live video stream of our dog can be viewed by visiting the ip address of my raspberry pi in the browser.  
 
-**Conclusion**:  The product built using "Raspberry Pi + Camera module + OpenCV/smart-security-camera software"" successly met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.
+**Conclusion**:  The product built using "Raspberry Pi + Camera module + OpenCV/smart-security-camera software"" successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.
 
 
 ####ACKNOWLEDGEMENTS
