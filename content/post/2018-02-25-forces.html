@@ -17,22 +17,27 @@ tags:
 
 
 
-<p>In my Physics class, we are learning about Force and Newton’s Laws. I will create a function that calculates Force in Newtons given Mass and Acceleration.</p>
-<pre class="r"><code>#
+<p>In my Physics class, we are learning about Force and Newton’s Laws.</p>
+<p>I’ve learned quite a bit about the difference between <code>speed</code>, <code>velocity</code>, <code>acceleration</code>. <code>Speed</code> is distance/time (measured in m/sec: how far one travels a meter in 1 sec or whatever unit of distance and time specified specified. It is a scalar), <code>Velocity</code> is speed with direction (so it is a vector; has both direction and magnitude), and <code>acceleration</code> is the rate of change of velocity (it is a vector, and measured in m/sec^2. So acceleration is the change in m/sec/sec).</p>
+<p>I’ve also learned the difference between <code>mass</code> and <code>weight</code>; <code>mass</code> is the total substance in a body (measured in KG/lb, and it is a scalar; only has magnitude), while <code>weight</code> is a force which is measured in Newtons. It is how hard gravity pulls on an object.</p>
+<p>I will create a function that calculates Force in Newtons given Mass and Acceleration. This is Newton’s second law of motion <code>F = m*a</code> where, F is the force, m is the mass and a is the acceleration.</p>
+<pre class="r"><code>#The function
 ForceEquation &lt;- function(mass, acceleration) {
   
   F = mass*acceleration
   return(F)
 }
 
-#Call the function ForceEquation
+#Call the function ForceEquation with mass 6 Kg, and acceleration @ 22 m/sec^2
 ForceEquation(6, 22)</code></pre>
 <pre><code>## [1] 132</code></pre>
+<p>Using the same second law of motion equation, I can calculate the mass M.</p>
 <pre class="r"><code>MassEquation &lt;- function(force, gravity_a) {
   
  M = force/gravity_a 
   return(M)
 }
 
+#Call the MassEquation Function with Force 196 Newtons, and gravitational acceleration at 9.8m/sec^2
 MassEquation(196, 9.8)</code></pre>
 <pre><code>## [1] 20</code></pre>

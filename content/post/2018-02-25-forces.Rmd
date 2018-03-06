@@ -16,20 +16,28 @@ tags:
 ---
 
 In my Physics class, we are learning about Force and Newton's Laws. 
-I will create a function that calculates Force in Newtons given Mass and Acceleration.
+
+I've learned quite a bit about the difference between `speed`, `velocity`, `acceleration`.  `Speed` is distance/time (measured in m/sec: how far one travels a meter in 1 sec or whatever unit of distance and time specified specified.  It is a scalar), `Velocity` is speed with direction (so it is a vector; has both direction and magnitude), and `acceleration` is the rate of change of velocity (it is a vector, and measured in m/sec^2.  So acceleration is the change in m/sec/sec). 
+
+I've also learned the difference between `mass` and `weight`; `mass` is the total substance in a body (measured in KG/lb, and it is a scalar; only has magnitude), while `weight` is a force which is measured in Newtons. It is how hard gravity pulls on an object.  
+
+I will create a function that calculates Force in Newtons given Mass and Acceleration. This is Newton's second law of motion `F = m*a` where, F is the force, m is the mass and a is the acceleration.
 
 ```{r}
 
-#
+#The function
 ForceEquation <- function(mass, acceleration) {
   
   F = mass*acceleration
   return(F)
 }
 
-#Call the function ForceEquation
+#Call the function ForceEquation with mass 6 Kg, and acceleration @ 22 m/sec^2
 ForceEquation(6, 22)
 ```
+
+Using the same second law of motion equation, I can calculate the mass M.
+
 ```{r}
 
 MassEquation <- function(force, gravity_a) {
@@ -38,6 +46,7 @@ MassEquation <- function(force, gravity_a) {
   return(M)
 }
 
+#Call the MassEquation Function with Force 196 Newtons, and gravitational acceleration at 9.8m/sec^2
 MassEquation(196, 9.8)
 ```
 
