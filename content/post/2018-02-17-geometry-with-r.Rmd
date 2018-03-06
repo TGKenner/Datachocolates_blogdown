@@ -16,6 +16,8 @@ tags:
 ```{r, echo=FALSE, message=FALSE}
 library(tidyverse)
 library(ggforce)
+
+library(plotrix)
 ```
 
 In my math class, we are studying how to calculate the area, circumference and diameter of a circle.
@@ -64,9 +66,11 @@ ggplot() + geom_circle(aes(x0 = 0, y0 = 0, r = 5, fill = 5))
 
 ```{r}
 symbols (0, 0, circles=1,fg="red")
-# install.packages("plotrix")
-# library(plotrix)
-# plot(BOD)
-# draw.circle(4,14,2,border="blue",col="tan2")
+
+ # plot(BOD)
+ # require(plotrix)
+ # draw.circle(4,14,2,border="blue",col="tan2")
 ```
+
+
 
