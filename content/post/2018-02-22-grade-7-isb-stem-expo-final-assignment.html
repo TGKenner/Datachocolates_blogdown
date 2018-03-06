@@ -23,7 +23,52 @@ tags:
 <p><strong>Purpose:</strong> Our dog can sometimes get into trouble at home, especially when he is alone, and we wanted to figure an affordable way to keep tabs on him when we are away during the day. Making a security camera that outputs a live video stream of our dog at home, which we can watch from our phones at a secure web address is therefore the goal of this project.</p>
 <p><strong>Procedure:</strong> Using <a href="https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd">online instructions</a>, assemble and configure the <a href="https://www.raspberrypi.org/">Raspberry Pi</a> and the camera module, downloaded and modify the <a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/">openCV software</a> that detects objects in the video feed, and download/clone the <a href="https://github.com/HackerHouseYT/Smart-Security-Camera">Smart-Security-Camera</a> project from github. Finally, run the python program <code>python main.py</code> at the terminal, which outputs the live video stream. View the live video stream using the ip address of the raspberry pi; the ability to view this live video stream on a device with internet connectivity is the design criteria for the project.</p>
 <p><strong>Results:</strong> The assembly and configuration of the Raspberry Pi and Camera went smoothly; I was able to quickly test the camera using the <code>raspistill -o image.jpg</code> command in the terminal. Key challenges I encountered included installing/configuring the open source software, <a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/">openCV</a>, and configuring a secure port to monitor the video stream on a different network other than my raspberry pi. With the help of online resources/comments section of the online tutorial, the challenges were resolved. The live video stream of our dog can be viewed by visiting the ip address of my raspberry pi in the browser.</p>
-<p><strong>Conclusion</strong>: The product built using “Raspberry Pi + Camera module + OpenCV/smart-security-camera software”&quot; successly met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.</p>
+<p><strong>Conclusion</strong>: The product built using “Raspberry Pi + Camera module + OpenCV/smart-security-camera software”&quot; successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.</p>
+<div id="materials" class="section level3">
+<h3>Materials</h3>
+<ul>
+<li>Raspberry Pi3</li>
+<li>Raspberry Pi Camera module</li>
+<li>Camera cable</li>
+<li>MicroUSB power supply</li>
+<li>Micro SD card</li>
+<li>HDMI to HDMI Cable</li>
+<li>USB to USB cable</li>
+</ul>
+</div>
+<div id="procedure" class="section level3">
+<h3>Procedure</h3>
+<ol style="list-style-type: decimal">
+<li>Follow online directions to assemble Raspberry Pi and camera: <a href="https://www.canakit.com/pi-case">Raspberry Pi assembly directions</a></li>
+<li>Load operating system. I had a preloaded microSD card with NOOBS.</li>
+<li>Connect to monitor to see if running correctly at this point</li>
+<li>Connect to WiFi</li>
+<li>Open the terminal and run the unix command to enable the camera</li>
+</ol>
+<pre class="r"><code>sudo raspi-config</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Now we verify that the camera works by running the command</li>
+</ol>
+<pre class="r"><code>raspistill -o prince.jpg</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Install openCV by using this <a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/">tutorial</a><br />
+</li>
+<li>Modify configuration files per online instructions (with parents’ help)</li>
+<li>Clone Smart-Security-Camera project from <a href="https://github.com/HackerHouseYT/Smart-Security-Camera">git</a></li>
+<li>Configure mail.py and main.py in the Smart-Security-Camera directory using the ‘pico’ text editor or other editor of your choice.</li>
+<li>Run the program with the following command:</li>
+</ol>
+<pre class="r"><code>python main.py</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>View the live video stream by visiting the ip address of my pi in a browser. Find the ip address of the pi using the <code>ifconfig</code> command and look for the inet address.</li>
+<li>To view the live stream on a different network other than the pi, an account is needed with ngrok (My parents will help with this part).</li>
+</ol>
+</div>
+<div id="test-improve" class="section level3">
+<h3>Test &amp; Improve</h3>
+<ul>
+<li>Take extra care when inserting the camera module <strong>Obstacles</strong>: <strong>Future Applications</strong>: <strong>Results</strong>: <strong>Conclusion</strong>: <strong>References</strong>:</li>
+</ul>
 <div id="acknowledgements" class="section level4">
 <h4>ACKNOWLEDGEMENTS</h4>
 <ul>
@@ -42,5 +87,6 @@ tags:
 <li><a href="https://www.wikihow.com/Understand-Security-Camera-Systems">Understanding Security Camera Systems</a></li>
 <li><a href="https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd">Hackster io Smart Security Camera Info</a></li>
 </ul>
+</div>
 </div>
 </div>

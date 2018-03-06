@@ -15,18 +15,23 @@ tags:
   - Equations
 ---
 
-In my Physics class, we are learning about forces and Newton's Laws.
-I will create a function that calculates force in Newtons.
+In my Physics class, we are learning about Force and Newton's Laws. 
+I will create a function that calculates Force in Newtons given Mass and Acceleration.
 
 ```{r}
+
+#
 ForceEquation <- function(mass, acceleration) {
   
   F = mass*acceleration
   return(F)
 }
+
+#Call the function ForceEquation
 ForceEquation(6, 22)
 ```
 ```{r}
+
 MassEquation <- function(force, gravity_a) {
   
  M = force/gravity_a 

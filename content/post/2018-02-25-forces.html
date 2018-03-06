@@ -17,12 +17,15 @@ tags:
 
 
 
-<p>In my Physics class, we are learning about forces and Newton’s Laws. I will create a function that calculates force in Newtons.</p>
-<pre class="r"><code>ForceEquation &lt;- function(mass, acceleration) {
+<p>In my Physics class, we are learning about Force and Newton’s Laws. I will create a function that calculates Force in Newtons given Mass and Acceleration.</p>
+<pre class="r"><code>#
+ForceEquation &lt;- function(mass, acceleration) {
   
   F = mass*acceleration
   return(F)
 }
+
+#Call the function ForceEquation
 ForceEquation(6, 22)</code></pre>
 <pre><code>## [1] 132</code></pre>
 <pre class="r"><code>MassEquation &lt;- function(force, gravity_a) {

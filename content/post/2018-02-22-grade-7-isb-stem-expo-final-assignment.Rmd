@@ -30,6 +30,56 @@ tags:
 
 **Conclusion**:  The product built using "Raspberry Pi + Camera module + OpenCV/smart-security-camera software"" successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.
 
+### Materials
+
+*  Raspberry Pi3
+*  Raspberry Pi Camera module
+*  Camera cable
+*  MicroUSB power supply
+*  Micro SD card 
+*  HDMI to HDMI Cable
+*  USB to USB cable
+
+
+### Procedure
+
+1.  Follow online directions to assemble Raspberry Pi and camera: [Raspberry Pi assembly directions](https://www.canakit.com/pi-case)
+2.  Load operating system.  I had a preloaded microSD card with NOOBS.
+3.  Connect to monitor to see if running correctly at this point
+4.  Connect to WiFi
+5.  Open the terminal and run the unix command to enable the camera
+
+```{r, eval = FALSE}
+sudo raspi-config
+```
+
+6.  Now we verify that the camera works by running the command
+
+```{r, eval = FALSE}
+raspistill -o prince.jpg
+```
+
+7.  Install openCV by using this 
+[tutorial](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/)  
+8.  Modify configuration files per online instructions (with parents' help)
+9.  Clone Smart-Security-Camera project from [git](https://github.com/HackerHouseYT/Smart-Security-Camera)
+10. Configure mail.py and main.py in the Smart-Security-Camera directory using the 'pico' text editor or other editor of your choice.
+11. Run the program with the following command: 
+```{r, eval =FALSE}
+python main.py
+```
+12. View the live video stream by visiting the ip address of my pi in a browser.  Find the ip address of the pi using the `ifconfig` command and look for the inet address.
+13.  To view the live stream on a different network other than the pi, an account is needed with ngrok (My parents will help with this part).
+
+### Test & Improve
+
+* Take extra care when inserting the camera module 
+**Obstacles**:
+**Future Applications**:
+**Results**:
+**Conclusion**:
+**References**:
+
 
 ####ACKNOWLEDGEMENTS
 
