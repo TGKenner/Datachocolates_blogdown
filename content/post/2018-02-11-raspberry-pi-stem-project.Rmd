@@ -1,5 +1,5 @@
 ---
-title: Making a Security Camera using a Raspberry pi
+title: Intro Science Project Grade 7
 thumbnail: "/img/testpic.png"
 author: Tara Kenner
 date: '2018-02-11'
