@@ -151,7 +151,7 @@ git clone https://github.com/HackerHouseYT/Smart-Security-Camera
 
 ### Opening the port
 Go to Downloads folder 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = FALSE}
 cd Downloads
 #Run the command
 ./ngrok authtoken 34TANXmfyKaK6qPJmi5TR_5eTXjsdCMcFWuAJMjF76L

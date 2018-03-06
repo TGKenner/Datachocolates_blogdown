@@ -51,24 +51,83 @@ tags:
 </ol>
 <pre class="r"><code>raspistill -o prince.jpg</code></pre>
 <ol start="7" style="list-style-type: decimal">
-<li>Install openCV by using this <a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/">tutorial</a><br />
-</li>
+<li>Install openCV by using this <a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/">tutorial</a>. A few of the unix commands shown for the install. Please follow tutorial for exact steps.</li>
+</ol>
+<pre class="r"><code>#install dependencies step #2 per the online tutorial
+$ sudo apt-get update
+$ sudo apt-get upgrade
+
+#After installing dependencies step #2 per the online tutorial, install the openCV sofware
+cd ~
+$ wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip
+$ unzip opencv.zip
+
+$ wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip
+$ unzip opencv_contrib.zip</code></pre>
+<ol start="8" style="list-style-type: decimal">
 <li>Modify configuration files per online instructions (with parents’ help)</li>
 <li>Clone Smart-Security-Camera project from <a href="https://github.com/HackerHouseYT/Smart-Security-Camera">git</a></li>
-<li>Configure mail.py and main.py in the Smart-Security-Camera directory using the ‘pico’ text editor or other editor of your choice.</li>
+</ol>
+<pre class="r"><code>source ~/.profile 
+workon cv
+cd Smart-Security-Camera</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Configure mail.py and main.py in the Smart-Security-Camera directory using the ‘pico’ text editor or other editor of your choice. In the mail.py file (using Python 3.5) use the following:</li>
+</ol>
+<pre class="r"><code>from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+-D ENABLE_PRECOMPILED_HEADERS=OFF</code></pre>
+<pre class="r"><code>pip install -r requirements.txt
+# Email you want to send the update from (only works with gmail)
+fromEmail = &#39;myemail@gmail.com&#39;
+fromEmailPassword = &#39;password1234&#39;
+# Email you want to send the update to
+toEmail = &#39;anotheremail@gmail.com&#39;
+
+email_update_interval = 600 # sends an email only once in this time interval
+video_camera = VideoCamera(flip=True) # creates a camera object, flip vertically
+object_classifier = cv2.CascadeClassifier(&quot;models/fullbody_recognition_model.xml&quot;) # an opencv classifier</code></pre>
+<ol start="11" style="list-style-type: decimal">
 <li>Run the program with the following command:</li>
 </ol>
 <pre class="r"><code>python main.py</code></pre>
 <ol start="12" style="list-style-type: decimal">
-<li>View the live video stream by visiting the ip address of my pi in a browser. Find the ip address of the pi using the <code>ifconfig</code> command and look for the inet address.</li>
-<li>To view the live stream on a different network other than the pi, an account is needed with ngrok (My parents will help with this part).</li>
+<li><p>View the live video stream by visiting the ip address of my pi in a browser. Find the ip address of the pi using the <code>ifconfig</code> command and look for the inet address. Visit <code>&lt;raspberrypi_ip&gt;:5000</code> in the browser to view the stream.</p></li>
+<li><p>To view the live stream on a different network other than the pi, an account is needed with ngrok (My parents helped with this part).</p></li>
 </ol>
 </div>
 <div id="test-improve" class="section level3">
 <h3>Test &amp; Improve</h3>
 <ul>
-<li>Take extra care when inserting the camera module <strong>Obstacles</strong>: <strong>Future Applications</strong>: <strong>Results</strong>: <strong>Conclusion</strong>: <strong>References</strong>:</li>
+<li>Take extra care when inserting the camera module cable into the Raspberry Pi.</li>
+<li>Update online instructions for installing openCV software with all relevant fixes/updates.</li>
 </ul>
+</div>
+<div id="obstacles" class="section level3">
+<h3>Obstacles</h3>
+<ul>
+<li>Installing/configuring the open source software, openCV</li>
+<li>Configuring a secure port to monitor the video stream on a different network other than my raspberry pi.</li>
+</ul>
+</div>
+<div id="future-applications" class="section level3">
+<h3>Future Applications</h3>
+<ul>
+<li>Music on Raspberry Pi using Sonic P</li>
+<li>Photo Booth using Raspberry Pi</li>
+<li>Portable Digital eBook Library</li>
+</ul>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<ul>
+<li>Live Demo of the video Stream</li>
+</ul>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>The product built using “Raspberry Pi + Camera module + OpenCV/smart-security-camera software”&quot; successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.</p>
 <div id="acknowledgements" class="section level4">
 <h4>ACKNOWLEDGEMENTS</h4>
 <ul>
@@ -83,9 +142,8 @@ tags:
 <h4>REFERENCES</h4>
 <ul>
 <li><a href="https://www.raspberrypi.org/" target="_blank">Raspberry Pi Official Site</a></li>
-<li><a href="https://www.raspberrypi.org/">Raspberry Pi Official Site</a></li>
-<li><a href="https://www.wikihow.com/Understand-Security-Camera-Systems">Understanding Security Camera Systems</a></li>
-<li><a href="https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd">Hackster io Smart Security Camera Info</a></li>
+<li><a href = "https://www.wikihow.com/Understand-Security-Camera-Systems" target="_blank"> Understanding Security Camera Systems</a></li>
+<li><a href = "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd" target = "_blank"> Hackster io Smart Security Camera Info </a></li>
 </ul>
 </div>
 </div>
