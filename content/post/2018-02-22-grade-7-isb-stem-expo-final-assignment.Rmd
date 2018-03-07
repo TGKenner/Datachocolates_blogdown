@@ -20,7 +20,26 @@ tags:
 ![Rasberry Pi](/img/rasppi.jpg) ![Camera Module](/img/camera module1.jpg) 
 
 
-##ABSTRACT
+## Introduction
+
+Our family needs a security camera because we want to see how our dog is doing during the day when we're not home. Building a security camera using a Raspberry Pi + camera module is affordable and will enable us to see a live video of our dog on our phones. 
+
+Google search using the terms "security camera raspberry pi" show this is a very popular engineering project and there are several tutorials and blog posts on building such a security camera. The <a href = "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd" target = "_blank"> Hackster io Smart Security Camera Info </a> offered the best tutorial in achieving the objective of seeing a live video of our dog on our phones by building a security camera using a Raspberry Pi.   
+
+The report includes:
+
+* Abstract: A short summary of the report
+* Materials: List of the materials used for building the security camera system
+* Procedure: Step-by-step details of the design and testing of the system to complete the project
+* Test & Improve: If any improvements/enhancements to be made to the system
+* Obstacles: Challenges encountered during the process
+* Results: Demo of final output
+* Conclusion: Summary of the report
+* Acknowledgments
+* References
+
+
+## Abstract
 
 **Purpose:** Our dog can sometimes get into trouble at home, especially when he is alone, and we wanted to figure an affordable way to keep tabs on him when we are away during the day. Making a security camera that outputs a live video stream of our dog at home, which we can watch from our phones at a secure web address is therefore the goal of this project.
 
@@ -144,14 +163,14 @@ Visit `<raspberrypi_ip>:5000` in the browser to view the stream.
 
 The product built using “Raspberry Pi + Camera module + OpenCV/smart-security-camera software”" successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.
 
-####ACKNOWLEDGEMENTS
+#### Acknowledgements
 
 * My parents, a family friend and my dog
 
 
 ![Nubu](/img/PrinceNubu.jpg)
 
-####REFERENCES
+#### References
  
 *  Project: Getting Started with The Raspberry Pi. Retrieved from "https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started" <a href="https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started" target="_blank">Raspberry Pi Project Page</a>
 *  How to understand Security Camera Systems. Retrieved from "https://www.wikihow.com/Understand-Security-Camera-Systems" <a href = "https://www.wikihow.com/Understand-Security-Camera-Systems" target="_blank"> Understanding Security Camera Systems</a>
