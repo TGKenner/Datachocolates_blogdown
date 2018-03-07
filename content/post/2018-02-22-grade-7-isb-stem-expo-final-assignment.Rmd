@@ -78,6 +78,8 @@ sudo raspi-config
 raspistill -o prince.jpg
 ```
 
+![Prince](/img/Prince.png)
+
 7.  Install openCV by using this 
 [tutorial](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/).  A few of the unix commands shown for the install.  Please follow tutorial for exact steps. 
 
