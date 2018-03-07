@@ -1,0 +1,712 @@
+---
+title: 'Grade 5: Our Journey Through R'
+author: Tara K and Ben W
+date: '2016-02-17'
+slug: grade-5-our-journey-through-r
+categories:
+  - STEM projects
+tags:
+  - R ggvis
+  - School project
+---
+
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<script src="/rmarkdown-libs/detect-resize/jquery.resize.js"></script>
+<link href="/rmarkdown-libs/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/jquery-ui/jquery-ui.min.js"></script>
+<script src="/rmarkdown-libs/d3/d3.min.js"></script>
+<script src="/rmarkdown-libs/vega/vega.min.js"></script>
+<script src="/rmarkdown-libs/lodash/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="/rmarkdown-libs/ggvis/css/ggvis.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/ggvis/js/ggvis.js"></script>
+
+
+<div id="description" class="section level3">
+<h3>Description</h3>
+<p><strong>Started: December 27th, 2015</strong></p>
+<p><strong>Updated: January 27, 2016</strong></p>
+<p><strong>Project</strong>: Explore and Calculate Statistical Concepts (<em>mean, median</em>, and <em>range</em>) we learned during our Grade 5 Math class, in a programming language “R”.</p>
+<p><strong>Deliverables</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>A Website that details our project’s reproducible research <strong>(Started: Dec 27th, 2015 - Done: February 6th, 2016)</strong></li>
+<li>Our mean, median, and range functions written in R <strong>(Started: Mid-December 2015 - Done: January 22nd, 2016)</strong></li>
+<li>Plots of our data using the ggvis package <strong>(Done: January 29th, 2016)</strong></li>
+<li>A web Application (shiny app) in R <strong>(Work In Progress)</strong></li>
+<li>Certification of Completion of <strong>Introduction to R</strong> by Datacamp <strong>(Done: January 7th, 2016)</strong></li>
+</ol>
+<p><strong>Our Journey</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><p>We started our project on October 1st, 2015.</p></li>
+<li><p>We started learning the R programming language by signing up for an interactive <strong>Introduction to R</strong> course offered by <a href="https://www.datacamp.com/home">DataCamp</a>. The course has 6 chapters: Intro to Basics, Vectors, Matrices, Factors, Data Frames, Lists.</p></li>
+<li><p>We will be completing all the 6 chapters and programming exercises by the end of next week, January 7th, 2016. <strong>This is Done</strong></p></li>
+<li><p>We started our website for our project’s reproducible research on December 27th, 2015. <strong>Updated it on January 25th/27th 2016 and February 6th/8th 2016</strong></p></li>
+<li><p>We have completed building our R application, but we will attempt to build the R Shiny web application by the first week of February 2016.</p></li>
+</ol>
+<p>Below is a sample of R code that we have written so far:</p>
+<pre class="r"><code>#Build the character and numeric vectors and assign it to the variables
+districts&lt;-c(&quot;District1&quot;, &quot;District2&quot;, &quot;District3&quot;, &quot;District4&quot;, &quot;District5&quot;, &quot;District6&quot;, &quot;District7&quot;, &quot;District8&quot;)
+months&lt;- c (&quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;)
+score&lt;- c (5,7,15,12,0,2,6,6)
+
+#Build the data frame NaughtyNice using the data.frame function
+NaughtyNice &lt;-data.frame(districts, months, score)
+
+#Print the dataframe NaughtyNice
+NaughtyNice</code></pre>
+<pre><code>##   districts months score
+## 1 District1    May     5
+## 2 District2   June     7
+## 3 District3   July    15
+## 4 District4    Aug    12
+## 5 District5    Sep     0
+## 6 District6    Oct     2
+## 7 District7    Nov     6
+## 8 District8    Dec     6</code></pre>
+<pre class="r"><code>#plot the score vector on the y-axis and districts on the x-axis
+plot(NaughtyNice$score, type = &quot;p&quot;, xlab = &quot;Districts&quot;, ylab = &quot;Scores&quot;)</code></pre>
+<p><img src="/post/2018-03-06-grade-5-our-journey-through-r_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>#plot(NaughtyNice)</code></pre>
+<pre class="r"><code>#load required libraries
+library(ggvis)
+library(dplyr)
+library(gtools)</code></pre>
+<p><strong>Using the read.csv function and ggvis package for plots</strong></p>
+<pre class="r"><code>#we can also read data files in R by using the function read; in this case we are reading a csv file that contains data for our naughtynice score and store it in a dataframe object csvnicenaughty
+csvnicenaughty&lt;- read.csv(&quot;../../static/data/testscore.csv&quot;, stringsAsFactors = F)
+
+#Then we plot the score from the data file using the ggvis plotting package in R
+#We use the %&gt;% or pipe function which passes saved data to the function group_by
+#which then passes it to the function ggvis for the plot.  The %&gt;% lets makes the 
+#code easier to write and understand. 
+
+csvnicenaughty %&gt;% group_by(Districts) %&gt;% ggvis(x = ~Districts, y = ~Score) %&gt;% layer_bars(fill = ~Districts)</code></pre>
+<div id="plot_id265975322-container" class="ggvis-output-container">
+<div id="plot_id265975322" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id265975322_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id265975322" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id265975322_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id265975322" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id265975322_download" class="ggvis-download" data-plot-id="plot_id265975322">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id265975322_spec = {
+  "data": [
+    {
+      "name": ".0/group_by1/count2/stack3_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "stack_lwr_": "number",
+          "stack_upr_": "number"
+        }
+      },
+      "values": "\"Districts\",\"x_\",\"stack_lwr_\",\"stack_upr_\"\n\"District 1\",\"District 1\",0,40\n\"District 2\",\"District 2\",0,22\n\"District 3\",\"District 3\",0,23\n\"District 4\",\"District 4\",0,21\n\"District 5\",\"District 5\",0,25\n\"District 6\",\"District 6\",0,29\n\"District 7\",\"District 7\",0,31\n\"District 8\",\"District 8\",0,19"
+    },
+    {
+      "name": ".0/group_by1/count2/stack3",
+      "source": ".0/group_by1/count2/stack3_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.Districts"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"District 1\"\n\"District 2\"\n\"District 3\"\n\"District 4\"\n\"District 5\"\n\"District 6\"\n\"District 7\"\n\"District 8\""
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"District 1\"\n\"District 2\"\n\"District 3\"\n\"District 4\"\n\"District 5\"\n\"District 6\"\n\"District 7\"\n\"District 8\""
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n0\n42"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "name": "x",
+      "type": "ordinal",
+      "points": false,
+      "padding": 0.1,
+      "sort": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/count2/stack3"
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "properties": {
+            "update": {
+              "stroke": {
+                "value": "#000000"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.Districts"
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.x_"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.stack_lwr_"
+              },
+              "y2": {
+                "scale": "y",
+                "field": "data.stack_upr_"
+              },
+              "width": {
+                "scale": "x",
+                "band": true
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/count2/stack3"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "fill": "fill",
+      "title": "Districts"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "Districts"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "Score"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 672,
+    "height": 480
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id265975322").parseSpec(plot_id265975322_spec);
+</script>
+<pre class="r"><code>#We can also use the box-plot or the box-whisker plot using the ggvis package, so we can see the median and range of the scores.
+csvnicenaughty %&gt;% group_by(Districts) %&gt;% ggvis(x = ~Districts, y = ~Score) %&gt;% layer_boxplots(fill = ~Districts)</code></pre>
+<div id="plot_id948801421-container" class="ggvis-output-container">
+<div id="plot_id948801421" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id948801421_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id948801421" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id948801421_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id948801421" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id948801421_download" class="ggvis-download" data-plot-id="plot_id948801421">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id948801421_spec = {
+  "data": [
+    {
+      "name": ".0/group_by1/boxplot2_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "min_": "number",
+          "max_": "number",
+          "lower_": "number",
+          "upper_": "number",
+          "median_": "number"
+        }
+      },
+      "values": "\"Districts\",\"min_\",\"max_\",\"lower_\",\"upper_\",\"median_\"\n\"District 1\",4,14,8.5,12.5,11\n\"District 2\",1,14,1.75,7.25,3.5\n\"District 3\",1,10,4,7.75,6\n\"District 4\",0,8,3.75,8,6.5\n\"District 5\",3,9,5.25,7.5,6.5\n\"District 6\",4,12,4.75,9,6.5\n\"District 7\",4,11,5.5,10.25,8\n\"District 8\",1,12,1,6.75,3"
+    },
+    {
+      "name": ".0/group_by1/boxplot2",
+      "source": ".0/group_by1/boxplot2_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.Districts"
+          ]
+        }
+      ]
+    },
+    {
+      "name": ".0/group_by1/boxplot2/boxplot_outliers3_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "value_": "number"
+        }
+      },
+      "values": "\"value_\",\"Districts\"\n"
+    },
+    {
+      "name": ".0/group_by1/boxplot2/boxplot_outliers3",
+      "source": ".0/group_by1/boxplot2/boxplot_outliers3_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.Districts"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"District 1\"\n\"District 2\"\n\"District 3\"\n\"District 4\"\n\"District 5\"\n\"District 6\"\n\"District 7\"\n\"District 8\""
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"District 1\"\n\"District 2\"\n\"District 3\"\n\"District 4\"\n\"District 5\"\n\"District 6\"\n\"District 7\"\n\"District 8\""
+    },
+    {
+      "name": "scale/xcenter",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"District 1\"\n\"District 2\"\n\"District 3\"\n\"District 4\"\n\"District 5\"\n\"District 6\"\n\"District 7\"\n\"District 8\""
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-0.7\n14.7"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "padding": 0.1,
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "name": "x",
+      "points": false,
+      "sort": false,
+      "range": "width"
+    },
+    {
+      "points": true,
+      "padding": 1.1,
+      "name": "xcenter",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/xcenter",
+        "field": "data.domain"
+      },
+      "sort": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/boxplot2"
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "properties": {
+            "update": {
+              "stroke": {
+                "value": "#000000"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.Districts"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.min_"
+              },
+              "y2": {
+                "scale": "y",
+                "field": "data.max_"
+              },
+              "x": {
+                "scale": "xcenter",
+                "field": "data.Districts"
+              },
+              "width": {
+                "value": 0.5
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/boxplot2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/boxplot2"
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "properties": {
+            "update": {
+              "stroke": {
+                "value": "#000000"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.Districts"
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.Districts"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.lower_"
+              },
+              "y2": {
+                "scale": "y",
+                "field": "data.upper_"
+              },
+              "width": {
+                "scale": "x",
+                "band": true
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/boxplot2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/boxplot2"
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "properties": {
+            "update": {
+              "stroke": {
+                "value": "#000000"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.Districts"
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.Districts"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.median_"
+              },
+              "width": {
+                "scale": "x",
+                "band": true
+              },
+              "height": {
+                "value": 1
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/boxplot2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/boxplot2/boxplot_outliers3"
+      },
+      "marks": [
+        {
+          "type": "symbol",
+          "properties": {
+            "update": {
+              "size": {
+                "value": 50
+              },
+              "fill": {
+                "value": "black"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.value_"
+              },
+              "x": {
+                "scale": "xcenter",
+                "field": "data.Districts"
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/boxplot2/boxplot_outliers3"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "fill": "fill",
+      "title": "Districts"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "Districts"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "Score"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 672,
+    "height": 480
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id948801421").parseSpec(plot_id948801421_spec);
+</script>
+<pre class="r"><code>#We will now write our own functions and compare the result to the same in-built functions in R
+
+#Our mean function
+ownmean &lt;- function(x) {
+  meanresult &lt;- sum(x)/length(x)
+  return(meanresult)
+}
+
+#Call own mean function on csvnicenaughty data
+ownmean(csvnicenaughty$Score)</code></pre>
+<pre><code>## [1] 6.5625</code></pre>
+<pre class="r"><code>#Compare to built-in mean function in R
+mean(csvnicenaughty$Score)</code></pre>
+<pre><code>## [1] 6.5625</code></pre>
+<pre class="r"><code>#Our range function
+ownrange &lt;- function(x) {
+  totalnum &lt;- length(x)
+  sortednnice &lt;- sort(x, decreasing = FALSE)
+  rangeresult &lt;- sortednnice[totalnum]-sortednnice[1]
+  return(rangeresult)
+}
+
+#Call own range function on csvnicenaughty data
+ownrange(csvnicenaughty$Score)</code></pre>
+<pre><code>## [1] 14</code></pre>
+<pre class="r"><code>#Compare to built-in range function in R
+range(csvnicenaughty$Score)</code></pre>
+<pre><code>## [1]  0 14</code></pre>
+<pre class="r"><code>ownmedian &lt;- function(x) {
+  sortednnice &lt;- sort(x, decreasing = FALSE)
+  #divide the total number of scores by 2 to find the mid point
+  halflength &lt;- length(x)/2
+    if (odd(length(x))) {
+      sortednnice[halflength+1]
+    }
+  else {
+     (sortednnice[halflength]+sortednnice[halflength+1])/2
+  }
+  
+}
+
+#Call our own median function on our stored data
+ownmedian(csvnicenaughty$Score)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>#call R&#39;s in-built median function
+median(csvnicenaughty$Score)</code></pre>
+<pre><code>## [1] 6</code></pre>
+</div>
+<div id="challenges-we-faced" class="section level3">
+<h3>Challenges we faced</h3>
+<p>These were the challenges that we had to deal with when learning R and completing the project:</p>
+<ol style="list-style-type: decimal">
+<li>Learning the new syntax of R</li>
+<li>Writing the functions</li>
+<li>Finding the mistakes in our R code</li>
+</ol>
+</div>
+<div id="the-fun-part" class="section level3">
+<h3>The Fun Part</h3>
+<ol style="list-style-type: decimal">
+<li>Seeing our code work</li>
+<li>Collecting the data points</li>
+<li>Creating the dataframe</li>
+</ol>
+</div>
+<div id="future-with-r" class="section level3">
+<h3>Future with R</h3>
+<p>We plan to continue learning R by:</p>
+<ol style="list-style-type: decimal">
+<li>Completing Intermediate courses offered by DataCamp</li>
+<li>Making a shiny application</li>
+<li>Learning the ggvis package offered by DataCamp</li>
+</ol>
+</div>
+<div id="pictures-of-the-science-fair" class="section level3">
+<h3>Pictures of the Science Fair</h3>
+<p><img src="ScienceFair16_TB.JPG" alt="Science Fair 2016" /> <img src="ScienceFair16_wTeacher.JPG" alt="Science Fair 2016" /></p>
+</div>
