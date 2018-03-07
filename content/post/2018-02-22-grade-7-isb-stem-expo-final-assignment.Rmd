@@ -153,9 +153,11 @@ The product built using “Raspberry Pi + Camera module + OpenCV/smart-security-
 
 ####REFERENCES
  
-*  <a href="https://www.raspberrypi.org/" target="_blank">Raspberry Pi Official Site</a>
-*  <a href = "https://www.wikihow.com/Understand-Security-Camera-Systems" target="_blank"> Understanding Security Camera Systems</a>
-*   <a href = "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd" target = "_blank"> Hackster io Smart Security Camera Info </a>
+*  Project: Getting Started with The Raspberry Pi. Retrieved from "https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started" <a href="https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started" target="_blank">Raspberry Pi Project Page</a>
+*  How to understand Security Camera Systems. Retrieved from "https://www.wikihow.com/Understand-Security-Camera-Systems" <a href = "https://www.wikihow.com/Understand-Security-Camera-Systems" target="_blank"> Understanding Security Camera Systems</a>
+* Smart Security Camera. Retrieved from "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd"  <a href = "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd" target = "_blank"> Hackster io Smart Security Camera Info </a>
+
+
 
 
 
