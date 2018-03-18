@@ -1,0 +1,27 @@
+---
+title: Forces and Motion Review
+author: Tara Kenner
+date: '2018-03-18'
+slug: forces-and-motion-review
+categories:
+  - Physics
+  - Newton’s Laws
+tags:
+  - Math
+  - Equations
+---
+
+##Distance, Speed and Velocity
+* Define vector
+A vector is anything that has direction. For example: velocity, acceleration, weight
+*What two things must a vector always have?
+Magnitude and direction.
+*Distinguish (explain the difference) between distance and displacement.
+Distance only has magnitude but displacement has magnitude and direction. Distance is a scalar and displacement is a vector.
+Speed = distance/time, and velocity = displacement/time in a direction.
+*What are the units for distance and displacement?
+Distance can be measured in m, cm, inch, km, mi and displacement is all of them with direction. Example = 5m NW
+*Define speed and its units
+Speed is how fast something moves and its units are m/sec or km/hr or mi/hr
+*What are the two types of speed?
+Constant and instantaneous speed. Constant is the average speed (how far an object travels over that period of time) and instantaneous is speed at an instant in time.
