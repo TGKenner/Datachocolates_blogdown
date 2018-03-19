@@ -11,17 +11,261 @@ tags:
   - Equations
 ---
 
-##Distance, Speed and Velocity
+### Distance, Speed and Velocity
+
 * Define vector
-A vector is anything that has direction. For example: velocity, acceleration, weight
-*What two things must a vector always have?
+
+A vector has magnitude and direction. For example: velocity, acceleration, weight.
+
+* What two things must a vector always have?
+
 Magnitude and direction.
-*Distinguish (explain the difference) between distance and displacement.
+
+* Distinguish (explain the difference) between distance and displacement.
+
 Distance only has magnitude but displacement has magnitude and direction. Distance is a scalar and displacement is a vector.
-Speed = distance/time, and velocity = displacement/time in a direction.
-*What are the units for distance and displacement?
+
+`Speed = distance/time`, and `velocity = displacement/time in a direction`.
+
+* What are the units for distance and displacement?
+
 Distance can be measured in m, cm, inch, km, mi and displacement is all of them with direction. Example = 5m NW
-*Define speed and its units
+
+* Define speed and its units
+
 Speed is how fast something moves and its units are m/sec or km/hr or mi/hr
-*What are the two types of speed?
+
+* What are the two types of speed?
+
 Constant and instantaneous speed. Constant is the average speed (how far an object travels over that period of time) and instantaneous is speed at an instant in time.
+
+* What is the equation used to calculate speed?
+
+`speed = distance/time`
+
+* If Joe throws the football 45 meters in 5 seconds, what is the average speed of the football?
+
+```{r, eval = FALSE}
+speed = 45/5
+speed = 9 m/s
+```
+
+*Lisa ran 2000 m at an average speed of 3 m/s before she got caught. How long did she run?
+
+```{r, eval = FALSE}
+3m/s = 2000m/t
+3m/s*t = 2000m*1
+t = 2000m/3m/s
+t = 666.66
+```
+
+*Tom rides his motorcycle at an average speed of 25m/s for 500 sec. How far did he ride?
+```{r, eval = FALSE}
+25m/sec = d/500sec
+d = 25m/sec*500sec
+d = 12500m
+```
+
+
+*Define Velocity
+
+Velocity is speed with direction.
+
+*What are the units for velocity?
+
+m/s or Km/hr or mi/hr 
+
+*Compare and contrast speed and velocity.
+
+Speed is how fast something moves. Velocity is speed with direction.
+
+### Rates & Acceleration
+
+* Define rate
+
+Per the dictionary, Rate is a measure, quantity, or frequency measured against some other quantity or measure
+
+* Is velocity a rate? Explain why or why not?
+
+Yes it is a rate because it measures displacement against time.
+
+* Define acceleration
+
+The rate of change in velocity. The change in velocity within a certain period of time.
+
+`Acceleration = (FinalVelocity-InitialVelocity)/time`
+
+* What are the units for acceleration?
+
+`m/sec^2`
+
+* When is acceleration positive?
+
+When the velocity of an object increases. 
+
+When the forces are unbalanced.  When an object is speeding up, the acceleration is in the same direction as the velocity.  It has positive direction. 
+
+* When is acceleration negative?
+
+When the velocity of an object decreases.
+
+
+* When is acceleration zero?
+
+When the forces are balanced.  Acceleration is rate of change of velocity.  Zero acceleration means there is no change in velocity over time, namely constant velocity.
+
+* Explain how acceleration is a vector?
+
+Because acceleration depends on whether the object is moving in a +ve or -ve direction, and whether the object is speeding up or slowing down, it has both magnitude and direction.  Also, acceleration is the change in velocity per unit time; velocity is a vector, thus it follows that acceleration is also a vector. 
+
+The direction of the acceleration vector depends on 2 things:
+1. Whether the object is speeding up or slowing down
+2.Whether the object is moving in the +ve or -ve direction.
+
+* Explain how acceleration is a rate?
+
+Rate of change of velocity or rate at which an object changes its velocity. 
+
+
+* In 1.5 secs, a projectile goes from 0 to 300 m/s.  What is the acceleration of the projectile?
+
+```{r, eval = FALSE}
+a = (300m/sec)/1.5sec
+a = 0.66 m/sec^2
+```
+
+
+* You are traveling in a car that is moving at a velocity of 20m/s.  Suddenly, a car in front of you slams on it's brakes.  At that moment, you also slam on your brakes and slow to 5 m/s.  Calculate the acceleration if it took 3 secs to slow your car down. 
+
+```{r, eval = FALSE}
+a = (-15m/sec)/3sec
+a = -5m/sec^2
+```
+
+### Intro to Forces
+
+* Define Force
+
+Force is a push or a pull
+
+* What are the units for force?
+
+`Newton which is Kg.m/sec^2`. A Newton is the force it takes to make 1 kg change its velocity by 1 m/s every second.
+
+* State Newton's First Law
+
+Inertia: A body at rest remains at rest and a body in motion remains in motion unless some external force acts on it.  
+
+* Newton's first law is also known as 
+
+Inertia. `Inertia means the object wants to continue to do what it does.`So if it is in motion, it stays in motion; if it is at rest it stays at rest.
+
+* Give an example of Newton's first law
+
+Any object that is at rest; example a book on a table.  Swinging. A pendulum.   
+
+
+* State and give the equation for Newton's second law.
+
+`Force = mass * acceleration`
+
+*Note* that we use the same equation when calculating `weight` by replacing `Force` with `weight` and `acceleration` with `9.8 m/sec^2`, as that is the acceleration 
+
+`weight = mass * 9.8m/s^2`
+
+* In Newton's second law, what are the units of force, acceleration and mass?
+
+Force = Newton
+Acceleration = m/s^2
+mass = Kg
+
+`Newton(Force) is a product of Kg*m/s^2 (mass*acceleration)`
+
+* A toy rocket of mass 1.2 kg undergoes an acceleration of 20m/s^2. Calculate the force being developed by the rocket engines.
+```{r, eval = FALSE}
+f = 1.2kg*20m/sec^2
+f = 24kg m/sec^2 
+f = 24N
+```
+
+
+* If a net force of 1300N gives an object an acceleration of 2.0m/s^2, what is the mass of the object?
+```{r, eval = FALSE}
+m = 1300N/2.0m/sec^2
+m = 650N/m/sec^2
+m = (650kg*m/sec^2)/m/sec^2
+m = 650kg
+because m/sec^2 cancel out.
+```
+
+
+* You push with a 50N force on a 20 kg curling stone sitting on the ice.  What will the acceleration of the stone be?
+```{r, eval = FALSE}
+a = 50N/20kg
+a = 2.5N/kg
+a = (2.5kg*m/sec^2)/kg
+a = 2.5m/sec^2
+Because kg and kg cancel each other out.
+```
+
+### Types of Forces
+
+* List and define the six different types of forces
+Forces can be categorized into Contact Forces and Action-at-a-Distance Forces
+
+Contact Forces: Frictional force, tension force, normal force, air resistance force, applied force, spring force.
+Action-at-a-distance force: Gravitational force, electrical force, magnetic force.
+
+* Explain the difference between mass and weight. Include units in your explanation. 
+
+Weight is a force and is measured in Newtons. An object's weight is how hard gravity is pulling on it. An object's mass does not change, but it's weight can. Our weight is different on the moon than it is on earth, but our mass still remains the same. Weight is a vector. 
+
+Mass is the total amount of substance in a body; it only has magnitude and is a scalar.
+
+* What is the main force when a dog pulls on a leash? What other forces are also present?
+
+* Identify the forces in the picture below.
+
+### Net Force and Newton's 3rd Law
+
+* Define net force
+Net force is sum of all forces acting on an object.
+
+* What does it mean when the forces in the system are balanced?
+
+When the forces in the system are balanced , there is no acceleration. That is forces in one direction are equal to forces in the opposite direction.
+Example: Forces at the top of the golden gate bridge.
+
+* What does it mean when the forces in the system are unbalanced?
+When forces are unbalanced, the object accelerates.  Kicking a soccer ball is an unbalanced force that makes it accelerate very quickly.  The ball will continue in a straight line at a fixed velocity, except that the other forces act on the ball: Gravity is the unbalanced force that makes the ball accelerate downwards.  Also air resistance is an unbalanced force which gradually reduces the velocity of the ball.  
+
+* How would you calculate net force when the forces point in the same direction?
+
+
+* How would you calculate net force when the forces point in the opposite directions?
+
+* Use the picture to answer the following questions.
+
+* What is the net force acting on the person?
+
+* Are the forces balanced or unbalanced? Explain.
+
+* Explain what is wrong with the forces in this picture.
+
+* State Newton's 3rd law.
+* When a fish swims it pushes the water backwards using its fins, but the fish ends up moving forwards.  Use Newton's 3rd law to explain how this happens.  Make sure to discuss the action force and the reaction force and what is creating them.
+The water pushes the fish forward with the same force as the fish exerted on the water backwards using its fins.  Newton's third law which states every action has an equal and opposite reaction applies.  The equal action-reaction force pair enables the fish to swim.  This also applies to us human swimmers, when we use our arms to push the water backwards which then propels us forward with the same force.  
+
+* Draw a picture of the scenario in the previous question. Label the forces.
+
+* Give an example that shows Newton's 3rd law.  Be prepared to share it in class. 
+When someone throws a soccer ball at me, I can either catch it or push it away.  When I push the ball away, the impact of the ball causes pain in my hands.  This happens because my hand and the soccer ball exerts equal and opposite forces on each other.
+
+Flight of birds: When birds fly, their wings push the air downwards, and this results in the air applying force of the same magnitude in the opposite direction/i.e. upwards.  This pushes the bird upwards into the air.  The same concept applies to planes and helicopters.  
+
+Rocket travel: Hot gases are released in downward direction of the rocket.  This results in an equal size upward force on the rocket that pushes the rocket ahead. 
+
+
+
+
+
