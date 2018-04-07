@@ -1,0 +1,94 @@
+---
+title: Visualizing Categorical Data
+author: Tara Kenner
+date: '2018-04-07'
+slug: visualizing-categorical-data
+categories:
+  - math
+  - data
+  - School assignment
+tags:
+  - R
+  - highcharter
+  - ggplot
+  - Math
+  - ggplotly
+  - Statistics
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<script src="/rmarkdown-libs/proj4js/proj4.js"></script>
+<link href="/rmarkdown-libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/highcharts/highstock.js"></script>
+<script src="/rmarkdown-libs/highcharts/highcharts-3d.js"></script>
+<script src="/rmarkdown-libs/highcharts/highcharts-more.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/annotations.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/broken-axis.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/data.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/drilldown.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/exporting.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/funnel.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/heatmap.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/map.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/no-data-to-display.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/offline-exporting.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/solid-gauge.js"></script>
+<script src="/rmarkdown-libs/highcharts/modules/treemap.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/annotations.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/draggable-legend.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/draggable-points.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/export-csv.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/grouped-categories.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/motion.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/pattern-fill-v2.js"></script>
+<script src="/rmarkdown-libs/highcharts/plugins/tooltip-delay.js"></script>
+<script src="/rmarkdown-libs/highcharts/custom/reset.js"></script>
+<script src="/rmarkdown-libs/highcharts/custom/symbols-extra.js"></script>
+<script src="/rmarkdown-libs/highcharts/custom/text-symbols.js"></script>
+<link href="/rmarkdown-libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/htmlwdgtgrid/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/highchart-binding/highchart.js"></script>
+
+
+<div id="math-unit-8" class="section level3">
+<h3>Math Unit 8</h3>
+<p>In this unit, we are focusing on visualizing categorical data using pie charts and even better, bar graphs. I will be using ggplot and highcharter to visualize the data.</p>
+<pre class="r"><code>library(tidyverse)
+library(highcharter)
+library(ggplot2)</code></pre>
+<p>Create and view my data</p>
+<pre class="r"><code>#Problem 7-8
+Mode_of_trans &lt;- c(&quot;bus&quot;, &quot;bike&quot;, &quot;car&quot;, &quot;walk&quot;)
+Num_of_Students &lt;- c(90, 30, 75, 45)
+Survey_Data = tibble(Mode_of_trans, Num_of_Students)
+
+#Now I&#39;m going to calculate the proportion using dplyr verbs
+Prop_survey_data &lt;- Survey_Data %&gt;% mutate(prop_of_students = (Num_of_Students/sum(Num_of_Students))*100)
+Prop_survey_data</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   Mode_of_trans Num_of_Students prop_of_students
+##           &lt;chr&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+## 1           bus              90            37.50
+## 2          bike              30            12.50
+## 3           car              75            31.25
+## 4          walk              45            18.75</code></pre>
+<p>Now I’ll use highcharter to create a pie chart</p>
+<pre class="r"><code>highchart() %&gt;% 
+ hc_add_series(Prop_survey_data, &quot;pie&quot;, hcaes(name = Mode_of_trans, y = prop_of_students), name = &quot;% of Trans&quot;, dataLabels = list(enabled = TRUE, format = &#39;{point.name}: {point.y}%&#39;)) %&gt;% 
+ hc_add_theme(hc_theme_ffx())</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"hc_opts":{"title":{"text":null},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"group":"group","data":[{"Mode_of_trans":"bus","Num_of_Students":90,"prop_of_students":37.5,"y":37.5,"name":"bus"},{"Mode_of_trans":"bike","Num_of_Students":30,"prop_of_students":12.5,"y":12.5,"name":"bike"},{"Mode_of_trans":"car","Num_of_Students":75,"prop_of_students":31.25,"y":31.25,"name":"car"},{"Mode_of_trans":"walk","Num_of_Students":45,"prop_of_students":18.75,"y":18.75,"name":"walk"}],"type":"pie","name":"% of Trans","dataLabels":{"enabled":true,"format":"{point.name}: {point.y}%"}}]},"theme":{"colors":["#00AACC","#FF4E00","#B90000","#5F9B0A","#CD6723"],"chart":{"backgroundColor":{"linearGradient":[0,0,0,150],"stops":[[0,"#CAE1F4"],[1,"#EEEEEE"]]},"style":{"fontFamily":"Open Sans"}},"title":{"align":"left"},"subtitle":{"align":"left"},"legend":{"align":"right","verticalAlign":"bottom"},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Open+Sans","debug":false},"evals":[],"jsHooks":[]}</script>
+<p>Highcharter to create a bar graph</p>
+<pre class="r"><code># highchart() %&gt;% 
+#  hc_add_series(Prop_survey_data, &quot;column&quot;, hcaes(x = Mode_of_trans, y = prop_of_students), name = &quot;% of trans&quot;, dataLabels = list(enabled = TRUE, format = &#39;{point.y}%&#39;)) %&gt;% 
+#  hc_add_theme(hc_theme_538())
+
+hchart(Prop_survey_data, &quot;column&quot;, hcaes(x = Mode_of_trans, y = prop_of_students), name = &quot;%n of trans&quot;, dataLabels = list(enabled = TRUE, format = &#39;{point.y}%&#39;)) %&gt;% 
+  hc_add_theme(hc_theme_538())</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"hc_opts":{"title":{"text":null},"yAxis":{"title":{"text":"prop_of_students"},"type":"linear"},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0,"showInLegend":false,"marker":{"enabled":true}},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25},"scatter":{"marker":{"symbol":"circle"}}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"group":"group","data":[{"Mode_of_trans":"bus","Num_of_Students":90,"prop_of_students":37.5,"y":37.5,"name":"bus"},{"Mode_of_trans":"bike","Num_of_Students":30,"prop_of_students":12.5,"y":12.5,"name":"bike"},{"Mode_of_trans":"car","Num_of_Students":75,"prop_of_students":31.25,"y":31.25,"name":"car"},{"Mode_of_trans":"walk","Num_of_Students":45,"prop_of_students":18.75,"y":18.75,"name":"walk"}],"type":"column","name":"%n of trans","dataLabels":{"enabled":true,"format":"{point.y}%"}}],"xAxis":{"type":"category","title":{"text":"Mode_of_trans"},"categories":null}},"theme":{"colors":["#FF2700","#008FD5","#77AB43","#636464","#C4C4C4"],"chart":{"backgroundColor":"#F0F0F0","plotBorderColor":"#606063","style":{"fontFamily":"Roboto","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"xAxis":{"gridLineWidth":1,"gridLineColor":"#D7D7D8","labels":{"style":{"fontFamily":"Unica One, sans-serif","color":"#3C3C3C"}},"lineColor":"#D7D7D8","minorGridLineColor":"#505053","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"yAxis":{"gridLineColor":"#D7D7D8","labels":{"style":{"fontFamily":"Unica One, sans-serif","color":"#3C3C3C"}},"lineColor":"#D7D7D8","minorGridLineColor":"#505053","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"rgba(0, 0, 0, 0.85)","style":{"color":"#F0F0F0"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["Roboto","Unica+One"],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>ggplot to create a bar graph</p>
+<pre class="r"><code>ggplot(Prop_survey_data, aes(x = Mode_of_trans, y = prop_of_students, fill = Mode_of_trans)) + geom_bar(stat = &quot;identity&quot;) </code></pre>
+<p><img src="/post/2018-04-07-visualizing-categorical-data_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
