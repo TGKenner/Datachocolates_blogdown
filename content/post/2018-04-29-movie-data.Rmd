@@ -1,0 +1,26 @@
+---
+title: Movie Data
+author: Tara Kenner
+date: '2018-04-29'
+slug: movie-data
+categories:
+  - data
+  - Linear regresssion
+  - r
+tags:
+  - ggplot
+  - Math
+  - R
+---
+
+```{r}
+library(tidyverse)
+
+movie_title <- c("Get Out", "Casablanca", "Lady Bird", "Mad Max", "The Godfather", "Moonlight")
+release_year <- c(2017, 1942, 2017, 2015, 1972, 2016)
+box_office_mill <- c(254, 1, 70, 370, 245, 55)
+moviedata <- tibble(release_year, box_office_mill)
+
+ggplot(moviedata, aes(x = release_year, y = box_office_mill)) + geom_point() + geom_smooth(method = "lm")
+```
+

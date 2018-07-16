@@ -1,0 +1,35 @@
+---
+title: Interest Calculation
+author: Tara Kenner
+date: '2018-04-28'
+slug: interest-calculation
+categories:
+  - data
+  - math
+  - School assignment
+tags:
+  - Math
+  - R
+  - tidyverse
+---
+
+
+
+<p>Math Chapter Nine</p>
+<pre class="r"><code>simple_interest_calc &lt;- function(principal, zeit, rate){
+
+  interesse= principal*rate*zeit 
+  return(interesse)
+}
+  
+
+simple_interest_calc(1000, 40, 0.02)</code></pre>
+<pre><code>## [1] 800</code></pre>
+<pre class="r"><code>compound_amount_calc &lt;- function(principal, zeit, rate) {
+  
+  compound_amount = principal*(1 + rate)^zeit
+  return(compound_amount)
+}
+  
+  compound_amount_calc(500,3/12, 0.06)</code></pre>
+<pre><code>## [1] 507.3369</code></pre>

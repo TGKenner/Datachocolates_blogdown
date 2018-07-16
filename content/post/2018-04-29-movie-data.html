@@ -1,0 +1,34 @@
+---
+title: Movie Data
+author: Tara Kenner
+date: '2018-04-29'
+slug: movie-data
+categories:
+  - data
+  - Linear regresssion
+  - r
+tags:
+  - ggplot
+  - Math
+  - R
+---
+
+
+
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<pre class="r"><code>movie_title &lt;- c(&quot;Get Out&quot;, &quot;Casablanca&quot;, &quot;Lady Bird&quot;, &quot;Mad Max&quot;, &quot;The Godfather&quot;, &quot;Moonlight&quot;)
+release_year &lt;- c(2017, 1942, 2017, 2015, 1972, 2016)
+box_office_mill &lt;- c(254, 1, 70, 370, 245, 55)
+moviedata &lt;- tibble(release_year, box_office_mill)
+
+ggplot(moviedata, aes(x = release_year, y = box_office_mill)) + geom_point() + geom_smooth(method = &quot;lm&quot;)</code></pre>
+<p><img src="/post/2018-04-29-movie-data_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>

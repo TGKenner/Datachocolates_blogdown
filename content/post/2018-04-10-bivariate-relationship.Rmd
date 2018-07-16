@@ -1,0 +1,104 @@
+---
+title: Bivariate Relationship
+author: Tara Kenner
+date: '2018-04-10'
+slug: bivariate-relationship
+categories:
+  - Linear regresssion
+  - math
+  - r
+  - School assignment
+tags:
+  - ggplot
+  - linear regression
+  - Math
+  - R Markdown
+---
+
+Learning Bivariate realtionship in my math class
+
+```{r}
+library(tidyverse)
+fertilizer <- c(5, 10, 15, 20, 25, 30)
+height_of_plant <- c(14, 17, 21, 31, 33, 40)
+plant_data <- tibble(fertilizer, height_of_plant)
+
+ggplot(plant_data, aes(x = fertilizer, y = height_of_plant)) + geom_point() + geom_smooth(method = lm)
+
+```
+
+```{r, eval=FALSE}
+y = mx + c
+m = (y2 - y1)/(x2 - x1)
+m = (17-14)/(10-5)
+plant_data
+m
+```
+
+```{r}
+A_data <- tibble(weekend = c("feb6", "feb13", "feb20", "feb27", "march6", "march13"), time_min = c(68, 88, 35, 150, 104, 80),  distance_miles = c(7, 17, 3.5, 25, 14, 11))
+A_data %>% ggplot(aes(x = distance_miles, y = time_min)) + geom_point() + geom_smooth(method = lm)
+A_data
+
+```
+
+```{r}
+
+
+my_slope <- function(y2, y1, x2, x1) {
+  m = (y2-y1)/(x2-x1)
+  return(m)
+}
+
+my_slope(35, 88, 3.5, 17)
+my_slope(133,127, 169,166.4)
+
+
+```
+
+```{r}
+my_intercept <- function(y, x, m) {
+  c= y-m*x
+  return(c)
+}
+
+
+2.30*228.6 - 272.7
+
+my_intercept(139, 179, 2.30)
+```
+
+```{r}
+newtons_revenge <- tibble(Height = c(166.4,169,172.8,179,170,183,162.5,165,157.5,165,169,156), reach = c(127,133,133,139,139,137,121,126,128,123,132,119))
+newtons_revenge
+
+ggplot(newtons_revenge, aes(x = Height, y = reach)) + geom_point() + geom_smooth(method = lm)
+
+str(newtons_revenge)
+
+newtons_revenge_1 <- newtons_revenge %>% mutate(heightchange = Height-lag(Height), reachchange = reach-lag(reach), slope = reachchange/heightchange)
+
+str(newtons_revenge_1)
+
+newtons_revenge_1
+
+
+newtons_revenge_1 <- newtons_revenge %>% mutate(heightchange = Height-lag(Height), reachchange = reach - lag(reach), slope = reachchange/heightchange)
+newtons_revenge_1
+
+my_intercept(127, 166.4, 2.3)
+my_intercept(127, 166.4, 0.96)
+my_intercept(133,169, 0)
+
+ggplot(newtons_revenge, aes(x = Height, y = reach))+geom_point()+geom_smooth(method = lm)
+
+```
+
+
+```{r}
+model_lm_smooth <- lm(reach ~Height, data = newtons_revenge)
+summary(model_lm_smooth)
+```
+
+
+
