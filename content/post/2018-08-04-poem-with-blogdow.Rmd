@@ -3,10 +3,15 @@ title: 'Poem & Sentiment Analysis with Blogdown '
 author: Tara Kenner
 date: '2018-08-04'
 slug: poem-with-blogdow
-categories: []
+categories:
+  - Poetry
+  - Sentiment Analysis
+  - r
 tags:
-  - R
   - blogdown
+  - R Markdown
+  - tidytext
+  - word cloud
 ---
 I love to read and compose poetry and this poem is one that I wrote for my grade 7 Language Arts class. Thus, I was pleasantly suprised when I came across [Yihui's blog](https://yihui.name/en/2018/06/quote-poem-blogdown/)
 because I never knew that I could integrate my passion for poetry with my passion for R. Thank you so much Yihui; I appreciate it.
