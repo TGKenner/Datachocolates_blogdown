@@ -15,17 +15,9 @@ tags:
 
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr</code></pre>
-<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
-<pre><code>## filter(): dplyr, stats
-## lag():    dplyr, stats</code></pre>
-<pre class="r"><code>movie_title &lt;- c(&quot;Get Out&quot;, &quot;Casablanca&quot;, &quot;Lady Bird&quot;, &quot;Mad Max&quot;, &quot;The Godfather&quot;, &quot;Moonlight&quot;)
+<pre class="r"><code>library(tidyverse)
+
+movie_title &lt;- c(&quot;Get Out&quot;, &quot;Casablanca&quot;, &quot;Lady Bird&quot;, &quot;Mad Max&quot;, &quot;The Godfather&quot;, &quot;Moonlight&quot;)
 release_year &lt;- c(2017, 1942, 2017, 2015, 1972, 2016)
 box_office_mill &lt;- c(254, 1, 70, 370, 245, 55)
 moviedata &lt;- tibble(release_year, box_office_mill)

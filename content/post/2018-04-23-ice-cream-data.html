@@ -1,5 +1,5 @@
 ---
-title: Ice Cream Data
+title: Test Score Data
 author: Tara Kenner
 date: '2018-04-23'
 slug: ice-cream-data
@@ -18,17 +18,8 @@ tags:
 
 
 <p>Test scores plotted against hours of study</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr</code></pre>
-<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
-<pre><code>## filter(): dplyr, stats
-## lag():    dplyr, stats</code></pre>
-<pre class="r"><code>score &lt;-c(43, 61, 85, 100)
+<pre class="r"><code>library(tidyverse)
+score &lt;-c(43, 61, 85, 100)
 hrs_study &lt;-c(1, 2, 3, 4)
 score_data &lt;- tibble(hrs_study, score)
 

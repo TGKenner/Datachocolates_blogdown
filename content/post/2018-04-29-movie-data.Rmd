@@ -13,7 +13,7 @@ tags:
   - R
 ---
 
-```{r}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 library(tidyverse)
 
 movie_title <- c("Get Out", "Casablanca", "Lady Bird", "Mad Max", "The Godfather", "Moonlight")

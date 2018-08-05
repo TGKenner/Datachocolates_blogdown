@@ -1,0 +1,115 @@
+---
+title: 'Poem & Sentiment Analysis with Blogdown '
+author: Tara Kenner
+date: '2018-08-04'
+slug: poem-with-blogdow
+categories: []
+tags:
+  - R
+  - blogdown
+---
+I love to read and compose poetry and this poem is one that I wrote for my grade 7 Language Arts class. Thus, I was pleasantly suprised when I came across [Yihui's blog](https://yihui.name/en/2018/06/quote-poem-blogdown/)
+because I never knew that I could integrate my passion for poetry with my passion for R. Thank you so much Yihui; I appreciate it.
+What I'd like to attempt is a sentiment analysis using [Julia Stilge's Text Mining with r ](https://www.tidytextmining.com/tidytext.html) so I can see the general feeling my poem gives out.
+
+
+> What We Take For Granted
+
+> My fellow gentlemen, take some advice from me  
+As I wander around eternally  
+Thinking of how I paid the ultimate cost  
+A silent spectator to all I have lost
+
+> Let me start at the beginning in New York city  
+Where I met a young lady, clever and pretty  
+We had dinner and drinks at Le Bernardin  
+And danced until dawn at the downtown scene
+
+> A week later she informed me “I’m studying for the bar”  
+And laughed as I almost tripped into a car  
+“It’s not very feminine”, my words left hanging  
+“This is 1964” she frowned, “the world is changing”
+
+> Months later I proposed and we moved in together  
+In a luxury penthouse just off 21’st and Heather  
+She bought a hi fi phono and let it blast  
+100 little records of rock, rhythm and jazz
+
+> On the weekdays I worked my 9 to 5  
+Managing numbers for the Wall Street jive  
+And every night I came home to our dinner table  
+And we ate her roasted chicken with sugar maple  
+Oh, didn’t it seem as though I had I all?  
+Wealthy and charming at functions and balls  
+With a beautiful fiance, never dull never aged  
+When she found employment, all of that changed
+
+> Now, I was not a misogynistic man  
+Nor did I want her dressed in gloves and fans  
+But we all have a place, come destiny or doom  
+And a young woman’s place is not in a courtroom
+
+> You should have heard the screaming and the yelling  
+She was deaf to all reason, deaf to my tellings  
+Deaf to my warnings and deaf to my pleading  
+I only ever kept a lookout for her well being
+
+> That evening I was in a terrible rage  
+Drove like a madman, revved the pedal gage  
+So to the loads traffic I paid no attention  
+Not seeing the cars coming from all directions
+
+> When we collided it was as if time had froze  
+Then back came reality, in three sharp blows  
+The sirens, the commotion, a crescendo of screams  
+The smell of blood mingling with petrol gasoline  
+For as long as I could remember, I had always feared dying  
+But I felt no fear, not at all terrifying  
+The emotion that filled me was bitter regret  
+Of all of the things that her and I had said
+
+> Mourning for the life I could have lived  
+For I could take and take but never give  
+Regret for not appreciating, opposed to being glad  
+Regret for the best thing that I never had
+
+>
+
+Now for my sentiment analysis on a set of my poems that I have saved as a pdf file. Let's load the required libraries. 
+```{r, error=FALSE, message=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(pdftools)
+library(tidytext)
+library(wordcloud)
+library(reshape2)
+```
+
+
+Now I will load my poems from the pdf file
+```{r}
+tara_poems<-pdf_text("../../static/data/Poems_TK.pdf")
+ table_tara_poem <- data.frame(text = unlist(strsplit(tara_poems, "\n"))) %>% 
+  mutate(poem = "all_my_poems", line = row_number(), text = gsub("\n", "", text)) 
+
+#head(table_tara_poem)
+tara_poem_text<- table_tara_poem %>% 
+    as_tibble() %>% 
+   unnest_tokens(word, text) %>% 
+   anti_join(stop_words)
+
+tara_poem_text
+```
+
+```{r, error=FALSE, message=FALSE, warning=FALSE}
+tara_poem_text %>% 
+  inner_join(get_sentiments("bing")) %>% 
+  count(word, sentiment, sort = TRUE) %>% 
+  acast(word~sentiment, value.var = "n", fill = 0) %>% 
+  comparison.cloud(colors = c("gray20", "gray80"), max.words = 100)
+
+```
+
+
+
+

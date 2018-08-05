@@ -1,0 +1,126 @@
+---
+title: 'Poem & Sentiment Analysis with Blogdown '
+author: Tara Kenner
+date: '2018-08-04'
+slug: poem-with-blogdow
+categories: []
+tags:
+  - R
+  - blogdown
+---
+
+
+
+<p>I love to read and compose poetry and this poem is one that I wrote for my grade 7 Language Arts class. Thus, I was pleasantly suprised when I came across <a href="https://yihui.name/en/2018/06/quote-poem-blogdown/">Yihui’s blog</a> because I never knew that I could integrate my passion for poetry with my passion for R. Thank you so much Yihui; I appreciate it. What I’d like to attempt is a sentiment analysis using <a href="https://www.tidytextmining.com/tidytext.html">Julia Stilge’s Text Mining with r</a> so I can see the general feeling my poem gives out.</p>
+<blockquote>
+<p>What We Take For Granted</p>
+</blockquote>
+<blockquote>
+<p>My fellow gentlemen, take some advice from me<br />
+As I wander around eternally<br />
+Thinking of how I paid the ultimate cost<br />
+A silent spectator to all I have lost</p>
+</blockquote>
+<blockquote>
+<p>Let me start at the beginning in New York city<br />
+Where I met a young lady, clever and pretty<br />
+We had dinner and drinks at Le Bernardin<br />
+And danced until dawn at the downtown scene</p>
+</blockquote>
+<blockquote>
+<p>A week later she informed me “I’m studying for the bar”<br />
+And laughed as I almost tripped into a car<br />
+“It’s not very feminine”, my words left hanging<br />
+“This is 1964” she frowned, “the world is changing”</p>
+</blockquote>
+<blockquote>
+<p>Months later I proposed and we moved in together<br />
+In a luxury penthouse just off 21’st and Heather<br />
+She bought a hi fi phono and let it blast<br />
+100 little records of rock, rhythm and jazz</p>
+</blockquote>
+<blockquote>
+<p>On the weekdays I worked my 9 to 5<br />
+Managing numbers for the Wall Street jive<br />
+And every night I came home to our dinner table<br />
+And we ate her roasted chicken with sugar maple<br />
+Oh, didn’t it seem as though I had I all?<br />
+Wealthy and charming at functions and balls<br />
+With a beautiful fiance, never dull never aged<br />
+When she found employment, all of that changed</p>
+</blockquote>
+<blockquote>
+<p>Now, I was not a misogynistic man<br />
+Nor did I want her dressed in gloves and fans<br />
+But we all have a place, come destiny or doom<br />
+And a young woman’s place is not in a courtroom</p>
+</blockquote>
+<blockquote>
+<p>You should have heard the screaming and the yelling<br />
+She was deaf to all reason, deaf to my tellings<br />
+Deaf to my warnings and deaf to my pleading<br />
+I only ever kept a lookout for her well being</p>
+</blockquote>
+<blockquote>
+<p>That evening I was in a terrible rage<br />
+Drove like a madman, revved the pedal gage<br />
+So to the loads traffic I paid no attention<br />
+Not seeing the cars coming from all directions</p>
+</blockquote>
+<blockquote>
+<p>When we collided it was as if time had froze<br />
+Then back came reality, in three sharp blows<br />
+The sirens, the commotion, a crescendo of screams<br />
+The smell of blood mingling with petrol gasoline<br />
+For as long as I could remember, I had always feared dying<br />
+But I felt no fear, not at all terrifying<br />
+The emotion that filled me was bitter regret<br />
+Of all of the things that her and I had said</p>
+</blockquote>
+<blockquote>
+<p>Mourning for the life I could have lived<br />
+For I could take and take but never give<br />
+Regret for not appreciating, opposed to being glad<br />
+Regret for the best thing that I never had</p>
+</blockquote>
+<blockquote>
+
+</blockquote>
+<p>Now for my sentiment analysis on a set of my poems that I have saved as a pdf file. Let’s load the required libraries.</p>
+<pre class="r"><code>library(tidyverse)
+library(pdftools)
+library(tidytext)
+library(wordcloud)
+library(reshape2)</code></pre>
+<p>Now I will load my poems from the pdf file</p>
+<pre class="r"><code>tara_poems&lt;-pdf_text(&quot;../../static/data/Poems_TK.pdf&quot;)
+ table_tara_poem &lt;- data.frame(text = unlist(strsplit(tara_poems, &quot;\n&quot;))) %&gt;% 
+  mutate(poem = &quot;all_my_poems&quot;, line = row_number(), text = gsub(&quot;\n&quot;, &quot;&quot;, text)) 
+
+#head(table_tara_poem)
+tara_poem_text&lt;- table_tara_poem %&gt;% 
+    as_tibble() %&gt;% 
+   unnest_tokens(word, text) %&gt;% 
+   anti_join(stop_words)</code></pre>
+<pre><code>## Joining, by = &quot;word&quot;</code></pre>
+<pre class="r"><code>tara_poem_text</code></pre>
+<pre><code>## # A tibble: 347 × 3
+##            poem  line      word
+##           &lt;chr&gt; &lt;int&gt;     &lt;chr&gt;
+## 1  all_my_poems   100    scythe
+## 2  all_my_poems   100    bullet
+## 3  all_my_poems   100    exempt
+## 4  all_my_poems    99    subdue
+## 5  all_my_poems    99     cruel
+## 6  all_my_poems    98  ornament
+## 7  all_my_poems    97 someplace
+## 8  all_my_poems    96 fortunate
+## 9  all_my_poems    95    cocoon
+## 10 all_my_poems    95   guarded
+## # ... with 337 more rows</code></pre>
+<pre class="r"><code>tara_poem_text %&gt;% 
+  inner_join(get_sentiments(&quot;bing&quot;)) %&gt;% 
+  count(word, sentiment, sort = TRUE) %&gt;% 
+  acast(word~sentiment, value.var = &quot;n&quot;, fill = 0) %&gt;% 
+  comparison.cloud(colors = c(&quot;gray20&quot;, &quot;gray80&quot;), max.words = 100)</code></pre>
+<p><img src="/post/2018-08-04-poem-with-blogdow_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>

@@ -1,0 +1,1756 @@
+---
+title: '6th Grade STEM: Does Tire Air Pressure Affect the Rolling Resistance of a Mountain Bike?'
+author: Tara K
+date: '2017-03-26'
+slug: does-tire-air-pressure-affect-the-rolling-resistance-of-a-mountain-bike
+categories:
+  - 'STEM projects'
+tags:
+  - R
+  - ggplot
+  - linear regression
+  - tidyverse
+---
+
+##The Test Mountain Bike: Transition Covert C
+![](/img/rolling_bike2.png)
+
+## My Question/s
+
+- *Does tire air pressure affect the rolling resistance of a mountain bike?* 
+- *Is the effect the same on both smooth and rough surfaces?*
+
+
+## My Hypothesis:
+
+- *If the air pressure is decreased by 10 psi, then the elapsed time in which the bike rolls down the track will increase by ~3% because the rolling resistance of a bicycle tire is inversely related to the air pressure.*
+
+## Variables
+
+##### Independent Variable (IV)- Also called manipulated/explanatory variable or predictor.
+
+*Independent Variable*   | *How will you Change the independent variable*
+-------------------------|----------------------------------------------
+Air Pressure             | Decrease the air pressure 10 PSI (Pounds Per Square Inch) at a time
+
+##### Dependent Variable (DV) - Also called the response/target variable
+
+*Dependent Variable*     | *How and when will you measure the dependent variable*
+-------------------------|-----------------------------------------------------
+Time in secs             | With an iphone stopwatch/When the bike crosses the fixed marker (set at 20 meters)
+
+
+##### Control variable: Variables that are kept the same.
+
+*Control Variable*        | *How will you will control it*
+-------------------------|---------------------------------------------
+Rider                    | Same rider (Mark Kenner)
+Bike                     | Same bike (Transition Covert C) 
+Distance the bike rolls  | 20 meters
+Same Tires               | Maxxis EXO DHF front and DHR rear, 26” diameter and tubeless
+
+### Materials and Procedures
+
+##### Materials
+  + Rider (Mark Kenner)
+  + Assistant/Timekeeper/Statistician/Data-Scientist (Tara Kenner)
+  + Bicycle (Transition Covert C)
+  + Tires (Maxxis EXO DHF front and EXO DHR rear, 26” diameter and tubeless). 
+  + Elapsed time will be measured with the stopwatch feature of an iPhone6
+  + Air pressure will be measured with an Accu-guage(accurate to ¼ PSI).  
+  + Track distance will be measured with a tape measurer. 
+  + The slope will be measured at the start, middle, and end of track with a Pitch Angle Calculator to get the average.
+
+![Materials](/img/Materials_small.jpg) ![Materials2](/img/PSI_material_small_1.jpg)
+
+##### Procedures
+   + A bicycle will coast down a fixed distance, in a straight line, from one fixed marker to the next with no pedaling or braking.  
+   + An assistant will record the elapsed time.  
+   + The distance and average slope of the test track will be recorded (probably 100 meters and about 12 degrees). Due to what we learned about gradient resistance from our on-line research, we went with the smallest degrees which allowed the bike to roll. Used 20 meters instead of 100 meters) 
+   + Winds must be 5mph or less as to not impact results.  
+   + Runs will be done with tires at 50PSI, 40PSI, 30PSI, 20PSI, and 10PSI.  
+   + This test will be conducted once on asphalt and once on a rough surface (probably a logging road, preferably with 1-2 inch diameter gravel and some irregularities such as holes and ruts). Ended up using a motorcycle trail with large rocks solidly embedded into the surface. Was worried that gravel would deflect and compress and really be testing a soft surface.  Wanted to test a hard surface, but a rough one.
+
+![Smooth Road](/img/Smoothroad_small.jpg) ![Rough Road](/img/Rough_Road_small.jpg)
+
+![Riding](/img/riding_1.jpg) ![Riding2](/img/riding2.jpg) ![Riding3](/img/riding3.jpg)
+
+##### Data Collection
+
+I will be using the programming language [R](http://www.r-project.org/about.html) and [RStudio](http://www.rstudio.com) which is an IDE (Integrated Development Environment) for R, to analyze, model, and visualize the data I have collected, and Rstudio's [rmarkdown package](http://rmarkdown.rstudio.com/) to communicate my results and answer the questions in the conclusion section.   
+
+First, I'll load the libraries I need in R:
+
+```{r, message = FALSE, warning = FALSE}
+#Load the required libraries for analyis, modeling, and visualization in R
+library(tidyverse)
+library(broom)
+library(modelr)
+library(plotly)
+library(grid)
+library(gridExtra)
+
+```
+
+Next, I will create data frames for the data I collected for both surfaces in R:
+
+  - Smooth surface (asphalt) 
+  - Rough surface (motorcycle trail with large rocks solidly embedded into the surface).
+ 
+```{r}
+#Create vectors for Air Pressure in PSI, recorded Elapsed time in secs for the bike to travel 20 meters on Smooth and Rough Road 
+# Tire_Air_Pressure_PSI <- c(50, 50, 50, 40, 40, 40, 30, 30, 30, 20, 20, 20, 10, 10, 10)
+
+Tire_Air_Pressure_PSI <- rep(c(50,40,30,20,10), each =3)
+Elapsed_Time_Sec_SmR <- c(9.15, 9.35, 9.42, 9.83, 9.97, 9.77, 10.13, 10.52, 10.27, 11.05, 10.47, 11.09, 12.09, 11.52, 11.15)
+Elapsed_Time_Sec_RgR <- c(12.95, 12.10, 13.12, 12.87, 13.44, 13.77, 13.02, 13.62, 13.54, 13.57, 13.80, 14.02, 14.89, 15.02, 15.66)
+
+#bind the Air Pressure, Elapsed time vectors to create a data frame/tibble
+Data_for_BikeRuns <- tibble(Tire_Air_Pressure_PSI, Elapsed_Time_Sec_SmR, Elapsed_Time_Sec_RgR)
+
+#View the table of Data_for_BikeRuns
+Data_for_BikeRuns
+
+```
+
+Next, I will plot and visualize the collected data-set using the ggplot function and plotly.
+
+```{r}
+
+smooth_title <- c("Smooth Surface")
+rough_title <- c("Rough Surface")
+
+own_plot_function <- function(df, manipulated_var, response_var, plottitle) {
+  df %>% 
+    ggplot(aes(x = manipulated_var, y = response_var)) + geom_point(color = "firebrick") + ggtitle(paste("Data for ", plottitle))
+}
+
+smooth_surface_plot <- own_plot_function(Data_for_BikeRuns, Tire_Air_Pressure_PSI, Elapsed_Time_Sec_SmR, smooth_title)
+rough_surface_plot <- own_plot_function(Data_for_BikeRuns, Tire_Air_Pressure_PSI, Elapsed_Time_Sec_RgR, rough_title)
+
+ggplotly(smooth_surface_plot)
+ggplotly(rough_surface_plot)
+
+```
+
+Adding the line of best fit to both the data plots. The line of best fit is as close as possible to all points, and as many points above the line as below.
+
+```{r}
+ggplotly(smooth_surface_plot + geom_smooth(method = "lm", se = FALSE, color = "black"))
+ggplotly(rough_surface_plot + geom_smooth(method = "lm", se = FALSE, color = "black"))
+
+```
+
+##### Observations from Plots as per the topic "Analysis" in our Grade 6 Science Class:
+   + The plots show a negative correlation; the response variable *Elapsed time_sec* decreases as the manipulated variable *Tire Air Pressure* increases, or vice-versa.
+   + The data points in each plot shows linear relationship.
+   + The smooth surface data points are closer to the line of best fit than the rough surface data points.
+      + The difference between the actual observed elapsed time and line of best fit for the smooth surface data is smaller than for the rough surface data. So the residuals for the smooth surface data is smaller than for the rough surface data. 
+      + I expect the $R^2$ statistic will be higher for the smooth surface versus the rough surface. 
+   + *Both these plots tell me that part of my hypothesis which states the rolling resistance of a bicycle tire is inversely related to the air pressure is true.*
+
+To prove the other half of my hypothesis, I need to find out the rate of change in the elapsed time in which the bike rolls down the track as the air pressure is decreased by 10 PSI.  
+
+To find the rate of change or by how much the elapsed time decreases/increases per 10 PSI increase/decrease, we first need to find the slope of the fitted line or the relationship between the 2 variables by using the simple linear equation $Y = mx + c$, where m is the slope. 
+
+I will first find the slope by writing a function in R, then I will use the linear regression function lm() in R to build a linear model for my dataset.
+
+Our regression line can be written in slope-intercept form:
+
+  + Elapsed_Time_in_Secs = (slope)*Tire_Air_Pressure_PSI + (Intercept) 
+  + $Y = mx + c$ 
+
+Transposing, we can calculate the slope manually:
+$m = (y_{1}-{y})/(x_{1}-{x})$ 
+
+```{r}
+#Create own slope function
+own_slope <- function(x, y, x1, y1) {
+  m = (y1-y)/(x1-x)
+}
+
+```
+
+So, if I want to calculate the slope between the 2 PSI points 40 PSI and 50 PSI, then we can substitute the x and y values with Elapsed Time and PSI respectively, and make the function call.
+
+```{r}
+slope_40_50_sm <- own_slope(40, 9.83, 50, 9.15)
+
+#Print the slope value for 1 PSI increase
+slope_40_50_sm
+
+#Since the hypothesis is for 10 PSI
+slope_40_50_sm*10
+
+# To calculate %change in elapsed time, we divide the slope by the elapsed time (y), and multiply it by 100 to change it to percent 
+
+Percent_change_Elapsed_Time <- round((slope_40_50_sm*10)/9.83*100, 2)
+
+#Create a single data frame for the slope and % change in elapsed time
+single_40_50_data <- tibble(slope_40_50_sm*10, Percent_change_Elapsed_Time)
+
+#print the data frame
+single_40_50_data
+```
+
+
+This tells me that for the set of smooth surface data points (40,9.83) and (50,9.15):
+ 
+  + A 10 PSI increase (40 to 50 PSI) causes the elapsed time to decrease by `r (slope_40_50_sm)*10` and that the % change in Elapsed time in which the bike rolls down the track is `r Percent_change_Elapsed_Time`. 
+  + For these two smooth surface data points, my hypothesis is off by `r (Percent_change_Elapsed_Time) + 3`%.
+
+##### I can manually calculate the slope for each of the 15 observations in each of my datasets, and figure out the % change in the Elapsed time in which our bike rolls down the track, but I will do this with the predicted elapsed time values using the linear modeling function lm().
+
+```{r}
+#The lm() function needs the response variable(Elapsed_Time_Sec_SmR) and the manipulated (Tire_Air_Pressure_PSI) variable, and the data that contains those variables.
+
+model_lm_smooth <- lm(Elapsed_Time_Sec_SmR ~Tire_Air_Pressure_PSI, data = Data_for_BikeRuns)
+
+#To see the summary of the model
+summary(model_lm_smooth)
+
+```
+
+
+While the summary for the model contains all the statistics to explain the result, I will focus only on the ones I understand and taught in our *Grade 6 class*. 
+
+I will use lm() and tidy functions in tidyverse, modelr, and broom libraries in R as shown in [Garrett's Grolemund's MasterTidyVerse notes](http://r4ds.had.co.nz/model-basics.html#predictions). This will provide me with important statistics in a user friendly format:
+
+  + An average slope/rate of change of my response variable to the 10 PSI change of my manipulated variable. 
+  + The R-squared statistic ($R^2$) which is a number that tells us how well the model fits the actual elapsed data points.
+  + The Residual statistic which is the difference between my actual Elapsed time data points and the predicted data points.
+  + The predicted values for my response variable.
+
+```{r}
+
+#For Smooth test results, use the lm function passing the response and manipulated variables
+
+#Apply lm to the smooth surface data
+mod_smooth_1 <- Data_for_BikeRuns %>% 
+  lm(Elapsed_Time_Sec_SmR ~Tire_Air_Pressure_PSI, data = .)
+
+#Apply lm to the rough surface data
+mod_rough <- Data_for_BikeRuns %>% 
+  lm(Elapsed_Time_Sec_RgR ~Tire_Air_Pressure_PSI, data = .)
+
+#To get the intercept and slope, I'll use the tidy() function from the broom library
+smooth_slp_intcpt <- mod_smooth_1 %>% 
+  tidy() %>% 
+  select(term, estimate, std.error)
+
+smooth_slp_intcpt
+
+```
+
+
+```{r}
+#Do the same for the rough data set
+rough_slp_intcpt <- mod_rough %>% 
+  tidy() %>% 
+  select(term, estimate, std.error)
+
+rough_slp_intcpt
+
+```
+
+#### Visualization of the model: Used Example from [Garrett's Grolemund's MasterTidyVerse notes](http://r4ds.had.co.nz/model-basics.html#predictions)
+
+```{r}
+#Plot the predicted values
+Smooth_Data_plot1 <- Data_for_BikeRuns %>% 
+  add_predictions(mod_smooth_1) %>% 
+  ggplot(aes(x = Tire_Air_Pressure_PSI)) +
+  geom_point(aes(y = Elapsed_Time_Sec_SmR), color = "firebrick") +
+  geom_line(aes(y = pred)) 
+
+#Plot the residuals
+Smooth_Data_plot2 <- Data_for_BikeRuns %>% 
+  add_residuals(mod_smooth_1) %>% 
+  ggplot(aes(resid)) +
+  geom_freqpoly(binwidth = 0.5)
+
+
+grid.arrange(Smooth_Data_plot1,Smooth_Data_plot2, top = "Smooth Surface Data plots: Predicted, Residuals")
+
+#Plot the residuals
+
+```
+
+For the smooth surface, the residual plot tells us that the predictions from the observed values are not very far off.  
+
+```{r}
+#Plot the predicted values
+Rough_Data_plot1 <- Data_for_BikeRuns %>% 
+  add_predictions(mod_rough) %>% 
+  ggplot(aes(x = Tire_Air_Pressure_PSI)) +
+  geom_point(aes(y = Elapsed_Time_Sec_RgR), color = "firebrick") +
+  geom_line(aes(y = pred)) 
+
+#Plot the residuals
+Rough_Data_plot2 <- Data_for_BikeRuns %>% 
+  add_residuals(mod_rough) %>% 
+  ggplot(aes(resid)) +
+  geom_freqpoly(binwidth = 0.5)
+
+grid.arrange(Rough_Data_plot1,Rough_Data_plot2, top = "Rough Surface Data plots: Predicted, Residuals")
+
+```
+
+Repeating the same commands and code for both the smooth and rough data points is not very efficient, so I will use the examples of the map() functions from the library purrr and use it with the tidy(), glance() and augment() functions, as provided in [Garrett's Grolemund's MasterTidyVerse notes](http://r4ds.had.co.nz/model-basics.html#predictions) from [RStudio conference 2017](http://www.rstudio.com/conference/).
+
+```{r}
+#First I will create the formulas with the Elapsed time and PSI variables so we can map it to lm()
+
+formulas_for_lm <- list(
+  mod_smooth <- Elapsed_Time_Sec_SmR ~Tire_Air_Pressure_PSI,
+  mod_rough <- Elapsed_Time_Sec_RgR~Tire_Air_Pressure_PSI
+)
+
+#'ll map the formulas created to function lm, and provide it the Data_for_BikeRuns data set to get the intercept and slope values using tidy for both the smooth and rough data sets
+
+slope_intercept <- formulas_for_lm %>% 
+  map(lm, data = Data_for_BikeRuns) %>% 
+ map_df(tidy, .id = "model") %>% 
+  select(model, term, estimate, std.error)
+
+slope_intercept
+```
+
+
+For the smooth surface data points (model 1), the statistics from the model shows that:
+
++ For every 1 PSI increase in the pressure of the tire, the required time (elapsed time) to complete the travel distance goes down by `r (slope_intercept$estimate[[2]])` secs.
++ Therefore, a 10 PSI increase causes the elapsed time to decrease by `r (slope_intercept$estimate[[2]])*10` secs. Or conversely, for 10 PSI decrease, the required time to complete the travel distance goes up by `r (slope_intercept$estimate[[2]])*10` secs.
++ The intercept tells me that at 0 PSI, the elapsed time for the bike to roll down the 20 meters track is `r slope_intercept$estimate[[1]]` secs; this is not possible because a tire with 0 PSI will not be able to roll.
++ The std.error shows that the time required by the bike to complete the 20 meters travel distance can vary by `r slope_intercept$std.error[[2]]` secs. 
+
+Similarly for the rough surface data points(model 2):
+
++ For every 1 PSI increase in the pressure of the tire, the required time (elapsed time) to complete the travel distance goes down by `r (slope_intercept$estimate[[4]])` secs.
+  + Therefore, a 10 PSI increase causes the elapsed time to decrease by `r (slope_intercept$estimate[[4]])*10` secs. Or conversely, for 10 PSI decrease, the required time to complete the travel distance goes up by `r (slope_intercept$estimate[[4]])*10` secs.
+  + The intercept tells me that at 0 PSI, the elapsed time for the bike to roll down the 20 meters track is `r slope_intercept$estimate[[3]]` secs; this is not possible because a tire with 0 PSI will not be able to roll.
+  + The std.error shows that the time required by the bike to complete the 20 meters travel distance can vary by `r slope_intercept$std.error[[4]]` secs. 
+
+Now, let's extract the $R^2$ for each of the models.
+```{r}
+
+#I'll map the formulas created to function lm(), and provide it the Data_for_BikeRuns data set, and use glance() to get the r-squared values 
+Rsquared_fit <- formulas_for_lm %>% 
+  map(lm, data = Data_for_BikeRuns) %>% 
+  map_df(glance, .id = "model") %>% 
+  select(model, r.squared, p.value)
+#Print the R-Squared values
+Rsquared_fit
+
+```
+
+For the smooth surface data set, the $R^2$ value of `r Rsquared_fit$r.squared[[1]]` is close to 1 which tells me the fit of the model is really good. It is a high R.squared fit for the smooth data set and an Okay fit on the rough data set whose $R^2$ value is `r Rsquared_fit$r.squared[[2]]`.  This tells me that if I were choose tire pressure(measured in PSI) as an important measurement that could help explain how the rolling resistance of the bike would vary based on tire pressure(PSI), then I would be correct. It is why we get a high R.squared fit. 
+
+Finally to get the predicted Elapsed time values (the line of best fit values) and how off the predicted values are compared to our actual elapsed time data, I will use the augment() function.
+
+```{r}
+#To get the predictions and residuals from the model along with the original data points, I will use the augment() function
+
+predicted_residual_val <- formulas_for_lm %>% 
+  map(lm, data = Data_for_BikeRuns) %>% 
+  map_df(augment, .id = "model") %>% 
+  select(model, Elapsed_Time_Sec_SmR, Tire_Air_Pressure_PSI, .fitted, .resid, Elapsed_Time_Sec_RgR)
+
+predicted_residual_val
+
+```
+
+To calculate the percentage change on the Elapsed time when the PSI is changed by 10 PSI (second part of my hypothesis), I will use the slope and divide it by the predicted Elapsed Time values from the model.
+
+```{r}
+perc_chg_smooth <- predicted_residual_val%>% 
+  filter(model ==1) %>% 
+  distinct(Tire_Air_Pressure_PSI,.fitted) %>% 
+  mutate(perc_chg = ((slope_intercept$estimate[[2]]*10)/lead(.fitted,1))*100, Delta_myHypothesis = (perc_chg-(-3)))
+
+perc_chg_rough <- predicted_residual_val%>% 
+  filter(model ==2) %>% 
+  distinct(Tire_Air_Pressure_PSI,.fitted) %>% 
+  mutate(perc_chg = ((slope_intercept$estimate[[4]]*10)/lead(.fitted,1))*100, Delta_myHypothesis = (perc_chg-(-3)))
+
+perc_chg_smooth
+
+```
+
+For the smooth surface data set, it appears that my hypothesis of an increase of 3% in elapsed time for every 10 PSI decrease is not very accurate to the average percent change of `r mean(perc_chg_smooth$perc_chg, na.rm = TRUE)` of the predicted values. 
+
+```{r}
+perc_chg_rough
+
+```
+
+For the rough surface data set, it appears that my hypothesis of an increase of 3% in elapsed time for every 10 PSI decrease is very close to the average percent change of `r mean(perc_chg_rough$perc_chg, na.rm = TRUE)` of the predicted values. 
+
+
+```{r, echo = FALSE, eval = FALSE}
+mut_test <- Data_for_BikeRuns %>% 
+  mutate(Calc_slp_sm = ((lead(Elapsed_Time_Sec_SmR, 3) - Elapsed_Time_Sec_SmR)/(lead(Tire_Air_Pressure_PSI,3)-Tire_Air_Pressure_PSI))*10, per_change_sm =round((Calc_slp_sm/Elapsed_Time_Sec_SmR)*100,2), Calc_slp_rg = ((lead(Elapsed_Time_Sec_RgR, 3) - Elapsed_Time_Sec_RgR)/(lead(Tire_Air_Pressure_PSI,3)-Tire_Air_Pressure_PSI))*10, per_change_rg =round((Calc_slp_rg/Elapsed_Time_Sec_RgR)*100,2))
+
+avg_mut_test <- mut_test %>% filter(Tire_Air_Pressure_PSI!=10) %>% summarize(avg_slope_sm = mean(Calc_slp_sm), avg_perc_chg_sm = mean(per_change_sm), avg_slope_rg = mean(Calc_slp_rg), avg_perc_chg_rg = mean(per_change_rg))
+
+avg_data_set <- Data_for_BikeRuns %>% 
+  group_by(Tire_Air_Pressure_PSI) %>% 
+  summarize(avg_elasped_time_sm = mean(Elapsed_Time_Sec_SmR), avg_elapsed_time_rg = mean(Elapsed_Time_Sec_RgR))
+
+avg_data_calc <- avg_data_set %>% mutate(avg_Calc_slp_sm = ((lag(avg_elasped_time_sm) - avg_elasped_time_sm)/(lag(Tire_Air_Pressure_PSI)-Tire_Air_Pressure_PSI))*10, per_change_sm =round((avg_Calc_slp_sm/avg_elasped_time_sm)*100,2), avg_Calc_slp_rg = ((lag(avg_elapsed_time_rg) - avg_elapsed_time_rg)/(lag(Tire_Air_Pressure_PSI)-Tire_Air_Pressure_PSI))*10, per_change_rg =round((avg_Calc_slp_rg/avg_elapsed_time_rg)*100,2))
+
+```
+
+### Extra
+
+Interpolation: Interpolation is where we find a value inside our set of data points.
+Interpolating to get an estimate of the elapsed time when PSI is 15
+```{r}
+Elapsed_15PSI <- mod_smooth_1$coefficients[[2]]*15 + mod_smooth_1$coefficients[[1]]
+
+Elapsed_15PSI
+```
+
+Extrapolation: Extrapolation is where we find a value outside our set of data points
+Extrapolating to get an estimate of the elapsed time when PSI is 60
+```{r, eval = FALSE}
+Elapsed_60PSI <- mod_smooth_1$coefficients[[2]]*60 + mod_smooth_1$coefficients[[1]]
+
+Elapsed_60PSI
+```
+
+### Conclusion
+
+The Tire Air Pressure PSI affects the rolling resistance of a Mountain Bike (measured in elapsed time secs), as we have proved that it is negatively correlated, the slope or rate of change per 10 PSI is `r slope_intercept$estimate[[2]]*10` (for smooth surface) and `r slope_intercept$estimate[[4]]*10` secs(for rough surface) which means the air pressure and rolling resistance are inversely related.  
+
+The correct part of my hypothesis is that for every 10 PSI decrease, the elapsed time in which the bike rolls down the track will increase. The incorrect part is the % of decrease which is an average of `r mean(perc_chg_smooth$perc_chg, na.rm = TRUE)` for the smooth surface, and an average of `r mean(perc_chg_rough$perc_chg, na.rm = TRUE)` for the rough surface, versus the 3% in my hypothesis.  
+
+The problems I encountered when doing the test are as follows:
+
+- *Started raining when we tested the rolling resistance on the rough surface*
+- *Hard to get the right terrain and incline for our test. As it is a wet winter it took a couple hours to find a spot for the rough test. We wanted a surface that was rough but not soft so we needed a test track with a minimum of soil and vegetation.*
+- *Had to use a slightly steeper 4 degree grade for the rough surface test as the bike would not remain stable using the 3 degree grade of the smooth surface test.*
+- *Difficult to start moving consistently for each test.*
+
+The additional piece I'd like to investigate:
+
+  - Soft versus hard surface. If the trail is soft mud, or contains a lot of soft vegetation, does tire PSI affect the rolling resistance?
+
+Our test proves that:
+
+  - Higher air pressure does roll faster.  This matters because mountain bikes are limited to the power provided by a human, so efficiency is a top priority.
+  - Traction is also very important, and lower pressure provides better traction.  
+  - This test makes it easier to make a data-driven decision when a bike rider has to make the trade-off between traction and efficiency.
+
+### Background Information
+- [Schwalbe](http://www.schwalbe.com/en/rollwiederstand.html)
+
+-They claim tires inflated to a high PSI are faster on a smooth surface and tires inflated to a low PSI are faster on a rough surface.  This is a biased source and they offer no evidence of their claims.  Definitions from this source:
+- Rolling resistance: Energy that is lost when the tire is rolling
+- Air resistance : Resistance to air that rises in a squared ratio with increased speed.
+- Gradient resistance : The main resistance to overcome when riding uphill (Due to gradient resistance we modified our test to use the smallest grade possible instead of what we originally proposed).  
+
+- *[Analytic Cycling](http://www.analyticcycling.com/forces)
+
+- Various road bicycle tires were tested against a smooth, steel drum.  The graph shows a rolling resistance decreasing with increased air pressure.  The source concludes that the returns from increasing pressure diminished at a certain point.  Note that these tires are quite smoother and smaller than mountain bike tires.
+
+- *[Engineering Toolbox](http://www.engineeringtoolbox.com/rolling-friction-resistance-d_1303httd)
+
+- Has mathematical formulas which show more air pressure resulting in less rolling resistance.  Note Math is outside of grade level.
+
+### R Challenges
+
+- I did not understand what data_grid() from the modelr library does
+- Could not replace Model 1, 2 with names (smooth and rough) that would identify the model
+- Could not show my plots side by side using ggplot and plotly. 
+- Difficult to remember which functions (tidy, glance, augment) extracted which pieces of the lm model statistics.
+
+Overall, the project was long but fun, and I look forward to next year's STEM Expo. I'm also hoping to build a basic shiny app to demo my expo results.
+
+I'd like to thank [RStudio (Garrett Grolemund, J.J. Allaire, Hadley Wickham, Roger Oberg, )](http://www.rstudio.com) and [DataCamp (Nick Carchedi, Jonathan Cornelissen)](http://www.datacamp.com) for their kindness and all the help and encouragement they have given me to learn R. Thank you so much.   
+
+### STEM Expo Pictures
+![Expo Day](/img/Expo1_tst.jpg) 
+![Biker&DataScientist](/img/Expo2_ts.jpg)
+
+
+<!--chapter:end:2017-03-26-does-tire-air-pressure-affect-the-rolling-resistance-of-a-mountain-bike.Rmd-->
+
+---
+title: Intro Science Project Grade 7
+thumbnail: "/img/testpic.png"
+author: Tara Kenner
+date: '2018-02-11'
+slug: raspberry-pi-stem-project
+categories:
+  - Raspberry Pi
+  - Engineering
+  - STEM
+tags:
+  - R Markdown
+  - Security Camera
+  - R
+  - Statistics
+  - Ruby
+---
+
+
+### What is your title- Choose something that reflects your engineering goal. 
+
+Making a Security Camera using a Raspberry pi
+
+### What is your Engineering Problem-What problem are you trying to solve? 
+
+Our dog can sometimes get into trouble at home and we want to keep tabs on him.
+
+### Engineering goal- what you are trying to produce. 
+
+A video camera that we can monitor from our phones
+
+### What topics will be researched to find out more about what is known about your project and how to design your project. LIST AT LEAST 3. (keywords/topics to use in a literature search)
+
+Raspberry Pi, 
+Security camera design,
+How to connect a security camera to your phone and parts needed to build a security camera
+
+### Write a problem statement that follows this format guideline: Who need(s) what because why. In other words, “_____ need(s) _________ because________.”
+
+Our family needs a security camera because we want to see how our dog is doing during the day when we're not home.
+
+### Draft of Materials: List equipment needed to complete your project.
+
+*  Raspberry Pi, 
+*  Raspberry Pi Camera module, 
+*  Camera cable, 
+*  MicroUSB power supply,
+*  Micro SD card, 
+*  Wood screws, 
+*  1/8" metal plate
+
+### Draft of Engineering Methods: The method describes how you will design and test your device to safely complete the project
+
+1.  Follow online directions to assemble Raspberry Pi and camera
+2.  Load operating system and camera software
+3.  Modify configuration files (maybe custom code with parents assistance)
+4.  Connect to monitor to see if running correctly at this point
+5.  Connect to WiFi
+6.  Configure Router port (parent will do this to ensure it is secure)
+7.  Create web landing page. (with help)
+8.  Test from web connected device
+9.  Stretch goal - Configure recording when motion detector activated
+
+### List of three sources of information on your topic, cited in APA format. None of the sources may be encyclopedias.All of the sources must be recent, less than 5 years. If you have a question about a source, please ask before the due date 
+
+*  <a href="https://www.raspberrypi.org/" target="_blank">Raspberry Pi Official Site</a>
+*  [Raspberry Pi Official Site](https://www.raspberrypi.org/)
+*   [Understanding Security Camera Systems](https://www.wikihow.com/Understand-Security-Camera-Systems)
+*   [Hackster io Smart Security Camera Info](https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd)
+
+
+###  Results after the project
+
+![](/img/Raspberrypi1.jpg)
+
+1.  Follow online directions to assemble Raspberry Pi and camera
+[Raspberry Pi assembly directions](https://www.canakit.com/pi-case)
+2.  Load operating system and camera software
+We had a preloaded microSD card with NOOBS.
+3.  Modify configuration files (maybe custom code with parents assistance)
+[Security Camera Instructions](https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd)
+4.  Connect to monitor to see if running correctly at this point
+5.  Connect to WiFi
+6.  Open the terminal and run the unix command to enable the camera
+```{r, eval = FALSE}
+sudo raspi-config
+```
+
+7.  Now we verify that the camera works by running 
+```{r, eval = FALSE}
+raspistill -o image.jpg
+```
+
+
+```{r, eval = FALSE}
+source ~/.profile 
+workon cv
+```
+
+```{r,eval = FALSE}
+cd Smart-Security-Camera
+```
+
+
+In the mail.py file (using Python 3.5) use the following:
+
+```{r, eval = FALSE}
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+-D ENABLE_PRECOMPILED_HEADERS=OFF
+```
+
+
+```{r, eval = FALSE}
+pip install -r requirements.txt
+# Email you want to send the update from (only works with gmail)
+fromEmail = 'myemail@gmail.com'
+fromEmailPassword = 'password1234'
+# Email you want to send the update to
+toEmail = 'anotheremail@gmail.com'
+
+email_update_interval = 600 # sends an email only once in this time interval
+video_camera = VideoCamera(flip=True) # creates a camera object, flip vertically
+object_classifier = cv2.CascadeClassifier("models/fullbody_recognition_model.xml") # an opencv classifier
+
+python main.py
+```
+
+You can view a live stream by visiting the ip address of my pi in a browser on the same network. Y can find the ip address of your Raspberry Pi by typing ifconfig in the terminal and looking for the inet address.
+
+Visit <raspberrypi_ip>:5000 in your browser to view the stream.
+
+Note: To view the live stream on a different network than your Raspberry Pi, you can use ngrok to expose a local tunnel. Once downloaded, run ngrok with ./ngrok http 5000 and visit one of the generated links in your browser.
+
+
+
+8.  Install openCV by using this 
+[tutorial](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/)
+6.  Configure Router port (parent will do this to ensure it is secure)
+7.  Create web landing page. (with help)
+8.  Test from web connected device
+First, install git: sudo apt-get install git -y
+
+Once that's installed, go to your home directory and clone the project using:
+
+git clone https://github.com/HackerHouseYT/Smart-Security-Camera
+
+9.  Stretch goal - Configure recording when motion detector activated
+
+
+### Opening the port
+Go to Downloads folder 
+```{r, eval = FALSE, echo = FALSE}
+cd Downloads
+#Run the command
+./ngrok authtoken 34TANXmfyKaK6qPJmi5TR_5eTXjsdCMcFWuAJMjF76L
+./ngrok http -auth="prince:nubu" 5000
+This will pop up the screen that will give us the Forwarding:(Use the https) https: address for secure tunnel.
+
+When authentication pops up type username as:prince, and password: nubu (./ngrok http -auth="prince:nubu" 5000) 
+
+```
+
+
+
+
+
+
+
+
+
+<!--chapter:end:2018-02-11-raspberry-pi-stem-project.Rmd-->
+
+---
+title: Geometry With R
+author: Tara Kenner
+date: '2018-02-17'
+slug: geometry-with-r
+categories:
+  - math
+  - geometry
+  - r
+tags:
+  - ggplot
+  - highcharter
+---
+
+## Area of a circle
+```{r, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(ggforce)
+
+library(plotrix)
+```
+
+In my math class, we are studying how to calculate the area, circumference and diameter of a circle.
+
+```{r}
+circlearea_r <- function(pi, radius) {
+  
+  area_circle <- pi*radius^2
+}
+
+test_circle <- circlearea_r(22/7, 5)
+
+test_circle
+```
+
+```{r}
+circlearea_d <- function(pi, diameter) {
+  
+  area_circle <- (pi*diameter^2)/4
+}
+
+test_circled <- circlearea_d(22/7, 12)  
+
+test_circled
+  
+```
+
+```{r}
+circle_area_c <- function(pi, circum) {
+  
+  area_circle <- (circum^2)/(4*pi)
+}
+  
+test_circlec <- circle_area_c(22/7, 16)
+  
+test_circlec
+
+
+```
+
+##Drawing circles with ggplot
+```{r}
+ggplot() + geom_circle(aes(x0 = 0, y0 = 0, r = 5, fill = 5))
+```
+
+
+```{r}
+symbols (0, 0, circles=1,fg="red")
+
+ # plot(BOD)
+ # require(plotrix)
+ # draw.circle(4,14,2,border="blue",col="tan2")
+```
+
+
+
+
+<!--chapter:end:2018-02-17-geometry-with-r.Rmd-->
+
+---
+title: Grade 7 ISB STEM Expo Final Assignment
+author: Tara Kenner
+date: '2018-02-22'
+slug: grade-7-isb-stem-expo-final-assignment
+categories:
+  - Engineering
+  - Raspberry Pi
+  - r
+  - STEM
+tags:
+  - blogdown
+  - R Markdown
+  - Security Camera
+  - School project
+---
+
+
+
+![Rasberry Pi](/img/rasppi.jpg) ![Camera Module](/img/camera module1.jpg) 
+
+
+## Introduction
+
+Our family needs a security camera because we want to see how our dog is doing during the day when we're not home. Building a security camera using a Raspberry Pi + camera module is affordable and will enable us to see a live video of our dog on our phones. 
+
+Google search using the terms "security camera raspberry pi" show this is a very popular engineering project and there are several tutorials and blog posts on building such a security camera. The <a href = "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd" target = "_blank"> Hackster io Smart Security Camera Info </a> offered the best tutorial in achieving the objective of seeing a live video of our dog on our phones by building a security camera using a Raspberry Pi.   
+
+The report includes:
+
+* Abstract: A short summary of the report
+* Materials: List of the materials used for building the security camera system
+* Procedure: Step-by-step details of the design and testing of the system to complete the project
+* Test & Improve: If any improvements/enhancements to be made to the system
+* Obstacles: Challenges encountered during the process
+* Results: Demo of final output
+* Conclusion: Summary of the report
+* Acknowledgments
+* References
+
+
+## Abstract
+
+**Purpose:** Our dog can sometimes get into trouble at home, especially when he is alone, and we wanted to figure an affordable way to keep tabs on him when we are away during the day. Making a security camera that outputs a live video stream of our dog at home, which we can watch from our phones at a secure web address is therefore the goal of this project.
+
+**Procedure:** Using [online instructions](https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd), assemble and configure the [Raspberry Pi](https://www.raspberrypi.org/) and the camera module, downloaded and modify the [openCV software](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/) that detects objects in the video feed, and download/clone the [Smart-Security-Camera](https://github.com/HackerHouseYT/Smart-Security-Camera) project from github. Finally, run the python program `python main.py` at the terminal, which outputs the live video stream. View the live video stream using the ip address of the raspberry pi; the ability to view this live video stream on a device with internet connectivity is the design criteria for the project.  
+
+**Results:** The assembly and configuration of the Raspberry Pi and Camera went smoothly; I was able to quickly test the camera using the `raspistill -o image.jpg` command in the terminal. Key challenges I encountered included installing/configuring the open source software, [openCV](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/), and configuring a secure port to monitor the video stream on a different network other than my raspberry pi. With the help of online resources/comments section of the online tutorial, the challenges were resolved.  The live video stream of our dog can be viewed by visiting the ip address of my raspberry pi in the browser.  
+
+**Conclusion**:  The product built using "Raspberry Pi + Camera module + OpenCV/smart-security-camera software"" successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.
+
+### Materials
+
+*  Raspberry Pi3
+*  Raspberry Pi Camera module
+*  Camera cable
+*  MicroUSB power supply
+*  Micro SD card 
+*  HDMI to HDMI Cable
+*  USB to USB cable
+
+
+### Procedure
+
+1.  Follow online directions to assemble Raspberry Pi and camera: [Raspberry Pi assembly directions](https://www.canakit.com/pi-case)
+2.  Load operating system.  I had a preloaded microSD card with NOOBS.
+3.  Connect to monitor to see if running correctly at this point
+4.  Connect to WiFi
+5.  Open the terminal and run the unix command to enable the camera
+
+```{r, eval = FALSE}
+sudo raspi-config
+```
+
+6.  Now we verify that the camera works by running the command
+
+```{r, eval = FALSE}
+raspistill -o prince.jpg
+```
+
+![Prince](/img/Prince.png)
+
+7.  Install openCV by using this 
+[tutorial](https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/).  A few of the unix commands shown for the install.  Please follow tutorial for exact steps. 
+
+```{r, eval = FALSE}
+
+#install dependencies step #2 per the online tutorial
+$ sudo apt-get update
+$ sudo apt-get upgrade
+
+#After installing dependencies step #2 per the online tutorial, install the openCV sofware
+cd ~
+$ wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip
+$ unzip opencv.zip
+
+$ wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip
+$ unzip opencv_contrib.zip
+```
+
+8.  Modify configuration files per online instructions (with parents' help)
+9.  Clone Smart-Security-Camera project from [git](https://github.com/HackerHouseYT/Smart-Security-Camera)
+
+```{r, eval = FALSE}
+source ~/.profile 
+workon cv
+cd Smart-Security-Camera
+```
+
+10. Configure mail.py and main.py in the Smart-Security-Camera directory using the 'pico' text editor or other editor of your choice. In the mail.py file (using Python 3.5) use the following:
+
+```{r, eval = FALSE}
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+-D ENABLE_PRECOMPILED_HEADERS=OFF
+```
+
+
+```{r, eval = FALSE}
+pip install -r requirements.txt
+# Email you want to send the update from (only works with gmail)
+fromEmail = 'myemail@gmail.com'
+fromEmailPassword = 'password1234'
+# Email you want to send the update to
+toEmail = 'anotheremail@gmail.com'
+
+email_update_interval = 600 # sends an email only once in this time interval
+video_camera = VideoCamera(flip=True) # creates a camera object, flip vertically
+object_classifier = cv2.CascadeClassifier("models/fullbody_recognition_model.xml") # an opencv classifier
+
+```
+
+11. Run the program with the following command: 
+```{r, eval =FALSE}
+python main.py
+```
+
+12. View the live video stream by visiting the ip address of my pi in a browser.  Find the ip address of the pi using the `ifconfig` command and look for the inet address.
+Visit `<raspberrypi_ip>:5000` in the browser to view the stream.
+
+13.  To view the live stream on a different network other than the pi, an account is needed with ngrok (My parents helped with this part).
+
+### Test & Improve
+
+* Take extra care when inserting the camera module cable into the Raspberry Pi.
+* Update online instructions for installing openCV software with all relevant fixes/updates.
+
+### Obstacles
+
+* Installing/configuring the open source software, openCV
+* Configuring a secure port to monitor the video stream on a different network other than my raspberry pi. 
+
+### Future Applications
+
+*	Music on Raspberry Pi using Sonic P
+* Photo Booth using Raspberry Pi
+* Portable Digital eBook Library
+
+### Results
+
+* Live Demo of the video Stream
+
+### Conclusion
+
+The product built using “Raspberry Pi + Camera module + OpenCV/smart-security-camera software”" successfully met the design criteria for this engineering project, which is the ability to view a live video stream of our dog by visiting the ip address of my raspberry pi in the browser, or if in a different network other than my raspberry pi via the ./ngrok http 5000 site.
+
+#### Acknowledgements
+
+* My parents, a family friend and my dog
+
+
+![Nubu](/img/PrinceNubu.jpg)
+
+#### References
+ 
+*  Project: Getting Started with The Raspberry Pi. Retrieved from "https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started" <a href="https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started" target="_blank">Raspberry Pi Project Page</a>
+*  How to understand Security Camera Systems. Retrieved from "https://www.wikihow.com/Understand-Security-Camera-Systems" <a href = "https://www.wikihow.com/Understand-Security-Camera-Systems" target="_blank"> Understanding Security Camera Systems</a>
+* Smart Security Camera. Retrieved from "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd"  <a href = "https://www.hackster.io/hackerhouse/smart-security-camera-90d7bd" target = "_blank"> Hackster io Smart Security Camera Info </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--chapter:end:2018-02-22-grade-7-isb-stem-expo-final-assignment.Rmd-->
+
+---
+title: Forces
+author: Tara Kenner
+date: '2018-02-25'
+slug: forces
+categories:
+  - Physics
+  - r
+  - math
+tags:
+  - blogdown
+  - ggplot
+  - highcharter
+  - Math
+  - Equations
+---
+
+In my Physics class, we are learning about Force and Newton's Laws. 
+
+I've learned quite a bit about the difference between `speed`, `velocity`, `acceleration`.  `Speed` is distance/time (measured in m/sec: how far one travels a meter in 1 sec or whatever unit of distance and time specified specified.  It is a scalar), `Velocity` is speed with direction (so it is a vector; has both direction and magnitude), and `acceleration` is the rate of change of velocity (it is a vector, and measured in m/sec^2.  So acceleration is the change in m/sec/sec). 
+
+I've also learned the difference between `mass` and `weight`; `mass` is the total substance in a body (measured in KG/lb, and it is a scalar; only has magnitude), while `weight` is a force which is measured in Newtons. It is how hard gravity pulls on an object.  
+
+I will create a function that calculates Force in Newtons given Mass and Acceleration. This is Newton's second law of motion `F = m*a` where, F is the force, m is the mass and a is the acceleration.
+
+```{r}
+
+#The function
+ForceEquation <- function(mass, acceleration) {
+  
+  F = mass*acceleration
+  return(F)
+}
+
+#Call the function ForceEquation with mass 6 Kg, and acceleration @ 22 m/sec^2
+ForceEquation(6, 22)
+```
+
+Using the same second law of motion equation, I can calculate the mass M.
+
+```{r}
+
+MassEquation <- function(force, gravity_a) {
+  
+ M = force/gravity_a 
+  return(M)
+}
+
+#Call the MassEquation Function with Force 196 Newtons, and gravitational acceleration at 9.8m/sec^2
+MassEquation(196, 9.8)
+```
+
+
+
+
+
+
+
+<!--chapter:end:2018-02-25-forces.Rmd-->
+
+---
+title: 'Grade 5: Our Journey Through R'
+author: Tara K and Ben W
+date: '2016-02-17'
+slug: grade-5-our-journey-through-r
+categories:
+  - STEM projects
+tags:
+  - R ggvis
+  - School project
+---
+
+###Description
+
+**Started: December 27th, 2015**
+
+**Updated: January 27, 2016**
+
+**Project**: Explore and Calculate Statistical Concepts (*mean, median*, and *range*) we learned during our Grade 5 Math class, in a programming language "R".
+
+
+**Deliverables**:
+
+1.  A Website that details our project's reproducible research **(Started: Dec 27th, 2015 - Done: February 6th, 2016)**
+2.  Our mean, median, and range functions written in R **(Started: Mid-December 2015 - Done: January 22nd, 2016)**
+3.  Plots of our data using the ggvis package **(Done: January 29th, 2016)**
+4.  A web Application (shiny app) in R **(Work In Progress)**
+5.  Certification of Completion of **Introduction to R** by Datacamp **(Done: January 7th, 2016)**
+
+**Our Journey**:
+
+1.  We started our project on October 1st, 2015.
+
+2.  We started learning the R programming language by signing up for an interactive **Introduction to R** course offered by [DataCamp](https://www.datacamp.com/home).  The course has 6 chapters: Intro to Basics, Vectors, Matrices, Factors, Data Frames, Lists. 
+
+3.  We will be completing all the 6 chapters and programming exercises by the end of next week, January 7th, 2016.  **This is Done**
+
+4.  We started our website for our project's reproducible research on December 27th, 2015.  **Updated it on January 25th/27th 2016 and February 6th/8th 2016**
+
+4. We have completed building our R application, but we will attempt to build the R Shiny web application by the first week of February 2016.
+
+
+Below is a sample of R code that we have written so far:
+
+```{r}
+#Build the character and numeric vectors and assign it to the variables
+districts<-c("District1", "District2", "District3", "District4", "District5", "District6", "District7", "District8")
+months<- c ("May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec")
+score<- c (5,7,15,12,0,2,6,6)
+
+#Build the data frame NaughtyNice using the data.frame function
+NaughtyNice <-data.frame(districts, months, score)
+
+#Print the dataframe NaughtyNice
+NaughtyNice
+```
+
+
+```{r}
+#plot the score vector on the y-axis and districts on the x-axis
+plot(NaughtyNice$score, type = "p", xlab = "Districts", ylab = "Scores")
+#plot(NaughtyNice)
+```
+
+```{r warning = FALSE, error = FALSE, message = FALSE}
+#load required libraries
+library(ggvis)
+library(dplyr)
+library(gtools)
+```
+
+
+**Using the read.csv function and ggvis package for plots**
+```{r}
+#we can also read data files in R by using the function read; in this case we are reading a csv file that contains data for our naughtynice score and store it in a dataframe object csvnicenaughty
+csvnicenaughty<- read.csv("../../static/data/testscore.csv", stringsAsFactors = F)
+
+#Then we plot the score from the data file using the ggvis plotting package in R
+#We use the %>% or pipe function which passes saved data to the function group_by
+#which then passes it to the function ggvis for the plot.  The %>% lets makes the 
+#code easier to write and understand. 
+
+csvnicenaughty %>% group_by(Districts) %>% ggvis(x = ~Districts, y = ~Score) %>% layer_bars(fill = ~Districts)
+```
+```{r}
+#We can also use the box-plot or the box-whisker plot using the ggvis package, so we can see the median and range of the scores.
+csvnicenaughty %>% group_by(Districts) %>% ggvis(x = ~Districts, y = ~Score) %>% layer_boxplots(fill = ~Districts)
+```
+```{r}
+#We will now write our own functions and compare the result to the same in-built functions in R
+
+#Our mean function
+ownmean <- function(x) {
+  meanresult <- sum(x)/length(x)
+  return(meanresult)
+}
+
+#Call own mean function on csvnicenaughty data
+ownmean(csvnicenaughty$Score)
+#Compare to built-in mean function in R
+mean(csvnicenaughty$Score)
+
+```
+
+```{r}
+#Our range function
+ownrange <- function(x) {
+  totalnum <- length(x)
+  sortednnice <- sort(x, decreasing = FALSE)
+  rangeresult <- sortednnice[totalnum]-sortednnice[1]
+  return(rangeresult)
+}
+
+#Call own range function on csvnicenaughty data
+ownrange(csvnicenaughty$Score)
+#Compare to built-in range function in R
+range(csvnicenaughty$Score)
+```
+```{r}
+
+ownmedian <- function(x) {
+  sortednnice <- sort(x, decreasing = FALSE)
+  #divide the total number of scores by 2 to find the mid point
+  halflength <- length(x)/2
+    if (odd(length(x))) {
+      sortednnice[halflength+1]
+    }
+  else {
+     (sortednnice[halflength]+sortednnice[halflength+1])/2
+  }
+  
+}
+
+#Call our own median function on our stored data
+ownmedian(csvnicenaughty$Score)
+
+#call R's in-built median function
+median(csvnicenaughty$Score)
+```
+
+```{r, echo = FALSE}
+#R shiny app is work in progress
+
+# inputPanel (
+#   selectInput("month",
+#                   label = "Choose TimeFrame",
+#                   choices = list("October", "November", "December", "January", "All"))
+# )
+
+#   renderPlot({
+#    if(input$month != "All")
+#    {
+#      plotdata <- csvnicenaughty %>% filter(Months == input$month) 
+#      ggvis(plotdata, x = ~Districts, y = ~Score) %>% layer_bars(fill = ~Districts)
+#      
+#    }
+#    else {
+#      ggvis(csvnicenaughty, x = ~Districts, y = ~Score) %>% layer_boxplots(fill = ~Districts)
+#    }
+#   })
+```
+
+###Challenges we faced
+These were the challenges that we had to deal with when learning R and completing the project:
+
+1.  Learning the new syntax of R
+2.  Writing the functions
+3.  Finding the mistakes in our R code
+
+###The Fun Part
+
+1. Seeing our code work
+2. Collecting the data points 
+3. Creating the dataframe
+
+###Future with R
+We plan to continue learning R by:
+
+1. Completing Intermediate courses offered by DataCamp
+2. Making a shiny application 
+3. Learning the ggvis package offered by DataCamp
+
+###Pictures of the Science Fair
+![Science Fair 2016](ScienceFair16_TB.JPG)
+![Science Fair 2016](ScienceFair16_wTeacher.JPG)
+
+<!--chapter:end:2018-03-06-grade-5-our-journey-through-r.Rmd-->
+
+---
+title: Forces and Motion Review
+author: Tara Kenner
+date: '2018-03-18'
+slug: forces-and-motion-review
+categories:
+  - Physics
+  - Newton’s Laws
+tags:
+  - Math
+  - Equations
+---
+
+### Distance, Speed and Velocity
+
+* Define vector
+
+A vector has magnitude and direction. For example: velocity, acceleration, weight.
+
+* What two things must a vector always have?
+
+Magnitude and direction.
+
+* Distinguish (explain the difference) between distance and displacement.
+
+Distance only has magnitude but displacement has magnitude and direction. Distance is a scalar and displacement is a vector.
+
+`Speed = distance/time`, and `velocity = displacement/time in a direction`.
+
+* What are the units for distance and displacement?
+
+Distance can be measured in m, cm, inch, km, mi and displacement is all of them with direction. Example = 5m NW
+
+* Define speed and its units
+
+Speed is how fast something moves and its units are m/sec or km/hr or mi/hr
+
+* What are the two types of speed?
+
+Constant and instantaneous speed. Constant is the average speed (how far an object travels over that period of time) and instantaneous is speed at an instant in time.
+
+* What is the equation used to calculate speed?
+
+`speed = distance/time`
+
+* If Joe throws the football 45 meters in 5 seconds, what is the average speed of the football?
+
+```{r, eval = FALSE}
+speed = 45/5
+speed = 9 m/s
+```
+
+*Lisa ran 2000 m at an average speed of 3 m/s before she got caught. How long did she run?
+
+```{r, eval = FALSE}
+3m/s = 2000m/t
+3m/s*t = 2000m*1
+t = 2000m/3m/s
+t = 666.66
+```
+
+*Tom rides his motorcycle at an average speed of 25m/s for 500 sec. How far did he ride?
+```{r, eval = FALSE}
+25m/sec = d/500sec
+d = 25m/sec*500sec
+d = 12500m
+```
+
+
+*Define Velocity
+
+Velocity is speed with direction.
+
+*What are the units for velocity?
+
+m/s or Km/hr or mi/hr 
+
+*Compare and contrast speed and velocity.
+
+Speed is how fast something moves. Velocity is speed with direction.
+
+### Rates & Acceleration
+
+* Define rate
+
+Per the dictionary, Rate is a measure, quantity, or frequency measured against some other quantity or measure
+
+* Is velocity a rate? Explain why or why not?
+
+Yes it is a rate because it measures displacement against time.
+
+* Define acceleration
+
+The rate of change in velocity. The change in velocity within a certain period of time.
+
+`Acceleration = (FinalVelocity-InitialVelocity)/time`
+
+* What are the units for acceleration?
+
+`m/sec^2`
+
+* When is acceleration positive?
+
+When the velocity of an object increases. 
+
+When the forces are unbalanced.  When an object is speeding up, the acceleration is in the same direction as the velocity.  It has positive direction. 
+
+* When is acceleration negative?
+
+When the velocity of an object decreases.
+
+
+* When is acceleration zero?
+
+When the forces are balanced.  Acceleration is rate of change of velocity.  Zero acceleration means there is no change in velocity over time, namely constant velocity.
+
+* Explain how acceleration is a vector?
+
+Because acceleration depends on whether the object is moving in a +ve or -ve direction, and whether the object is speeding up or slowing down, it has both magnitude and direction.  Also, acceleration is the change in velocity per unit time; velocity is a vector, thus it follows that acceleration is also a vector. 
+
+The direction of the acceleration vector depends on 2 things:
+1. Whether the object is speeding up or slowing down
+2.Whether the object is moving in the +ve or -ve direction.
+
+* Explain how acceleration is a rate?
+
+Rate of change of velocity or rate at which an object changes its velocity. 
+
+
+* In 1.5 secs, a projectile goes from 0 to 300 m/s.  What is the acceleration of the projectile?
+
+```{r, eval = FALSE}
+a = (300m/sec)/1.5sec
+a = 0.66 m/sec^2
+```
+
+
+* You are traveling in a car that is moving at a velocity of 20m/s.  Suddenly, a car in front of you slams on it's brakes.  At that moment, you also slam on your brakes and slow to 5 m/s.  Calculate the acceleration if it took 3 secs to slow your car down. 
+
+```{r, eval = FALSE}
+a = (-15m/sec)/3sec
+a = -5m/sec^2
+```
+
+### Intro to Forces
+
+* Define Force
+
+Force is a push or a pull
+
+* What are the units for force?
+
+`Newton which is Kg.m/sec^2`. A Newton is the force it takes to make 1 kg change its velocity by 1 m/s every second.
+
+* State Newton's First Law
+
+Inertia: A body at rest remains at rest and a body in motion remains in motion unless some external force acts on it.  
+
+* Newton's first law is also known as 
+
+Inertia. `Inertia means the object wants to continue to do what it does.`So if it is in motion, it stays in motion; if it is at rest it stays at rest.
+
+* Give an example of Newton's first law
+
+Any object that is at rest; example a book on a table.  Swinging. A pendulum.   
+
+
+* State and give the equation for Newton's second law.
+
+`Force = mass * acceleration`
+
+*Note* that we use the same equation when calculating `weight` by replacing `Force` with `weight` and `acceleration` with `9.8 m/sec^2`, as that is the acceleration 
+
+`weight = mass * 9.8m/s^2`
+
+* In Newton's second law, what are the units of force, acceleration and mass?
+
+Force = Newton
+Acceleration = m/s^2
+mass = Kg
+
+`Newton(Force) is a product of Kg*m/s^2 (mass*acceleration)`
+
+* A toy rocket of mass 1.2 kg undergoes an acceleration of 20m/s^2. Calculate the force being developed by the rocket engines.
+```{r, eval = FALSE}
+f = 1.2kg*20m/sec^2
+f = 24kg m/sec^2 
+f = 24N
+```
+
+
+* If a net force of 1300N gives an object an acceleration of 2.0m/s^2, what is the mass of the object?
+```{r, eval = FALSE}
+m = 1300N/2.0m/sec^2
+m = 650N/m/sec^2
+m = (650kg*m/sec^2)/m/sec^2
+m = 650kg
+because m/sec^2 cancel out.
+```
+
+
+* You push with a 50N force on a 20 kg curling stone sitting on the ice.  What will the acceleration of the stone be?
+```{r, eval = FALSE}
+a = 50N/20kg
+a = 2.5N/kg
+a = (2.5kg*m/sec^2)/kg
+a = 2.5m/sec^2
+Because kg and kg cancel each other out.
+```
+
+### Types of Forces
+
+* List and define the six different types of forces
+Forces can be categorized into Contact Forces and Action-at-a-Distance Forces
+
+Contact Forces: Frictional force, tension force, normal force, air resistance force, applied force, spring force.
+Action-at-a-distance force: Gravitational force, electrical force, magnetic force.
+
+* Explain the difference between mass and weight. Include units in your explanation. 
+
+Weight is a force and is measured in Newtons. An object's weight is how hard gravity is pulling on it. An object's mass does not change, but it's weight can. Our weight is different on the moon than it is on earth, but our mass still remains the same. Weight is a vector. 
+
+Mass is the total amount of substance in a body; it only has magnitude and is a scalar.
+
+* What is the main force when a dog pulls on a leash? What other forces are also present?
+
+* Identify the forces in the picture below.
+
+### Net Force and Newton's 3rd Law
+
+* Define net force
+Net force is sum of all forces acting on an object.
+
+* What does it mean when the forces in the system are balanced?
+
+When the forces in the system are balanced , there is no acceleration. That is forces in one direction are equal to forces in the opposite direction.
+Example: Forces at the top of the golden gate bridge.
+
+* What does it mean when the forces in the system are unbalanced?
+When forces are unbalanced, the object accelerates.  Kicking a soccer ball is an unbalanced force that makes it accelerate very quickly.  The ball will continue in a straight line at a fixed velocity, except that the other forces act on the ball: Gravity is the unbalanced force that makes the ball accelerate downwards.  Also air resistance is an unbalanced force which gradually reduces the velocity of the ball.  
+
+* How would you calculate net force when the forces point in the same direction?
+
+
+* How would you calculate net force when the forces point in the opposite directions?
+
+* Use the picture to answer the following questions.
+
+* What is the net force acting on the person?
+
+* Are the forces balanced or unbalanced? Explain.
+
+* Explain what is wrong with the forces in this picture.
+
+* State Newton's 3rd law.
+* When a fish swims it pushes the water backwards using its fins, but the fish ends up moving forwards.  Use Newton's 3rd law to explain how this happens.  Make sure to discuss the action force and the reaction force and what is creating them.
+The water pushes the fish forward with the same force as the fish exerted on the water backwards using its fins.  Newton's third law which states every action has an equal and opposite reaction applies.  The equal action-reaction force pair enables the fish to swim.  This also applies to us human swimmers, when we use our arms to push the water backwards which then propels us forward with the same force.  
+
+* Draw a picture of the scenario in the previous question. Label the forces.
+
+* Give an example that shows Newton's 3rd law.  Be prepared to share it in class. 
+When someone throws a soccer ball at me, I can either catch it or push it away.  When I push the ball away, the impact of the ball causes pain in my hands.  This happens because my hand and the soccer ball exerts equal and opposite forces on each other.
+
+Flight of birds: When birds fly, their wings push the air downwards, and this results in the air applying force of the same magnitude in the opposite direction/i.e. upwards.  This pushes the bird upwards into the air.  The same concept applies to planes and helicopters.  
+
+Rocket travel: Hot gases are released in downward direction of the rocket.  This results in an equal size upward force on the rocket that pushes the rocket ahead. 
+
+
+
+
+
+
+<!--chapter:end:2018-03-18-forces-and-motion-review.Rmd-->
+
+---
+title: Visualizing Categorical Data
+author: Tara Kenner
+date: '2018-04-07'
+slug: visualizing-categorical-data
+categories:
+  - math
+  - data
+  - School assignment
+tags:
+  - R
+  - highcharter
+  - ggplot
+  - Math
+  - ggplotly
+  - Statistics
+---
+
+### Math Unit 8
+
+In this unit, we are focusing on visualizing categorical data using pie charts and even better, bar graphs.
+I will be using ggplot and highcharter to visualize the data.
+
+
+```{r, message=FALSE}
+library(tidyverse)
+library(highcharter)
+library(ggplot2)
+
+```
+
+Create and view my data
+```{r}
+#Problem 7-8
+Mode_of_trans <- c("bus", "bike", "car", "walk")
+Num_of_Students <- c(90, 30, 75, 45)
+Survey_Data = tibble(Mode_of_trans, Num_of_Students)
+
+#Now I'm going to calculate the proportion using dplyr verbs
+Prop_survey_data <- Survey_Data %>% mutate(prop_of_students = (Num_of_Students/sum(Num_of_Students))*100)
+Prop_survey_data
+```
+
+
+Now I'll use highcharter to create a pie chart
+```{r}
+
+highchart() %>% 
+ hc_add_series(Prop_survey_data, "pie", hcaes(name = Mode_of_trans, y = prop_of_students), name = "% of Trans", dataLabels = list(enabled = TRUE, format = '{point.name}: {point.y}%')) %>% 
+ hc_add_theme(hc_theme_ffx())
+
+```
+
+Highcharter to create a bar graph
+```{r}
+
+
+# highchart() %>% 
+#  hc_add_series(Prop_survey_data, "column", hcaes(x = Mode_of_trans, y = prop_of_students), name = "% of trans", dataLabels = list(enabled = TRUE, format = '{point.y}%')) %>% 
+#  hc_add_theme(hc_theme_538())
+
+hchart(Prop_survey_data, "column", hcaes(x = Mode_of_trans, y = prop_of_students), name = "%n of trans", dataLabels = list(enabled = TRUE, format = '{point.y}%')) %>% 
+  hc_add_theme(hc_theme_538())
+```
+
+ggplot to create a bar graph
+```{r}
+
+ggplot(Prop_survey_data, aes(x = Mode_of_trans, y = prop_of_students, fill = Mode_of_trans)) + geom_bar(stat = "identity") 
+
+```
+
+
+<!--chapter:end:2018-04-07-visualizing-categorical-data.Rmd-->
+
+---
+title: Bivariate Relationship
+author: Tara Kenner
+date: '2018-04-10'
+slug: bivariate-relationship
+categories:
+  - Linear regresssion
+  - math
+  - r
+  - School assignment
+tags:
+  - ggplot
+  - linear regression
+  - Math
+  - R Markdown
+---
+
+Learning Bivariate realtionship in my math class
+
+```{r}
+library(tidyverse)
+fertilizer <- c(5, 10, 15, 20, 25, 30)
+height_of_plant <- c(14, 17, 21, 31, 33, 40)
+plant_data <- tibble(fertilizer, height_of_plant)
+
+ggplot(plant_data, aes(x = fertilizer, y = height_of_plant)) + geom_point() + geom_smooth(method = lm)
+
+```
+
+```{r, eval=FALSE}
+y = mx + c
+m = (y2 - y1)/(x2 - x1)
+m = (17-14)/(10-5)
+plant_data
+m
+```
+
+```{r}
+A_data <- tibble(weekend = c("feb6", "feb13", "feb20", "feb27", "march6", "march13"), time_min = c(68, 88, 35, 150, 104, 80),  distance_miles = c(7, 17, 3.5, 25, 14, 11))
+A_data %>% ggplot(aes(x = distance_miles, y = time_min)) + geom_point() + geom_smooth(method = lm)
+A_data
+
+```
+
+```{r}
+
+
+my_slope <- function(y2, y1, x2, x1) {
+  m = (y2-y1)/(x2-x1)
+  return(m)
+}
+
+my_slope(35, 88, 3.5, 17)
+my_slope(133,127, 169,166.4)
+
+
+```
+
+```{r}
+my_intercept <- function(y, x, m) {
+  c= y-m*x
+  return(c)
+}
+
+
+2.30*228.6 - 272.7
+
+my_intercept(139, 179, 2.30)
+```
+
+```{r}
+newtons_revenge <- tibble(Height = c(166.4,169,172.8,179,170,183,162.5,165,157.5,165,169,156), reach = c(127,133,133,139,139,137,121,126,128,123,132,119))
+newtons_revenge
+
+ggplot(newtons_revenge, aes(x = Height, y = reach)) + geom_point() + geom_smooth(method = lm)
+
+str(newtons_revenge)
+
+newtons_revenge_1 <- newtons_revenge %>% mutate(heightchange = Height-lag(Height), reachchange = reach-lag(reach), slope = reachchange/heightchange)
+
+str(newtons_revenge_1)
+
+newtons_revenge_1
+
+
+newtons_revenge_1 <- newtons_revenge %>% mutate(heightchange = Height-lag(Height), reachchange = reach - lag(reach), slope = reachchange/heightchange)
+newtons_revenge_1
+
+my_intercept(127, 166.4, 2.3)
+my_intercept(127, 166.4, 0.96)
+my_intercept(133,169, 0)
+
+ggplot(newtons_revenge, aes(x = Height, y = reach))+geom_point()+geom_smooth(method = lm)
+
+```
+
+
+```{r}
+model_lm_smooth <- lm(reach ~Height, data = newtons_revenge)
+summary(model_lm_smooth)
+```
+
+
+
+
+<!--chapter:end:2018-04-10-bivariate-relationship.Rmd-->
+
+---
+title: Test Score Data
+author: Tara Kenner
+date: '2018-04-23'
+slug: ice-cream-data
+categories:
+  - data
+  - Linear regresssion
+  - r
+  - math
+tags:
+  - blogdown
+  - ggplot
+  - linear regression
+  - Math
+---
+
+Test scores plotted against hours of study
+
+
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+library(tidyverse)
+score <-c(43, 61, 85, 100)
+hrs_study <-c(1, 2, 3, 4)
+score_data <- tibble(hrs_study, score)
+
+ggplot(score_data, aes(x = hrs_study, y = score)) + geom_point() + geom_smooth(method = "lm")
+
+```
+
+
+
+
+Now how about if we plot intrest on a scale of 1-10 and results on assignments?
+```{r}
+library(tidyverse)
+interest <-c(2, 4, 6, 8, 10)
+results <- c(20, 40, 60, 80, 100)
+results_interest <- tibble(interest, results)
+
+ggplot(results_interest, aes(x = interest, y = results)) + geom_point() + geom_smooth(method = "lm")
+```
+
+So it appears that the more interest you have in a subject, the better you tend to perform in it. But studying hard, even for your least favorite subject will also give you good scores.
+
+
+
+
+
+<!--chapter:end:2018-04-23-ice-cream-data.Rmd-->
+
+---
+title: Interest Calculation
+author: Tara Kenner
+date: '2018-04-28'
+slug: interest-calculation
+categories:
+  - data
+  - math
+  - School assignment
+tags:
+  - Math
+  - R
+  - tidyverse
+---
+
+
+Math Chapter Nine
+```{r}
+simple_interest_calc <- function(principal, zeit, rate){
+
+  interesse= principal*rate*zeit 
+  return(interesse)
+}
+  
+
+simple_interest_calc(1000, 40, 0.02)
+
+
+```
+
+```{r}
+compound_amount_calc <- function(principal, zeit, rate) {
+  
+  compound_amount = principal*(1 + rate)^zeit
+  return(compound_amount)
+}
+  
+  compound_amount_calc(500,3/12, 0.06)
+
+```
+
+
+<!--chapter:end:2018-04-28-interest-calculation.Rmd-->
+
+---
+title: Movie Data
+author: Tara Kenner
+date: '2018-04-29'
+slug: movie-data
+categories:
+  - data
+  - Linear regresssion
+  - r
+tags:
+  - ggplot
+  - Math
+  - R
+---
+
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+library(tidyverse)
+
+movie_title <- c("Get Out", "Casablanca", "Lady Bird", "Mad Max", "The Godfather", "Moonlight")
+release_year <- c(2017, 1942, 2017, 2015, 1972, 2016)
+box_office_mill <- c(254, 1, 70, 370, 245, 55)
+moviedata <- tibble(release_year, box_office_mill)
+
+ggplot(moviedata, aes(x = release_year, y = box_office_mill)) + geom_point() + geom_smooth(method = "lm")
+```
+
+
+<!--chapter:end:2018-04-29-movie-data.Rmd-->
+

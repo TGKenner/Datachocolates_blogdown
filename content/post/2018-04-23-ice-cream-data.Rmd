@@ -1,5 +1,5 @@
 ---
-title: Ice Cream Data
+title: Test Score Data
 author: Tara Kenner
 date: '2018-04-23'
 slug: ice-cream-data
@@ -18,7 +18,7 @@ tags:
 Test scores plotted against hours of study
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 library(tidyverse)
 score <-c(43, 61, 85, 100)
 hrs_study <-c(1, 2, 3, 4)
