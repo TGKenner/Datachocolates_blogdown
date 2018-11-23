@@ -1,0 +1,54 @@
+---
+title: Functions & Graphs
+author: Tara Kenner
+date: '2018-08-06'
+slug: functions-graphs
+categories:
+  - math
+  - data
+  - Algebra
+tags:
+  - Equations
+  - ggplot
+---
+
+So over the summer, I took some Algebra/Advanced Algebra classes at Saturday Academy at PSU.  We covered Exponents, Logarithms, matrices, polynomials, quadratics, solving systems of equations w/different methods, Factorisation, Graphing of functions,compound interest......
+
+My favorite: Matrices, and graphs, so I'll start out with writing functions and plotting them in R.
+
+Linear equation in slope intercept form:
+
+```{r}
+library(tidyverse)
+
+func_parabola <- function(x) {
+  x^2
+}
+
+func_parabola = function(x){
+  x^2
+}
+
+plot(func_parabola, 2,-2)
+domain_data <- tibble(x = c(2,-2))
+
+plot(func_parabola(c(2,-2)))
+
+domain_data %>% ggplot(aes(x = x)) + stat_function(fun = func_parabola)
+
+```
+
+```{r}
+
+domain_data_1 <- tibble(x = c(2,4))
+sqroot_function <- function(x){
+  if(x>=0) {
+    sqrt(x)
+  }
+}
+
+domain_data_1 %>% ggplot(aes(x =x)) + stat_function(fun = sqroot_function)
+
+
+```
+
