@@ -3,10 +3,15 @@ title: 'Poem & Sentiment Analysis with Blogdown '
 author: Tara Kenner
 date: '2018-08-04'
 slug: poem-with-blogdow
-categories: []
+categories:
+  - Poetry
+  - Sentiment Analysis
+  - r
 tags:
-  - R
   - blogdown
+  - R Markdown
+  - tidytext
+  - word cloud
 ---
 
 
@@ -124,3 +129,4 @@ tara_poem_text&lt;- table_tara_poem %&gt;%
   acast(word~sentiment, value.var = &quot;n&quot;, fill = 0) %&gt;% 
   comparison.cloud(colors = c(&quot;gray20&quot;, &quot;gray80&quot;), max.words = 100)</code></pre>
 <p><img src="/post/2018-08-04-poem-with-blogdow_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Appears my poems reflect quite a bit of negative sentiment. Next, I’ll try and evaluate my essays <span class="citation">@language</span> Arts class.</p>

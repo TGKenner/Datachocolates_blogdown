@@ -1,0 +1,56 @@
+---
+title: Functions & Graphs
+author: Tara Kenner
+date: '2018-08-06'
+slug: functions-graphs
+categories:
+  - math
+  - data
+  - Algebra
+tags:
+  - Equations
+  - ggplot
+---
+
+
+
+<p>So over the summer, I took some Algebra/Advanced Algebra classes at Saturday Academy at PSU. We covered Exponents, Logarithms, matrices, polynomials, quadratics, solving systems of equations w/different methods, Factorisation, Graphing of functions,compound interest……</p>
+<p>My favorite: Matrices, and graphs, so I’ll start out with writing functions and plotting them in R.</p>
+<p>Linear equation in slope intercept form:</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<pre class="r"><code>func_parabola &lt;- function(x) {
+  x^2
+}
+
+func_parabola = function(x){
+  x^2
+}
+
+plot(func_parabola, 2,-2)</code></pre>
+<p><img src="/post/2018-08-06-functions-graphs_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>domain_data &lt;- tibble(x = c(2,-2))
+
+plot(func_parabola(c(2,-2)))</code></pre>
+<p><img src="/post/2018-08-06-functions-graphs_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>domain_data %&gt;% ggplot(aes(x = x)) + stat_function(fun = func_parabola)</code></pre>
+<p><img src="/post/2018-08-06-functions-graphs_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<pre class="r"><code>domain_data_1 &lt;- tibble(x = c(2,4))
+sqroot_function &lt;- function(x){
+  if(x&gt;=0) {
+    sqrt(x)
+  }
+}
+
+domain_data_1 %&gt;% ggplot(aes(x =x)) + stat_function(fun = sqroot_function)</code></pre>
+<pre><code>## Warning in if (x &gt;= 0) {: the condition has length &gt; 1 and only the first
+## element will be used</code></pre>
+<p><img src="/post/2018-08-06-functions-graphs_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
