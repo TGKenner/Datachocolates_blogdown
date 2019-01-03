@@ -85,4 +85,54 @@ tags:
 <li>Elizabeth Paine, Product Developer, retrieved November 12th, 2018, from <a href="https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr" class="uri">https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr</a></li>
 <li>Wkipedia: <a href="https://en.wikipedia.org/wiki/Chemotaxis" class="uri">https://en.wikipedia.org/wiki/Chemotaxis</a></li>
 </ul>
+<pre class="r"><code>#load required library
+library(tidyverse)</code></pre>
+<p>Recording and graphing the observations from trial 1 and trial 2 of my experiment which is understanding chemotaxis in Physarum Polycephalum</p>
+<pre class="r"><code>#construct graphs from the experiment
+glucose_concen &lt;- c(100, 10, 1, .1, 0)
+positive_growth &lt;- c(2, 2, 1, 0, 0)
+negative_growth &lt;- c(0, 0, 1, 1, 0)
+neutral_growth &lt;- c(2, 0, 1, 1, 0)
+
+Physarum_Growth &lt;- tibble(glucose_concen,positive_growth, negative_growth, neutral_growth) %&gt;% 
+  mutate(glucose_concen = as.factor(glucose_concen))
+Physarum_Growth</code></pre>
+<pre><code>## # A tibble: 5 x 4
+##   glucose_concen positive_growth negative_growth neutral_growth
+##   &lt;fct&gt;                    &lt;dbl&gt;           &lt;dbl&gt;          &lt;dbl&gt;
+## 1 100                          2               0              2
+## 2 10                           2               0              0
+## 3 1                            1               1              1
+## 4 0.1                          0               1              1
+## 5 0                            0               0              0</code></pre>
+<pre class="r"><code>#Taking a wide data frame and making it a long data frame for graphing purposes by using the function gather() 
+Physarum_Growth_longformat &lt;- gather(Physarum_Growth, Growth_Type, Growth_Measure, positive_growth:neutral_growth)
+Physarum_Growth_longformat</code></pre>
+<pre><code>## # A tibble: 15 x 3
+##    glucose_concen Growth_Type     Growth_Measure
+##    &lt;fct&gt;          &lt;chr&gt;                    &lt;dbl&gt;
+##  1 100            positive_growth              2
+##  2 10             positive_growth              2
+##  3 1              positive_growth              1
+##  4 0.1            positive_growth              0
+##  5 0              positive_growth              0
+##  6 100            negative_growth              0
+##  7 10             negative_growth              0
+##  8 1              negative_growth              1
+##  9 0.1            negative_growth              1
+## 10 0              negative_growth              0
+## 11 100            neutral_growth               2
+## 12 10             neutral_growth               0
+## 13 1              neutral_growth               1
+## 14 0.1            neutral_growth               1
+## 15 0              neutral_growth               0</code></pre>
+<pre class="r"><code>#ggplot(Physarum_Growth_longformat, aes(x = as.factor(glucose_concen), y = Growth_Measure)) + geom_point()
+#I used the function facet_grid() to enable graphs in one visual.
+
+# Physarum_Growth_longformat %&gt;% group_by(Growth_Type) %&gt;% 
+  #ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(.~Growth_Type)
+
+Physarum_Growth_longformat %&gt;% group_by(Growth_Type) %&gt;% 
+  ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(Growth_Type ~.)</code></pre>
+<p><img src="/post/2018-11-19-stem-project-grade-8_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>

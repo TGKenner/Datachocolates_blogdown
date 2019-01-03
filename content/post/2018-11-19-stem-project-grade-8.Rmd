@@ -72,3 +72,41 @@ The experiment will be conducted using plasmodium cultures on filter paper strip
 *	Elizabeth Paine, Product Developer, retrieved November 12th, 2018, from https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr
 *	Wkipedia: https://en.wikipedia.org/wiki/Chemotaxis
 
+```{r, message=FALSE, warning=FALSE}
+#load required library
+library(tidyverse)
+
+```
+
+Recording and graphing the observations from trial 1 and trial 2 of my experiment which is understanding chemotaxis in Physarum Polycephalum
+```{r, warning=FALSE}
+#construct graphs from the experiment
+glucose_concen <- c(100, 10, 1, .1, 0)
+positive_growth <- c(2, 2, 1, 0, 0)
+negative_growth <- c(0, 0, 1, 1, 0)
+neutral_growth <- c(2, 0, 1, 1, 0)
+
+Physarum_Growth <- tibble(glucose_concen,positive_growth, negative_growth, neutral_growth) %>% 
+  mutate(glucose_concen = as.factor(glucose_concen))
+Physarum_Growth
+
+#Taking a wide data frame and making it a long data frame for graphing purposes by using the function gather() 
+Physarum_Growth_longformat <- gather(Physarum_Growth, Growth_Type, Growth_Measure, positive_growth:neutral_growth)
+Physarum_Growth_longformat
+
+```
+
+
+
+```{r}
+#ggplot(Physarum_Growth_longformat, aes(x = as.factor(glucose_concen), y = Growth_Measure)) + geom_point()
+#I used the function facet_grid() to enable graphs in one visual.
+
+# Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
+  #ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(.~Growth_Type)
+
+Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
+  ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(Growth_Type ~.)
+
+```
+
