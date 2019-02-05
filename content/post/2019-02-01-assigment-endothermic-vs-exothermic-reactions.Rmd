@@ -1,0 +1,89 @@
+---
+title: 'Assigment: Endothermic Vs Exothermic Reactions'
+author: Tara Kenner
+date: '2019-02-01'
+slug: assigment-endothermic-vs-exothermic-reactions
+categories:
+  - Chemistry
+  - School assignment
+tags:
+  - ggplot
+  - R Markdown
+---
+
+### Science Assignment
+
+#### Purpose
+
+To investigate the difference between an exothermic and endothermic reaction
+
+
+#### Data Tables:
+
+* Time in seconds as independent variable
+* Temperature as dependent variable
+
+Creating datatables in R.
+
+```{r, message = F, error = F, warning = F}
+#Vinegar and Baking soda
+
+library(tidyverse)
+
+#Create vectors for the data from my experiments.
+
+Time_seconds = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110)
+Temp_VinegarBakingSoda_5g = c(17, 13, 12, 12, 11, 11, 11, NA, NA, NA, NA, NA)
+Temp_VinegarBakingSoda_10g = c(15, 12, 10, 9, 9, 9, NA, NA, NA, NA, NA, NA)
+Temp_VinegarBakingSoda_15g = c(15, 12, 10, 9, 8, 8, 8, NA, NA, NA, NA, NA)
+
+Temp_HydrogenPeroxideYeast_3g = c(15, 17, 25, 28, 25, 28, 30, 32, 30, 32, 32, 32)
+Temp_HydrogenPeroxideYeast_6g = c(13, 15, 24, 24, 28, 30, 31, 31, 31, NA, NA, NA)
+Temp_HydrogenPeroxideYeast_9g = c(12, 15, 22, 23, 25, 28, 29, 30, 31, 30, 30, 30)
+
+Data_obs <- tibble(Time_seconds, 
+                   Temp_VinegarBakingSoda_5g, 
+                   Temp_VinegarBakingSoda_10g,
+                   Temp_VinegarBakingSoda_15g,
+                   Temp_HydrogenPeroxideYeast_3g,
+                   Temp_HydrogenPeroxideYeast_6g,
+                   Temp_HydrogenPeroxideYeast_9g)
+
+Data_obs
+
+```
+
+```{r}
+
+#Create a long format for the table for the plot.
+long_Data_obs <- gather(Data_obs, key = "Trial_No", value = "Temperature", Temp_VinegarBakingSoda_5g:Temp_HydrogenPeroxideYeast_9g)
+
+ggplot(long_Data_obs, aes(x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T) 
+
+```
+
+### 1. Did changing the concentration of the solid affect the change in temperature of the reaction? Why do you believe this is so?
+
+Yes, changing the concentration affected the temperature. In the vinegar+Baking soda experiment, the temperature reached its equilibrium at 11F with 5 grams.  The second trial reached its equilibrium at 9F with 10 grams and the third trial reached its equilibrium at 8F with 15 grams.  
+In the Hydrogen + yeast experiment, the temperature reached its equilibrium at 32F with 3 grams.  The second trial reached equilibrium at 31F with 6g. The third reached the equilibrium at 30F with 9 grams. The higher the concentration of the solid, the lower the temperature. It is inversely related.
+
+```{r, message = F, error = F}
+long_Data_obs %>% ggplot(aes( x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T, show.legend = FALSE) + facet_wrap(.~Trial_No)
+
+```
+
+### 2. Does graphing your data result in a straight line? Explain why the graph looks the way it does.
+
+No, graphing the data does not result in a straight line. With the Vinegar Baking soda data there is a negative correlation since it is exothermic. With the Hydrogen Peroxide + Yeast, there is a positive correlation.  Both data sets have a curved live.  This is because the temperature is increasing/decreasing at inconsistent rates. If the temperature increased/decreased at the same frequency, the lines would be straight.  
+
+Please see plot above
+
+### Compose 2 Claim-Evidence- Reasoning paragraphs to explain exothermic and endothermic reactions.
+
+### 3. Claim: Which of the reactions was endothermic? Evidence: How do you know? Use data and be specific
+
+Yeast + Hydrogen peroxide is an endothermic reaction.  Endothermic means the chemicals final energy is greater than the starting/initial energy.  The first trial starts at 15 and ends at 32.  The second trial starts at 13 and ends at 31.  The third trial starts at 12 and ends at 30.  When plotted, the data points show a positive correlation.  The starting temperature in all 3 trials were less than the equilibrium.  Therefore the yeast + hydrogen peroxide is an endothermic reaction. 
+
+### 4. Claim: Which reaction was exothermic? Evidence: How do you know?
+
+Vinegar + Baking Soda is an exothermic reaction.  Exothermic means the final energy is less than the starting energy.  The first trial that starts at 17 and ends at 11.  The second trial starts at 15 and ends at 9.  The third trial starts at 15 and ens at 8.  When plotted, the correlation is negative.  In all the trials, the starting temperature was greater than the equilibrium; Therefore, Vinegar + Baking soda is a exothermic reaction. 
