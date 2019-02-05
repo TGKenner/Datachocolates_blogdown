@@ -1,0 +1,118 @@
+---
+title: 'Assigment: Endothermic Vs Exothermic Reactions'
+author: Tara Kenner
+date: '2019-02-01'
+slug: assigment-endothermic-vs-exothermic-reactions
+categories:
+  - Chemistry
+  - School assignment
+tags:
+  - ggplot
+  - R Markdown
+---
+
+
+
+<div id="science-assignment" class="section level3">
+<h3>Science Assignment</h3>
+<div id="purpose" class="section level4">
+<h4>Purpose</h4>
+<p>To investigate the difference between an exothermic and endothermic reaction</p>
+</div>
+<div id="data-tables" class="section level4">
+<h4>Data Tables:</h4>
+<ul>
+<li>Time in seconds as independent variable</li>
+<li>Temperature as dependent variable</li>
+</ul>
+<p>Creating datatables in R.</p>
+<pre class="r"><code>#Vinegar and Baking soda
+
+library(tidyverse)
+
+#Create vectors for the data from my experiments.
+
+Time_seconds = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110)
+Temp_VinegarBakingSoda_5g = c(17, 13, 12, 12, 11, 11, 11, NA, NA, NA, NA, NA)
+Temp_VinegarBakingSoda_10g = c(15, 12, 10, 9, 9, 9, NA, NA, NA, NA, NA, NA)
+Temp_VinegarBakingSoda_15g = c(15, 12, 10, 9, 8, 8, 8, NA, NA, NA, NA, NA)
+
+Temp_HydrogenPeroxideYeast_3g = c(15, 17, 25, 28, 25, 28, 30, 32, 30, 32, 32, 32)
+Temp_HydrogenPeroxideYeast_6g = c(13, 15, 24, 24, 28, 30, 31, 31, 31, NA, NA, NA)
+Temp_HydrogenPeroxideYeast_9g = c(12, 15, 22, 23, 25, 28, 29, 30, 31, 30, 30, 30)
+
+Data_obs_VB &lt;- tibble(Time_seconds, 
+                      Temp_VinegarBakingSoda_5g, 
+                      Temp_VinegarBakingSoda_10g,
+                      Temp_VinegarBakingSoda_15g)
+
+Data_obs_HY &lt;- tibble(Time_seconds, 
+                      Temp_HydrogenPeroxideYeast_3g,
+                      Temp_HydrogenPeroxideYeast_6g,
+                      Temp_HydrogenPeroxideYeast_9g)
+
+Data_obs &lt;- tibble(Time_seconds, 
+                   Temp_VinegarBakingSoda_5g, 
+                   Temp_VinegarBakingSoda_10g,
+                   Temp_VinegarBakingSoda_15g,
+                   Temp_HydrogenPeroxideYeast_3g,
+                   Temp_HydrogenPeroxideYeast_6g,
+                   Temp_HydrogenPeroxideYeast_9g)
+
+Data_obs</code></pre>
+<pre><code>## # A tibble: 12 x 7
+##    Time_seconds Temp_VinegarBak… Temp_VinegarBak… Temp_VinegarBak…
+##           &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1            0               17               15               15
+##  2           10               13               12               12
+##  3           20               12               10               10
+##  4           30               12                9                9
+##  5           40               11                9                8
+##  6           50               11                9                8
+##  7           60               11               NA                8
+##  8           70               NA               NA               NA
+##  9           80               NA               NA               NA
+## 10           90               NA               NA               NA
+## 11          100               NA               NA               NA
+## 12          110               NA               NA               NA
+## # … with 3 more variables: Temp_HydrogenPeroxideYeast_3g &lt;dbl&gt;,
+## #   Temp_HydrogenPeroxideYeast_6g &lt;dbl&gt;,
+## #   Temp_HydrogenPeroxideYeast_9g &lt;dbl&gt;</code></pre>
+<pre class="r"><code>#Create a long format for the table for the plot.
+long_Data_obs_VB &lt;- gather(Data_obs_VB, key = &quot;Trial_No&quot;, value = &quot;Temperature&quot;, Temp_VinegarBakingSoda_5g:Temp_VinegarBakingSoda_15g)
+
+long_Data_obs_HY &lt;- gather(Data_obs_HY, key = &quot;Trial_No&quot;, value = &quot;Temperature&quot;, Temp_HydrogenPeroxideYeast_3g:Temp_HydrogenPeroxideYeast_9g)
+
+long_Data_obs &lt;- gather(Data_obs, key = &quot;Trial_No&quot;, value = &quot;Temperature&quot;, Temp_VinegarBakingSoda_5g:Temp_HydrogenPeroxideYeast_9g)
+
+ggplot(long_Data_obs, aes(x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T) </code></pre>
+<p><img src="/post/2019-02-01-assigment-endothermic-vs-exothermic-reactions_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+</div>
+<div id="did-changing-the-concentration-of-the-solid-affect-the-change-in-temperature-of-the-reaction-why-do-you-believe-this-is-so" class="section level3">
+<h3>1. Did changing the concentration of the solid affect the change in temperature of the reaction? Why do you believe this is so?</h3>
+<p>Yes, changing the concentration affected the temperature. In the vinegar+Baking soda experiment, the temperature reached its equilibrium at 11F with 5 grams. The second trial reached its equilibrium at 9F with 10 grams and the third trial reached its equilibrium at 8F with 15 grams.<br />
+In the Hydrogen + yeast experiment, the temperature reached its equilibrium at 32F with 3 grams. The second trial reached equilibrium at 31F with 6g. The third reached the equilibrium at 30F with 9 grams. The higher the concentration of the solid, the lower the temperature. It is inversely related.</p>
+<pre class="r"><code>long_Data_obs %&gt;% ggplot(aes( x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T, show.legend = FALSE) + facet_wrap(.~Trial_No)</code></pre>
+<p><img src="/post/2019-02-01-assigment-endothermic-vs-exothermic-reactions_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="does-graphing-your-data-result-in-a-straight-line-explain-why-the-graph-looks-the-way-it-does." class="section level3">
+<h3>2. Does graphing your data result in a straight line? Explain why the graph looks the way it does.</h3>
+<p>No, graphing the data does not result in a straight line. With the Vinegar Baking soda data there is a negative correlation since it is exothermic. With the Hydrogen Peroxide + Yeast, there is a positive correlation. Both data sets have a curved live. This is because the temperature is increasing/decreasing at inconsistent rates. If the temperature increased/decreased at the same frequency, the lines would be straight.</p>
+<p>Please see plot above</p>
+</div>
+<div id="compose-2-claim-evidence--reasoning-paragraphs-to-explain-exothermic-and-endothermic-reactions." class="section level3">
+<h3>Compose 2 Claim-Evidence- Reasoning paragraphs to explain exothermic and endothermic reactions.</h3>
+</div>
+<div id="claim-which-of-the-reactions-was-endothermic-evidence-how-do-you-know-use-data-and-be-specific" class="section level3">
+<h3>3. Claim: Which of the reactions was endothermic? Evidence: How do you know? Use data and be specific</h3>
+<p>Yeast + Hydrogen peroxide is an endothermic reaction. Endothermic means the chemicals final energy is greater than the starting/initial energy. The first trial starts at 15 and ends at 32. The second trial starts at 13 and ends at 31. The third trial starts at 12 and ends at 30. When plotted, the data points show a positive correlation. The starting temperature in all 3 trials were less than the equilibrium. Therefore the yeast + hydrogen peroxide is an endothermic reaction.</p>
+<pre class="r"><code>long_Data_obs_HY %&gt;% ggplot(aes( x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T, show.legend = FALSE) + facet_wrap(.~Trial_No)</code></pre>
+<p><img src="/post/2019-02-01-assigment-endothermic-vs-exothermic-reactions_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="claim-which-reaction-was-exothermic-evidence-how-do-you-know" class="section level3">
+<h3>4. Claim: Which reaction was exothermic? Evidence: How do you know?</h3>
+<p>Vinegar + Baking Soda is an exothermic reaction. Exothermic means the final energy is less than the starting energy. The first trial that starts at 17 and ends at 11. The second trial starts at 15 and ends at 9. The third trial starts at 15 and ends at 8. When plotted, the correlation is negative. In all the trials, the starting temperature was greater than the equilibrium; Therefore, Vinegar + Baking soda is a exothermic reaction.</p>
+<pre class="r"><code>long_Data_obs_VB %&gt;% ggplot(aes( x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T, show.legend = FALSE) + facet_wrap(.~Trial_No)</code></pre>
+<p><img src="/post/2019-02-01-assigment-endothermic-vs-exothermic-reactions_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
