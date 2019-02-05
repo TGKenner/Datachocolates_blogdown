@@ -41,6 +41,16 @@ Temp_HydrogenPeroxideYeast_3g = c(15, 17, 25, 28, 25, 28, 30, 32, 30, 32, 32, 32
 Temp_HydrogenPeroxideYeast_6g = c(13, 15, 24, 24, 28, 30, 31, 31, 31, NA, NA, NA)
 Temp_HydrogenPeroxideYeast_9g = c(12, 15, 22, 23, 25, 28, 29, 30, 31, 30, 30, 30)
 
+Data_obs_VB <- tibble(Time_seconds, 
+                      Temp_VinegarBakingSoda_5g, 
+                      Temp_VinegarBakingSoda_10g,
+                      Temp_VinegarBakingSoda_15g)
+
+Data_obs_HY <- tibble(Time_seconds, 
+                      Temp_HydrogenPeroxideYeast_3g,
+                      Temp_HydrogenPeroxideYeast_6g,
+                      Temp_HydrogenPeroxideYeast_9g)
+
 Data_obs <- tibble(Time_seconds, 
                    Temp_VinegarBakingSoda_5g, 
                    Temp_VinegarBakingSoda_10g,
@@ -56,6 +66,10 @@ Data_obs
 ```{r}
 
 #Create a long format for the table for the plot.
+long_Data_obs_VB <- gather(Data_obs_VB, key = "Trial_No", value = "Temperature", Temp_VinegarBakingSoda_5g:Temp_VinegarBakingSoda_15g)
+
+long_Data_obs_HY <- gather(Data_obs_HY, key = "Trial_No", value = "Temperature", Temp_HydrogenPeroxideYeast_3g:Temp_HydrogenPeroxideYeast_9g)
+
 long_Data_obs <- gather(Data_obs, key = "Trial_No", value = "Temperature", Temp_VinegarBakingSoda_5g:Temp_HydrogenPeroxideYeast_9g)
 
 ggplot(long_Data_obs, aes(x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T) 
@@ -84,6 +98,15 @@ Please see plot above
 
 Yeast + Hydrogen peroxide is an endothermic reaction.  Endothermic means the chemicals final energy is greater than the starting/initial energy.  The first trial starts at 15 and ends at 32.  The second trial starts at 13 and ends at 31.  The third trial starts at 12 and ends at 30.  When plotted, the data points show a positive correlation.  The starting temperature in all 3 trials were less than the equilibrium.  Therefore the yeast + hydrogen peroxide is an endothermic reaction. 
 
+```{r, message = F, error = F}
+long_Data_obs_HY %>% ggplot(aes( x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T, show.legend = FALSE) + facet_wrap(.~Trial_No)
+```
+
 ### 4. Claim: Which reaction was exothermic? Evidence: How do you know?
 
-Vinegar + Baking Soda is an exothermic reaction.  Exothermic means the final energy is less than the starting energy.  The first trial that starts at 17 and ends at 11.  The second trial starts at 15 and ends at 9.  The third trial starts at 15 and ens at 8.  When plotted, the correlation is negative.  In all the trials, the starting temperature was greater than the equilibrium; Therefore, Vinegar + Baking soda is a exothermic reaction. 
+Vinegar + Baking Soda is an exothermic reaction.  Exothermic means the final energy is less than the starting energy.  The first trial that starts at 17 and ends at 11.  The second trial starts at 15 and ends at 9.  The third trial starts at 15 and ends at 8.  When plotted, the correlation is negative.  In all the trials, the starting temperature was greater than the equilibrium; Therefore, Vinegar + Baking soda is a exothermic reaction. 
+
+```{r, message = F, error = F}
+long_Data_obs_VB %>% ggplot(aes( x = as.factor(Time_seconds), y = Temperature, col = Trial_No)) + geom_point(na.rm = T, show.legend = FALSE) + facet_wrap(.~Trial_No)
+
+```
