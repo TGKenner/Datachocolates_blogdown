@@ -1,7 +1,7 @@
 ---
 title: Bivariate Relationship
 author: Tara Kenner
-date: '2018-04-10'
+date: '2018-04-28'
 slug: bivariate-relationship
 categories:
   - Linear regresssion
