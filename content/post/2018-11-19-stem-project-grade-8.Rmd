@@ -110,3 +110,41 @@ Physarum_Growth_longformat %>% group_by(Growth_Type) %>%
 
 ```
 
+
+Trial 2
+```{r, warning=FALSE}
+#construct graphs from the experiment
+glucose_concen2 <- c(100, 10, 1, .1, 0)
+positive_growth2 <- c(0, 0, 3, 1, 0)
+negative_growth2 <- c(3, 2, 1, 1, 0)
+neutral_growth2 <- c(0, 2, 0, 1, 3)
+
+Physarum_Growth2 <- tibble(glucose_concen2,positive_growth2, negative_growth2, neutral_growth2) %>% 
+  mutate(glucose_concen2 = as.factor(glucose_concen2))
+Physarum_Growth2
+
+#Taking a wide data frame and making it a long data frame for graphing purposes by using the function gather() 
+Physarum_Growth_longformat2 <- gather(Physarum_Growth2, Growth_Type2, Growth_Measure2, positive_growth2:neutral_growth2)
+Physarum_Growth_longformat2
+
+```
+
+
+
+```{r}
+#ggplot(Physarum_Growth_longformat, aes(x = as.factor(glucose_concen), y = Growth_Measure)) + geom_point()
+#I used the function facet_grid() to enable graphs in one visual.
+
+# Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
+  #ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(.~Growth_Type)
+
+Physarum_Growth_longformat2 %>% group_by(Growth_Type2) %>% 
+  ggplot(aes(x = glucose_concen2, y = Growth_Measure2, col = Growth_Type2)) + geom_point() + facet_grid(Growth_Type2 ~.)
+
+```
+
+
+
+
+
+
