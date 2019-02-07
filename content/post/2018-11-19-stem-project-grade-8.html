@@ -20,6 +20,7 @@ tags:
 
 
 
+<p><img src="/img/PhysarumGrowth.png" alt="Physarum Polycephalum" /> <img src="/img/Oatmeal_placement.jpg" alt="Physarum Cultures" /></p>
 <div id="title" class="section level3">
 <h3>Title</h3>
 <p>Investigating Chemotaxis by Analyzing the Effect of Glucose/Caffeine on Physarum Polycephalum cultures.</p>
@@ -75,6 +76,26 @@ tags:
 <li>Millimolar concentration: Measurement unit for the concentration of an ingredient in solution.</li>
 </ul>
 </div>
+<div id="methods" class="section level3">
+<h3>Methods:</h3>
+<p><strong>Materials</strong></p>
+<p>All required items except for Coffee are listed at <a href="https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#materials">Science Buddies/Studying Chemotaxis in Physarum</a>. The Physarum polycephalum kit we purchased from <a href="https://www.carolina.com/science-buddies-project-materials/science-buddies-slimey-likes-it-studying-chemotaxis-physarum-polycephalum--project-materials/P_SB_FAM_CHEMOTAX.pr?s_cid=ptnr_scibuddies">Carolina Biological Supply Company</a> contained the following:</p>
+<ul>
+<li>Physarum culture, as plasmodium on agar plate</li>
+<li>Petri dishes</li>
+<li>Non-nutrient agar</li>
+<li>Oatmeal flakes (Physarum “food”)</li>
+<li>Filter paper</li>
+<li>Aluminum foil</li>
+<li>Beaker, 250 mL</li>
+<li>Graduated cylinder, 10 mL</li>
+<li>Graduated cylinder, 100 mL</li>
+<li>Disposable gloves.</li>
+</ul>
+<p>Other required materials as stated on <a href="https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#materials">Science Buddies/Studying Chemotaxis in Physarum</a>.</p>
+<p><strong>Procedure:</strong></p>
+<p>Follow procedure from <a href="https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#procedure">Science Buddies/Studying Chemotaxis in Physarum</a>.</p>
+</div>
 <div id="background-information" class="section level3">
 <h3>Background Information:</h3>
 <ul>
@@ -84,6 +105,25 @@ tags:
 <li>Ferris Jabr, Nature|Scientific American (2012, November 13) How brainless slime molds redefine intelligence. Retrieved November 18th, 2018, from <a href="https://www.nature.com/news/how-brainless-slime-molds-redefine-intelligence-1.11811" class="uri">https://www.nature.com/news/how-brainless-slime-molds-redefine-intelligence-1.11811</a>. “Something scientists have come to understand is that slime molds are much smarter than they look. One species in particular, the SpongeBob SquarePants–yellow Physarum polycephalum, can solve mazes, mimic the layout of man-made transportation networks and choose the healthiest food from a diverse menu—and all this without a brain or nervous system.”Slime molds are redefining what you need to have to qualify as intelligent,&quot; Reid says.”</li>
 <li>Elizabeth Paine, Product Developer, retrieved November 12th, 2018, from <a href="https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr" class="uri">https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr</a></li>
 <li>Wkipedia: <a href="https://en.wikipedia.org/wiki/Chemotaxis" class="uri">https://en.wikipedia.org/wiki/Chemotaxis</a></li>
+</ul>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<p>Use programming language R to create data tables and plots:</p>
+<ul>
+<li>Present your data table with appropriate title and headings - Done</li>
+<li>Analyze your data by calculating the average for the dependent variable for each independent variable: NA</li>
+<li>Display your results using an appropriate graph- Done</li>
+<li>In a paragraph form, describe the trends you see in your data.</li>
+</ul>
+<p>The first trial1 supports my hypothesis of positive growth at glucose concentration of 1mM, 10mM and 100mM, and no growth at 0mM, does not support my hypothesis with neutral growth and negative growth at 0.1 and 1 mM.</p>
+<p>The second trial2 does not support my hypothesis at all levels of concentration.</p>
+</div>
+<div id="my-hypothesis" class="section level3">
+<h3>My Hypothesis</h3>
+<ul>
+<li>The physarum polycephalum will grow towards the higher concentrations of glucose</li>
+<li>The physarum polycephalum will grow away from coffee because it is toxic to slime mold.</li>
 </ul>
 <pre class="r"><code>#load required library
 library(tidyverse)</code></pre>
@@ -183,4 +223,44 @@ Physarum_Growth_longformat2</code></pre>
 Physarum_Growth_longformat2 %&gt;% group_by(Growth_Type2) %&gt;% 
   ggplot(aes(x = glucose_concen2, y = Growth_Measure2, col = Growth_Type2)) + geom_point() + facet_grid(Growth_Type2 ~.)</code></pre>
 <p><img src="/post/2018-11-19-stem-project-grade-8_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="discussion" class="section level3">
+<h3>Discussion</h3>
+<ul>
+<li>Compare your results with what was expected in your hypothesis.</li>
+<li>How did the test compare to the control.</li>
+<li>What are possible errors, meaning what could have made your data unreliable?
+<ul>
+<li>Flavored glucose tablets; the cherry flavored glucose tablets could be the reason why I could see negative growth on both trails at varying concentration levels.</li>
+</ul></li>
+<li>When completing the data collection what were unexpected things that could have affected your results?
+<ul>
+<li>Timing of data collection</li>
+<li>Temperature of the room where the trials were conducted</li>
+<li>Temperature of the water for preparing the various concentration levels of glucose</li>
+</ul></li>
+<li>What would you do differently if you were to repeat this project?</li>
+<li>Would not use flavored glucose tablets</li>
+<li>What other experiments could be conducted to further investigate your topic? Identify at least one.</li>
+<li>With caffeine.</li>
+</ul>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<ul>
+<li>Restate your hypothesis.
+<ul>
+<li>The physarum polycephalum will grow towards the higher concentrations of glucose</li>
+<li>The physarum polycephalum will grow away from coffee because it is toxic to slime mold.</li>
+</ul></li>
+<li>State whether the hypothesis was supported or refuted(not supported) by results.
+<ul>
+<li>Supported in trial 1 for 1, 10, 100mM glucose concentration</li>
+<li>Not supported in trial 2</li>
+</ul></li>
+<li>Include the results that show whether your hypothesis is supported or refuted.
+<ul>
+<li>Include plots/table</li>
+</ul></li>
+</ul>
 </div>

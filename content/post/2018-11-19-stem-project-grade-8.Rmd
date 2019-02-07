@@ -18,7 +18,7 @@ tags:
   - Physarum Polycephalum
 ---
 
-
+![Physarum Polycephalum](/img/PhysarumGrowth.png) ![Physarum Cultures](/img/Oatmeal_placement.jpg) 
 
 ### Title
 
@@ -64,6 +64,31 @@ The experiment will be conducted using plasmodium cultures on filter paper strip
 *	Physarum polycephalum: One of the slime molds that literally translates to “many-headed slime”. It is a unicellular organism that lives in dark, cool and humid areas such as leaf litter and other organic debris.
 *	Millimolar concentration: Measurement unit for the concentration of an ingredient in solution.
 
+### Methods:
+
+**Materials** 
+
+All required items except for Coffee are listed at [Science Buddies/Studying Chemotaxis in Physarum](https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#materials). The Physarum polycephalum kit we purchased from [Carolina Biological Supply Company](https://www.carolina.com/science-buddies-project-materials/science-buddies-slimey-likes-it-studying-chemotaxis-physarum-polycephalum--project-materials/P_SB_FAM_CHEMOTAX.pr?s_cid=ptnr_scibuddies) contained the following: 
+
+  * Physarum culture, as plasmodium on agar plate
+  * Petri dishes
+  * Non-nutrient agar
+  * Oatmeal flakes (Physarum "food")
+  * Filter paper
+  * Aluminum foil
+  * Beaker, 250 mL
+  * Graduated cylinder, 10 mL
+  * Graduated cylinder, 100 mL
+  * Disposable gloves. 
+
+Other required materials as stated on [Science Buddies/Studying Chemotaxis in Physarum](https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#materials). 
+
+**Procedure:**
+
+Follow procedure from [Science Buddies/Studying Chemotaxis in Physarum](https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#procedure).
+
+
+
 ### Background Information:
 *	Robby Berman(March 17th, 2018). Slime molds crack 3 of the biggest issues in the U.S. Retrieved October 31st, 2018, from https://bigthink.com/robby-berman/slime-molds-crack-3-of-the-biggest-issues-in-the-us. “At an event on March 2, their secretary, experimental philosopher and conceptual artist Jonathon Keats, announced the group has cracked three of America’s most vexing and controversial problems: the destruction of our climate, the opioid epidemic, and immigration. The Consortium’s secret? It brings a unique perspective to these issues. “They’re all slime molds,” says Keats. This is the first analysis of these issues by non-human scholars, he notes, asserting, “Their advice is objective, and transcends our polarized political environment because they don’t belong to our species.” (A slime mold was previously appointed to the Hampshire faculty.)"
 *	Katia Moskvitch, Contributing Writer, Cognitive Science (2018, July 9). Slime Molds Remember, but do they learn? Retrieved November 15th, 2018, from https://www.quantamagazine.org/slime-molds-remember-but-do-they-learn-20180709/. “In experiments conducted by Dussutour’s team, disks of yellow slime mold (at bottom) can eat plates of oatmeal (at top) — but only if they cross gelatinous bridges (at center) laced with noxious but harmless compounds. Here, the middle slime mold sample has learned to disregard the chemicals, a process called habituation.”
@@ -71,6 +96,25 @@ The experiment will be conducted using plasmodium cultures on filter paper strip
 *	Ferris Jabr, Nature|Scientific American (2012, November 13) How brainless slime molds redefine intelligence. Retrieved November 18th, 2018, from https://www.nature.com/news/how-brainless-slime-molds-redefine-intelligence-1.11811. “Something scientists have come to understand is that slime molds are much smarter than they look. One species in particular, the SpongeBob SquarePants–yellow Physarum polycephalum, can solve mazes, mimic the layout of man-made transportation networks and choose the healthiest food from a diverse menu—and all this without a brain or nervous system.”Slime molds are redefining what you need to have to qualify as intelligent," Reid says.”
 *	Elizabeth Paine, Product Developer, retrieved November 12th, 2018, from https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr
 *	Wkipedia: https://en.wikipedia.org/wiki/Chemotaxis
+
+### Results
+
+Use programming language R to create data tables and plots:
+
+*  Present your data table with appropriate title and headings - Done
+*  Analyze your data by calculating the average for the dependent variable for each
+independent variable: NA
+*  Display your results using an appropriate graph- Done
+*  In a paragraph form, describe the trends you see in your data.
+
+The first trial1 supports my hypothesis of positive growth at glucose concentration of 1mM, 10mM and 100mM, and no growth at 0mM, does not support my hypothesis with neutral growth and negative growth at 0.1 and 1 mM.
+
+The second trial2 does not support my hypothesis at all levels of concentration.
+
+### My Hypothesis 
+
+* The physarum polycephalum will grow towards the higher concentrations of glucose 
+* The physarum polycephalum will grow away from coffee because it is toxic to slime mold.
 
 ```{r, message=FALSE, warning=FALSE}
 #load required library
@@ -95,7 +139,6 @@ Physarum_Growth_longformat <- gather(Physarum_Growth, Growth_Type, Growth_Measur
 Physarum_Growth_longformat
 
 ```
-
 
 
 ```{r}
@@ -130,7 +173,6 @@ Physarum_Growth_longformat2
 ```
 
 
-
 ```{r}
 #ggplot(Physarum_Growth_longformat, aes(x = as.factor(glucose_concen), y = Growth_Measure)) + geom_point()
 #I used the function facet_grid() to enable graphs in one visual.
@@ -143,6 +185,34 @@ Physarum_Growth_longformat2 %>% group_by(Growth_Type2) %>%
 
 ```
 
+### Discussion
+
+
+* Compare your results with what was expected in your hypothesis.
+* How did the test compare to the control.
+* What are possible errors, meaning what could have made your data unreliable?
+    * Flavored glucose tablets; the cherry flavored glucose tablets could be the reason why I could see negative growth on both trails at varying concentration levels.
+* When completing the data collection what were unexpected things that could have affected
+your results?
+    * Timing of data collection
+    * Temperature of the room where the trials were conducted
+    * Temperature of the water for preparing the various concentration levels of glucose
+* What would you do differently if you were to repeat this project?
+  * Would not use flavored glucose tablets
+* What other experiments could be conducted to further investigate your topic? Identify at
+least one.
+  * With caffeine.  
+
+### Conclusion
+
+* Restate your hypothesis.
+    * The physarum polycephalum will grow towards the higher concentrations of glucose 
+    * The physarum polycephalum will grow away from coffee because it is toxic to slime mold.
+* State whether the hypothesis was supported or refuted(not supported) by results.
+    * Supported in trial 1 for 1, 10, 100mM glucose concentration
+    * Not supported in trial 2
+* Include the results that show whether your hypothesis is supported or refuted.
+    * Include plots/table
 
 
 
