@@ -1,21 +1,22 @@
 ---
-title: STEM Project Grade 8
-author: Tara Kenner
+title: "STEM Project Grade 8"
+author: "Tara Kenner"
 date: '2018-11-19'
+output: word_document
 slug: stem-project-grade-8
-categories:
-  - data
-  - STEM
-  - Chemistry
-  - Chemotaxis
-  - Slime Mold
 tags:
-  - blogdown
-  - ggplot
-  - highcharter
-  - linear regression
-  - Statistics
-  - Physarum Polycephalum
+- blogdown
+- ggplot
+- highcharter
+- linear regression
+- Statistics
+- Physarum Polycephalum
+categories:
+- data
+- STEM
+- Chemistry
+- Chemotaxis
+- Slime Mold
 ---
 
 ![Physarum Polycephalum](/img/PhysarumGrowth.png) ![Physarum Cultures](/img/Oatmeal_placement.jpg) 
@@ -23,6 +24,11 @@ tags:
 ### Title
 
 Investigating Chemotaxis by Analyzing the Effect of Glucose/Caffeine on Physarum Polycephalum cultures.
+
+### Abstract
+
+How will Physarum Polycephalum respond towards varying concentrations of glucose and caffeine?
+My hypothesis stated that the Physarum Polycephalum will grow towards the higher concentrations of glucose, and away from coffee. Following the online procedure from [Science Buddies/Studying Chemotaxis in Physarum](https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#procedure), Physarum plasmodium cultures were grown in petri dishes and then added as `0.5cm x 0.5cm` blocks (total of 4 blocks) onto the junction of 2 filter strips, one soaked in distilled water and the other soaked in various concentrations of glucose, per petri dish(*5 for 5 petri dishes); the same process was repeated for various concentrations of coffee. For various concentrations of glucose, the results of trial 1 and trial 2 were not consistent. Trial 1 results showed positive growth (growth towards the glucose strip) for glucose cocentrations > 1mM (milliMolar), while Trial 2 results showed negative growth (Growth away from the glucose strip) for concentrations > 1Mm. Trial results for coffee showed no growth (positive, negative or neutral) after a 2 day observation. Based on the results from both the glucose and coffee trials, determining chemotaxis on Physarum Polycephalum cultures per my hypothesis is inconsistent and therefore inconclusive.  
 
 ### Introduction
 
@@ -38,19 +44,6 @@ I wanted to do a project that involved observations in nature and apply statisti
 *	What are the various stages of growth of Physarum Plycephalum?
 *	Is Physarum Polycephalum capable of optimally finding food sources and avoiding harmful stimuli?
 
-### Variables
-
-* Independent: Food Source:
-      +	Different concentrations of glucose: 100-mM(millimolar), 10-mM, 1.0-mM, 0.1-mM, No * Glucose
-      +	Different concentrations of caffeine: TBD, No Caffeine
-*	Dependent: Number of PP cultures that show:
-      +	Positive Growth: Towards Glucose/Caffeine
-      +	Negative Growth: Away from Glucose/Caffeine
-      +	Neutral Growth: Equal growth in Glucose/Caffeine or No Glucose/No Caffeine
-*	Control: PP cultures, Various concentrations of Glucose/Caffeine
-The experiment will be conducted using plasmodium cultures on filter paper strips soaked with the food source (as defined under Variables: Independent) in petri-dishes (5 in total with different concetrations of the food source) in our garage with minimal sunlight. The experiment will be repeated twice for the two food sources (Glucose, Caffeine). Observations(numerical and digital pictures) will be recorded. The analysis of the observations will be done using the statistical programming language R.
-
-
 ### Terms and Concepts (cited from Science Buddies; please see Background Information)
 *	Physarum: Physarum is a genus of mycetozoan(grouping of slime molds) slime molds and Physarum Polycephalum is one of its species.
 *	Eukarytotic: Organisms whose cells have a nucleus enclosed within membranes.
@@ -63,6 +56,18 @@ The experiment will be conducted using plasmodium cultures on filter paper strip
 *	Chemotaxis: When an organism moves in repsonse to a chemical stimulus. Movement toward a higher concentration of chemical in question is termed as positive chemotaxis, while a movement in the opposite direction is negative chemotaxis.
 *	Physarum polycephalum: One of the slime molds that literally translates to “many-headed slime”. It is a unicellular organism that lives in dark, cool and humid areas such as leaf litter and other organic debris.
 *	Millimolar concentration: Measurement unit for the concentration of an ingredient in solution.
+
+### Background Information:
+*	Robby Berman(March 17th, 2018). Slime molds crack 3 of the biggest issues in the U.S. Retrieved October 31st, 2018, from https://bigthink.com/robby-berman/slime-molds-crack-3-of-the-biggest-issues-in-the-us. “At an event on March 2, their secretary, experimental philosopher and conceptual artist Jonathon Keats, announced the group has cracked three of America’s most vexing and controversial problems: the destruction of our climate, the opioid epidemic, and immigration. The Consortium’s secret? It brings a unique perspective to these issues. “They’re all slime molds,” says Keats. This is the first analysis of these issues by non-human scholars, he notes, asserting, “Their advice is objective, and transcends our polarized political environment because they don’t belong to our species.” (A slime mold was previously appointed to the Hampshire faculty.)"
+*	Katia Moskvitch, Contributing Writer, Cognitive Science (2018, July 9). Slime Molds Remember, but do they learn? Retrieved November 15th, 2018, from https://www.quantamagazine.org/slime-molds-remember-but-do-they-learn-20180709/. “In experiments conducted by Dussutour’s team, disks of yellow slime mold (at bottom) can eat plates of oatmeal (at top) — but only if they cross gelatinous bridges (at center) laced with noxious but harmless compounds. Here, the middle slime mold sample has learned to disregard the chemicals, a process called habituation.”
+*	Science Buddies Staff. (2017, July 28). Slimey Likes It! Studying Chemotaxis in Physarum Polycephalum . Retrieved October 31st, 2018, from https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold. Details summary, background, materials and procedures required for the study of chemotaxis in Physarum Polycephalum with the objective of exploring chemotactic responses of P.polycephalum in culture exposed to various amounts of glucose.
+*	Ferris Jabr, Nature|Scientific American (2012, November 13) How brainless slime molds redefine intelligence. Retrieved November 18th, 2018, from https://www.nature.com/news/how-brainless-slime-molds-redefine-intelligence-1.11811. “Something scientists have come to understand is that slime molds are much smarter than they look. One species in particular, the SpongeBob SquarePants–yellow Physarum polycephalum, can solve mazes, mimic the layout of man-made transportation networks and choose the healthiest food from a diverse menu—and all this without a brain or nervous system.”Slime molds are redefining what you need to have to qualify as intelligent," Reid says.”
+*	Elizabeth Paine, Product Developer, retrieved November 12th, 2018, from https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr
+*	Wkipedia: https://en.wikipedia.org/wiki/Chemotaxis
+
+### My Hypothesis 
+
+* The physarum polycephalum will grow towards the higher concentrations of glucose and away from caffeine (coffee) 
 
 ### Methods:
 
@@ -87,34 +92,29 @@ Other required materials as stated on [Science Buddies/Studying Chemotaxis in Ph
 
 Follow procedure from [Science Buddies/Studying Chemotaxis in Physarum](https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold#procedure).
 
+**Variables:**
 
+* Independent: Food Source:
+      +	Different concentrations of glucose: 100-mM(millimolar), 10-mM, 1.0-mM, 0.1-mM, No * Glucose
+      +	Different concentrations of caffeine: TBD, No Caffeine
+*	Dependent: Number of PP cultures that show:
+      +	Positive Growth: Towards Glucose/Caffeine
+      +	Negative Growth: Away from Glucose/Caffeine
+      +	Neutral Growth: Equal growth in Glucose/Caffeine or No Glucose/No Caffeine
+*	Control: PP cultures, Various concentrations of Glucose/Caffeine
+The experiment will be conducted using plasmodium cultures on filter paper strips soaked with the food source (as defined under Variables: Independent) in petri-dishes (5 in total with different concetrations of the food source) in our garage with minimal sunlight. The experiment will be repeated twice for the two food sources (Glucose, Caffeine). Observations(numerical and digital pictures) will be recorded. The analysis of the observations will be done using the statistical programming language R.
 
-### Background Information:
-*	Robby Berman(March 17th, 2018). Slime molds crack 3 of the biggest issues in the U.S. Retrieved October 31st, 2018, from https://bigthink.com/robby-berman/slime-molds-crack-3-of-the-biggest-issues-in-the-us. “At an event on March 2, their secretary, experimental philosopher and conceptual artist Jonathon Keats, announced the group has cracked three of America’s most vexing and controversial problems: the destruction of our climate, the opioid epidemic, and immigration. The Consortium’s secret? It brings a unique perspective to these issues. “They’re all slime molds,” says Keats. This is the first analysis of these issues by non-human scholars, he notes, asserting, “Their advice is objective, and transcends our polarized political environment because they don’t belong to our species.” (A slime mold was previously appointed to the Hampshire faculty.)"
-*	Katia Moskvitch, Contributing Writer, Cognitive Science (2018, July 9). Slime Molds Remember, but do they learn? Retrieved November 15th, 2018, from https://www.quantamagazine.org/slime-molds-remember-but-do-they-learn-20180709/. “In experiments conducted by Dussutour’s team, disks of yellow slime mold (at bottom) can eat plates of oatmeal (at top) — but only if they cross gelatinous bridges (at center) laced with noxious but harmless compounds. Here, the middle slime mold sample has learned to disregard the chemicals, a process called habituation.”
-*	Science Buddies Staff. (2017, July 28). Slimey Likes It! Studying Chemotaxis in Physarum Polycephalum . Retrieved October 31st, 2018, from https://www.sciencebuddies.org/science-fair-projects/project-ideas/MicroBio_p028/microbiology/chemotaxis-slime-mold. Details summary, background, materials and procedures required for the study of chemotaxis in Physarum Polycephalum with the objective of exploring chemotactic responses of P.polycephalum in culture exposed to various amounts of glucose.
-*	Ferris Jabr, Nature|Scientific American (2012, November 13) How brainless slime molds redefine intelligence. Retrieved November 18th, 2018, from https://www.nature.com/news/how-brainless-slime-molds-redefine-intelligence-1.11811. “Something scientists have come to understand is that slime molds are much smarter than they look. One species in particular, the SpongeBob SquarePants–yellow Physarum polycephalum, can solve mazes, mimic the layout of man-made transportation networks and choose the healthiest food from a diverse menu—and all this without a brain or nervous system.”Slime molds are redefining what you need to have to qualify as intelligent," Reid says.”
-*	Elizabeth Paine, Product Developer, retrieved November 12th, 2018, from https://www.carolina.com/teacher-resources/Interactive/think-single-celled-organisms-are-simple-think-again-the-slime-mold-physarum-polycephalum-a-single-celled-organism-for-student-investigations/tr41405.tr
-*	Wkipedia: https://en.wikipedia.org/wiki/Chemotaxis
 
 ### Results
 
-Use programming language R to create data tables and plots:
-
-*  Present your data table with appropriate title and headings - Done
-*  Analyze your data by calculating the average for the dependent variable for each
-independent variable: NA
-*  Display your results using an appropriate graph- Done
-*  In a paragraph form, describe the trends you see in your data.
+I'll be using programming language R to create data tables and plots:
 
 The first trial1 supports my hypothesis of positive growth at glucose concentration of 1mM, 10mM and 100mM, and no growth at 0mM, does not support my hypothesis with neutral growth and negative growth at 0.1 and 1 mM.
-
-The second trial2 does not support my hypothesis at all levels of concentration.
+The second trial2 does not support my hypothesis at all levels of concentration, except for 2 observations at concentrations 1mM and 10mM.
 
 ### My Hypothesis 
 
-* The physarum polycephalum will grow towards the higher concentrations of glucose 
-* The physarum polycephalum will grow away from coffee because it is toxic to slime mold.
+* Physarum Polycephalum will grow towards the higher concentrations of glucose and grow away from coffee.
 
 ```{r, message=FALSE, warning=FALSE}
 #load required library
@@ -132,11 +132,17 @@ neutral_growth <- c(2, 0, 1, 1, 0)
 
 Physarum_Growth <- tibble(glucose_concen,positive_growth, negative_growth, neutral_growth) %>% 
   mutate(glucose_concen = as.factor(glucose_concen))
-Physarum_Growth
 
+Trial_1_Data <- Physarum_Growth %>% knitr::kable(., caption = "Trial_1 Data")
+
+Trial_1_Data
+
+```
+
+```{r}
 #Taking a wide data frame and making it a long data frame for graphing purposes by using the function gather() 
 Physarum_Growth_longformat <- gather(Physarum_Growth, Growth_Type, Growth_Measure, positive_growth:neutral_growth)
-Physarum_Growth_longformat
+#Physarum_Growth_longformat %>% knitr::kable(.)
 
 ```
 
@@ -145,14 +151,12 @@ Physarum_Growth_longformat
 #ggplot(Physarum_Growth_longformat, aes(x = as.factor(glucose_concen), y = Growth_Measure)) + geom_point()
 #I used the function facet_grid() to enable graphs in one visual.
 
-# Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
-  #ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(.~Growth_Type)
+Trial_plot_1 <- Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
+  ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(Growth_Type ~.) + ggtitle("Trial_1: Plots")
 
-Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
-  ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(Growth_Type ~.)
+Trial_plot_1
 
 ```
-
 
 Trial 2
 ```{r, warning=FALSE}
@@ -164,11 +168,16 @@ neutral_growth2 <- c(0, 2, 0, 1, 3)
 
 Physarum_Growth2 <- tibble(glucose_concen2,positive_growth2, negative_growth2, neutral_growth2) %>% 
   mutate(glucose_concen2 = as.factor(glucose_concen2))
-Physarum_Growth2
 
+Trial_2_Data <- Physarum_Growth2 %>% knitr::kable(., caption = "Trial_2 Data")
+Trial_2_Data
+```
+
+```{r, echo = F}
 #Taking a wide data frame and making it a long data frame for graphing purposes by using the function gather() 
 Physarum_Growth_longformat2 <- gather(Physarum_Growth2, Growth_Type2, Growth_Measure2, positive_growth2:neutral_growth2)
-Physarum_Growth_longformat2
+
+#Physarum_Growth_longformat2 %>% knitr::kable(., caption = "Trial_2 Data")
 
 ```
 
@@ -180,39 +189,42 @@ Physarum_Growth_longformat2
 # Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
   #ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(.~Growth_Type)
 
-Physarum_Growth_longformat2 %>% group_by(Growth_Type2) %>% 
-  ggplot(aes(x = glucose_concen2, y = Growth_Measure2, col = Growth_Type2)) + geom_point() + facet_grid(Growth_Type2 ~.)
+Trial_2_Plot <- Physarum_Growth_longformat2 %>% group_by(Growth_Type2) %>% 
+  ggplot(aes(x = glucose_concen2, y = Growth_Measure2, col = Growth_Type2)) + geom_point() + facet_grid(Growth_Type2 ~.) + ggtitle("Trial_2 Plots")
+
+Trial_2_Plot
 
 ```
 
+**Trial 1 Data Observation:**
+
+*  For glucose concentrations greater than 1mM, 3 observations showed positive growth - Supports hypothesis for the 3 observations. 
+*  For glucose concentration's 0.1mM, 1mM, and 100mM, 3 observations showed neutral growth - Refutes hypothesis for the 3 observations. 
+*  For glucose concentration's 0.1mM and 1mM, 2 observations showed negative growth - Refutes hypothesis
+
+**Trial 2 Data Observation:**
+
+*  For glucose concentrations 1mM and 10mM, 2 observations showed positive growth - Supports hypothesis for the 2 observations. 
+*  For glucose concentrations 0.1mM, 10mM and 100mM, 3 observations showed neutral growth - Refutes hypothesis. 
+*  For glucose concentrations less than 100, 4 observations showed negative growth - Refutes hypothesis. 
+
 ### Discussion
 
+My hypothesis was partially correct and incorrect as proved by positive and negative growths in Trials 1 & 2 (for the glucose solutions). This could suggest variations in the control variables like room temp, preparation of various concentrations of glucose, and health of Physarum culture. For example, the glucose we used was grape flavored and this could have affected the results seeing as the artificial flavor could have repelled the Physarum. The room temperature may have been different when the separate trials were conducted. The health of the Physarum Culture may have varied with the trials. The trials with the various concentrations of coffee solution was interesting, as we observed no growth in any of the filter strips in 5 petri dishes; one could interpret this as the Physarum avoiding toxic substance or the Physarum culture was unhealthy. If I were to repeat this experiment in the future, I would try to find unflavored glucose or make my own glucose solution, conduct trial 1 & 2 on the same day at the same temperature, use cultures grown on a single petri dish. If I were to expand on this project, I would experiment chemotaxis on Physarum Polycephalum by placing glucose/oats (positive chemotaxis) and coffee/chilli pepper (negative chemotaxis) at the end of the maze, and see if the Physarum can find the quickest way to the glucose/oats or away from coffee/chilli pepper. 
 
-* Compare your results with what was expected in your hypothesis.
-* How did the test compare to the control.
-* What are possible errors, meaning what could have made your data unreliable?
-    * Flavored glucose tablets; the cherry flavored glucose tablets could be the reason why I could see negative growth on both trails at varying concentration levels.
-* When completing the data collection what were unexpected things that could have affected
-your results?
-    * Timing of data collection
-    * Temperature of the room where the trials were conducted
-    * Temperature of the water for preparing the various concentration levels of glucose
-* What would you do differently if you were to repeat this project?
-  * Would not use flavored glucose tablets
-* What other experiments could be conducted to further investigate your topic? Identify at
-least one.
-  * With caffeine.  
 
 ### Conclusion
 
-* Restate your hypothesis.
-    * The physarum polycephalum will grow towards the higher concentrations of glucose 
-    * The physarum polycephalum will grow away from coffee because it is toxic to slime mold.
-* State whether the hypothesis was supported or refuted(not supported) by results.
-    * Supported in trial 1 for 1, 10, 100mM glucose concentration
-    * Not supported in trial 2
-* Include the results that show whether your hypothesis is supported or refuted.
-    * Include plots/table
+My hypothesis that the Physarum Polycephalum will grow towards the higher concentrations of glucose was partially supported and partially refuted as proved by positive and negative growths in Trials 1 & 2 (for various glucose concentrations; please see data/plots below). Trial results for coffee showed no growth (positive, negative or neutral) after a 2 day observation. Based on the results from both the glucose and coffee trials, determining chemotaxis on Physarum Polycephalum cultures per my hypothesis is inconsistent and therefore inconclusive.  
+
+```{r}
+Trial_1_Data
+Trial_plot_1
+Trial_2_Data
+Trial_2_Plot
+
+```
+
 
 
 
