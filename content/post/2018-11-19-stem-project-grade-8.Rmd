@@ -123,6 +123,7 @@ library(tidyverse)
 ```
 
 Recording and graphing the observations from trial 1 and trial 2 of my experiment which is understanding chemotaxis in Physarum Polycephalum
+
 ```{r, warning=FALSE}
 #construct graphs from the experiment
 glucose_concen <- c(100, 10, 1, .1, 0)
@@ -135,6 +136,7 @@ Physarum_Growth <- tibble(glucose_concen,positive_growth, negative_growth, neutr
 
 Trial_1_Data <- Physarum_Growth %>% knitr::kable(., caption = "Trial_1 Data")
 
+#Print data_table
 Trial_1_Data
 
 ```
@@ -152,7 +154,10 @@ Physarum_Growth_longformat <- gather(Physarum_Growth, Growth_Type, Growth_Measur
 #I used the function facet_grid() to enable graphs in one visual.
 
 Trial_plot_1 <- Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
-  ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(Growth_Type ~.) + ggtitle("Trial_1: Plots")
+  ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + 
+  geom_point() + 
+  facet_grid(Growth_Type ~.) + 
+  ggtitle("Trial_1: Plots")
 
 Trial_plot_1
 
@@ -186,11 +191,11 @@ Physarum_Growth_longformat2 <- gather(Physarum_Growth2, Growth_Type2, Growth_Mea
 #ggplot(Physarum_Growth_longformat, aes(x = as.factor(glucose_concen), y = Growth_Measure)) + geom_point()
 #I used the function facet_grid() to enable graphs in one visual.
 
-# Physarum_Growth_longformat %>% group_by(Growth_Type) %>% 
-  #ggplot(aes(x = glucose_concen, y = Growth_Measure, col = Growth_Type)) + geom_point() + facet_grid(.~Growth_Type)
-
 Trial_2_Plot <- Physarum_Growth_longformat2 %>% group_by(Growth_Type2) %>% 
-  ggplot(aes(x = glucose_concen2, y = Growth_Measure2, col = Growth_Type2)) + geom_point() + facet_grid(Growth_Type2 ~.) + ggtitle("Trial_2 Plots")
+  ggplot(aes(x = glucose_concen2, y = Growth_Measure2, col = Growth_Type2)) + 
+  geom_point() + 
+  facet_grid(Growth_Type2 ~.) + 
+  ggtitle("Trial_2 Plots")
 
 Trial_2_Plot
 
@@ -226,7 +231,8 @@ Trial_2_Plot
 ```
 
 
+#### Acknowledgements
 
-
+* My parents
 
 
